@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "427112080066",
+    "project_id": "jugyourogu-d71e0",
+    "storage_bucket": "jugyourogu-d71e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427112080066:android:094f2852b7e66b1eda915b",
+        "android_client_info": {
+          "package_name": "com.example.jugyourogu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427112080066-mlsj5metr62j21s71s02c4uh82unvutp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWf2vSisQzlgz_bAIr8yzTwx9lIFDYr1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427112080066-mlsj5metr62j21s71s02c4uh82unvutp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "427112080066-2ovejpj33dbm5fg183f42m9etk9qat8k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jugyourogu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
