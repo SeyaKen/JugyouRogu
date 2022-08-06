@@ -53,11 +53,13 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                             children: [
                               SizedBox(
                                 height: MediaQuery.of(context).size.height * 0.24,
-                                child: const Text('ENPITSU',
-                                    style: TextStyle(
-                                      fontSize: 45,
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                child: const Text(
+                                  '授業ログ',
+                                  style: TextStyle(
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.bold,
+                                    )
+                                  ),
                               ),
                               InkWell(
                                 onTap: () {
