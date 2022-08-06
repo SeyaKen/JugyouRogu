@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jugyourogu/home_page.dart';
+import 'package:jugyourogu/Home/home_page.dart';
 
 class MainPage extends StatefulWidget {
   int currenttab;
