@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/Service/google_signIn.dart';
 import 'package:jugyourogu/SplashScreen/splash_screen.dart';
 import 'package:jugyourogu/main_page.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,15 +17,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider(
+      create: (context) => GoogleSignInProvider(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.grey,
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(),
+            bodyText2: TextStyle(),
+          ).apply(
+            bodyColor: Colors.white,
+            displayColor: Colors.white,
+          ),
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const MySplashScreen(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: const MySplashScreen(),
     );
   }
 }
-
-

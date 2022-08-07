@@ -25,10 +25,10 @@ class _SignInState extends State<mailSignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xff131313),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xff131313),
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +45,7 @@ class _SignInState extends State<mailSignIn> {
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
               TextButton.icon(
@@ -57,7 +57,7 @@ class _SignInState extends State<mailSignIn> {
                   widget.toggleView();
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.blue,
+                  primary: const Color(0XFF37EBFA),
                 ),
               )
             ],
@@ -73,8 +73,7 @@ class _SignInState extends State<mailSignIn> {
           child: Form(
             key: _formKey,
             child: Center(
-              child: Container(
-                color: Colors.white,
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.85,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
@@ -87,7 +86,6 @@ class _SignInState extends State<mailSignIn> {
                             Text(
                               'ログイン',
                               style: TextStyle(
-                                color: Colors.black,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -100,26 +98,22 @@ class _SignInState extends State<mailSignIn> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.8,
                           child: TextFormField(
+                            style: const TextStyle(color: Colors.white),
                             validator: (val) =>
                                 val!.isEmpty ? 'メールアドレスを入力してください' : null,
                             onChanged: (val) {
                               setState(() => email = val);
                             },
                             decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey)),
+                              fillColor: Color(0xff333333),
+                              filled: true,
                               hintText: 'メールアドレス',
+                              hintStyle: TextStyle(color: Colors.grey),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 13),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 1.0,
+                                  color: Colors.transparent,
                                 ),
                               ),
                             ),
@@ -131,6 +125,7 @@ class _SignInState extends State<mailSignIn> {
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: TextFormField(
+                                style: const TextStyle(color: Colors.white),
                                 validator: (val) => val!.length < 7
                                     ? '7文字以上のパスワードを入力してください'
                                     : null,
@@ -139,21 +134,15 @@ class _SignInState extends State<mailSignIn> {
                                   setState(() => password = val);
                                 },
                                 decoration: const InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.grey)),
+                                  fillColor: Color(0xff333333),
+                                  filled: true,
                                   hintText: 'パスワード',
+                                  hintStyle: TextStyle(color: Colors.grey),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 13),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.grey,
-                                      width: 1.0,
+                                      color: Colors.transparent,
                                     ),
                                   ),
                                 ),
@@ -173,7 +162,7 @@ class _SignInState extends State<mailSignIn> {
                                       ? FontAwesomeIcons.eyeSlash
                                       : FontAwesomeIcons.eye,
                                   size: 23,
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                 ),
                               ),
                             ),
@@ -183,8 +172,8 @@ class _SignInState extends State<mailSignIn> {
                         Container(
                           decoration: BoxDecoration(
                             color: password.length >= 7
-                                ? Colors.blue
-                                : Colors.blue.withOpacity(0.3),
+                                ? const Color(0XFF37EBFA)
+                                : const Color(0XFF37EBFA).withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -208,8 +197,7 @@ class _SignInState extends State<mailSignIn> {
                                   child: const Center(
                                     child: Text(
                                       'ログイン',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
+                                      style: TextStyle(fontSize: 20),
                                     ),
                                   ),
                                 ),
@@ -235,7 +223,7 @@ class _SignInState extends State<mailSignIn> {
                           child: const Text(
                             'パスワードを忘れた場合',
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: Color(0xff0283ff),
                             ),
                           ),
                         ),

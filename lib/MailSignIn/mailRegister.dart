@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class mailRegister extends StatefulWidget {
@@ -14,6 +16,7 @@ class mailRegister extends StatefulWidget {
 
 class _mailRegisterState extends State<mailRegister> {
   final auth = FirebaseAuth.instance;
+  late User user;
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
 
@@ -23,13 +26,18 @@ class _mailRegisterState extends State<mailRegister> {
   bool eye = true;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xff131313),
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xff131313),
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -41,7 +49,7 @@ class _mailRegisterState extends State<mailRegister> {
                   widget.toggleView();
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.blue,
+                  primary: const Color(0XFF37EBFA),
                 ),
               )
             ],
@@ -57,8 +65,7 @@ class _mailRegisterState extends State<mailRegister> {
           child: Form(
             key: _formKey,
             child: Center(
-              child: Container(
-                color: Colors.white,
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height * 0.85,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
@@ -69,7 +76,7 @@ class _mailRegisterState extends State<mailRegister> {
                         Text(
                           '新規登録',
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.white,
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -82,26 +89,22 @@ class _mailRegisterState extends State<mailRegister> {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: TextFormField(
+                        style: const TextStyle(color: Colors.white),
                         validator: (val) =>
                             val!.isEmpty ? '正しいメールアドレスを入力してください' : null,
                         onChanged: (val) {
                           setState(() => email = val);
                         },
                         decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey)),
+                          fillColor: Color(0xff333333),
+                          filled: true,
                           hintText: 'メールアドレス',
+                          hintStyle: TextStyle(color: Colors.grey),
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 10, vertical: 13),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.blue,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                              width: 1.0,
+                              color: Colors.transparent,
                             ),
                           ),
                         ),
@@ -113,6 +116,7 @@ class _mailRegisterState extends State<mailRegister> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.8,
                           child: TextFormField(
+                            style: const TextStyle(color: Colors.white),
                             controller: _usernameController,
                             validator: (val) => password.length >= 7
                                 ? null
@@ -122,20 +126,15 @@ class _mailRegisterState extends State<mailRegister> {
                               setState(() => password = val);
                             },
                             decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey)),
+                              fillColor: Color(0xff333333),
+                              filled: true,
                               hintText: 'パスワード',
+                              hintStyle: TextStyle(color: Colors.grey),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 13),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.blue,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 1.0,
+                                  color: Colors.transparent,
                                 ),
                               ),
                             ),
@@ -155,7 +154,7 @@ class _mailRegisterState extends State<mailRegister> {
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
                               size: 23,
-                              color: Colors.black,
+                              color: Colors.grey,
                             ),
                           ),
                         ),
@@ -165,8 +164,8 @@ class _mailRegisterState extends State<mailRegister> {
                     Container(
                       decoration: BoxDecoration(
                         color: password.length >= 7
-                            ? Colors.blue
-                            : Colors.blue.withOpacity(0.3),
+                            ? const Color(0XFF37EBFA)
+                            : const Color(0XFF37EBFA).withOpacity(0.3),
                         borderRadius: BorderRadius.circular(3),
                       ),
                       width: MediaQuery.of(context).size.width * 0.8,
@@ -180,14 +179,29 @@ class _mailRegisterState extends State<mailRegister> {
                                 try {
                                   await auth
                                       .createUserWithEmailAndPassword(
-                                          email: email, password: password)
-                                      .then((value) => Navigator.push(
-                                          context,
-                                          PageRouteBuilder(
-                                            pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
-                                            transitionDuration:
-                                                const Duration(seconds: 0),
-                                          )));
+                                          email: email, password: password).then((value) => 
+                                          user = auth.currentUser!)
+                                      .then((value) async =>
+                                          await FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(user.uid)
+                                              .set({
+                                            'ProfilePicture': '',
+                                            'email': user.email,
+                                            'name': '',
+                                            'selfIntroduction': '',
+                                            'uid': user.uid,
+                                          }))
+                                      .then((value) => SharedPreferenceHelper()
+                                          .saveUserName('LogIned')
+                                          .then((value) => Navigator.push(
+                                              context,
+                                              PageRouteBuilder(
+                                                pageBuilder: (_, __, ___) =>
+                                                    MainPage(currenttab: 0),
+                                                transitionDuration:
+                                                    const Duration(seconds: 0),
+                                              ))));
                                 } catch (e) {
                                   print(e.toString());
                                   if (e.toString() ==
@@ -210,7 +224,7 @@ class _mailRegisterState extends State<mailRegister> {
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: const Center(
                                 child: Text(
-                                  '認証コードを送信する',
+                                  '新規登録する',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 20),
                                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/Home/home_page.dart';
+import 'package:jugyourogu/Profile/profile.dart';
 
 class MainPage extends StatefulWidget {
   int currenttab;
@@ -64,7 +65,7 @@ class _MainPageState extends State<MainPage> {
         index: currenttab,
         children: const [
           HomePage(),
-          HomePage(),
+          ProfilePage(),
         ],
       ),
     );
