@@ -18,7 +18,7 @@ class DatabaseService extends ChangeNotifier {
   // 質問一覧をうつす関数
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect() {
     return FirebaseFirestore.instance
-        .collection('questions')
+        .collection('jugyou')
         .orderBy('date', descending: true)
         .limit(10)
         .snapshots();
@@ -27,7 +27,7 @@ class DatabaseService extends ChangeNotifier {
   // 追加の質問一欄？をうつす関数
   Future<Stream<QuerySnapshot>> fetchAdditionalData(int suuji) async {
     return FirebaseFirestore.instance
-        .collection('questions')
+        .collection('jugyou')
         .orderBy('date', descending: true)
         .limit(suuji)
         .snapshots();
@@ -37,7 +37,7 @@ class DatabaseService extends ChangeNotifier {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> searchDataCollect(
       searchWordsList) async {
     Query<Map<String, dynamic>> query =
-        FirebaseFirestore.instance.collection('questions');
+        FirebaseFirestore.instance.collection('jugyou');
     for (var i = 0; i < searchWordsList.length; i++) {
       try {
         query =
@@ -56,7 +56,7 @@ class DatabaseService extends ChangeNotifier {
   // 個人的な？質問一覧をうつす関数
   Stream<QuerySnapshot<Map<String, dynamic>>> personalQuestinosCollect() {
     return FirebaseFirestore.instance
-        .collection('questions')
+        .collection('jugyou')
         .orderBy('date', descending: true)
         .where('asker', isEqualTo: uid)
         .limit(10)
@@ -64,20 +64,20 @@ class DatabaseService extends ChangeNotifier {
   }
 
   // 追加の答えを持ってくる関数
-  Future<Stream<QuerySnapshot>> additionalPersonalQuestions(
-      int personalQuestionsSuuji) async {
+  Future<Stream<QuerySnapshot>> additionalPersonalJugyou(
+      int personalJugyouSuuji) async {
     return FirebaseFirestore.instance
-        .collection('questions')
+        .collection('jugyou')
         .orderBy('date', descending: true)
         .where('asker', isEqualTo: uid)
-        .limit(personalQuestionsSuuji)
+        .limit(personalJugyouSuuji)
         .snapshots();
   }
 
   // 個人的な？答え一覧をうつす関数
   Stream<QuerySnapshot<Map<String, dynamic>>> personalAnswersCollect() {
     return FirebaseFirestore.instance
-        .collection('questions')
+        .collection('jugyou')
         .orderBy('date', descending: true)
         .where('answersList', arrayContains: uid)
         .limit(10)
@@ -88,7 +88,7 @@ class DatabaseService extends ChangeNotifier {
   Future<Stream<QuerySnapshot>> additionalPersonalAnswers(
       int personalSuuji) async {
     return FirebaseFirestore.instance
-        .collection('questions')
+        .collection('jugyou')
         .orderBy('date', descending: true)
         .where('answersList', arrayContains: uid)
         .limit(personalSuuji)
