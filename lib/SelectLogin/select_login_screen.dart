@@ -231,7 +231,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                       ),
                                       TextSpan(
                                         style:
-                                            const TextStyle(color: Color(0xff0283ff)),
+                                            const TextStyle(color: Colors.blue),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
                                             Navigator.push(
@@ -251,7 +251,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                       ),
                                       TextSpan(
                                         style:
-                                            const TextStyle(color: Color(0xff0283ff)),
+                                            const TextStyle(color: Colors.blue),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
                                             Navigator.push(

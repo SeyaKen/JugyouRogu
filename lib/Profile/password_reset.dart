@@ -79,7 +79,7 @@ class _SignInState extends State<PasswordReset> {
                                   horizontal: 10, vertical: 13),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: Colors.blue,
+                                  color: const Color(0XFF37EBFA),
                                 ),
                               ),
                               enabledBorder: OutlineInputBorder(
@@ -95,8 +95,8 @@ class _SignInState extends State<PasswordReset> {
                         Container(
                           decoration: BoxDecoration(
                             color: email.contains('@')
-                                ? Colors.blue
-                                : Colors.blue.withOpacity(0.3),
+                                ? const Color(0XFF37EBFA)
+                                : const Color(0XFF37EBFA).withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,

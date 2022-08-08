@@ -54,8 +54,10 @@ class _ProfilePageState extends State<ProfilePage> {
           }
           return snapshot.hasData
               ? Scaffold(
+                backgroundColor: const Color(0xff131313),
                   key: _scaffoldKey,
                   endDrawer: Drawer(
+                    backgroundColor: const Color(0xff131313),
                       child: ListView(
                     children: [
                       InkWell(
@@ -63,6 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           AuthMethods().signOut(context);
                         },
                         child: Container(
+                          
                           decoration: const BoxDecoration(
                             border: Border(
                               bottom: BorderSide(
@@ -74,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: const ListTile(
                             leading: Icon(
                               Icons.logout,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             title: Text('ログアウト',
                                 style: TextStyle(
@@ -105,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: const ListTile(
                             leading: Icon(
                               Icons.lock_outline_rounded,
-                              color: Colors.black,
+                              color: Colors.white,
                             ),
                             title: Text('パスワード',
                                 style: TextStyle(
@@ -119,7 +122,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   )),
                   appBar: AppBar(
                     iconTheme: const IconThemeData(
-                      color: Colors.black,
+                      color: Colors.white,
                       size: 40,
                     ),
                     automaticallyImplyLeading: false,
@@ -127,16 +130,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     elevation: 0,
                   ),
                   resizeToAvoidBottomInset: false,
-                  body: Column(children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: Row(
-                        children: [
-                          ClipRRect(
+                  body: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    ClipRRect(
                             borderRadius: BorderRadius.circular(150.0),
                             child: SizedBox(
-                              width: 110,
-                              height: 110,
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              height: MediaQuery.of(context).size.width * 0.5,
                               child: Image.network(
                                 snapshot.data!.docs[0]['ProfilePicture'] == ''
                                     ? 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b'
@@ -145,20 +146,19 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.05),
-                          Expanded(
-                            child: Text(
-                              snapshot.data!.docs[0]['name'],
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                         const  SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          snapshot.data!.docs[0]['name'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 25,
                           ),
-                        ],
-                      ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -210,7 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
-                                        color: Colors.black),
+                                        color: Colors.white),
                                   ),
                                 ],
                               )),

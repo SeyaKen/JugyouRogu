@@ -42,8 +42,8 @@ class _MainPageState extends State<MainPage> {
           },
           currentIndex: currenttab,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
-          backgroundColor: Colors.white,
+          selectedItemColor: Colors.white,
+          backgroundColor: const Color(0xff131313),
           unselectedItemColor: Colors.grey,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

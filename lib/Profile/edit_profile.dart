@@ -44,9 +44,10 @@ class _EditProfileState extends State<EditProfile> {
         builder: (context, snapshot) {
           return snapshot.hasData
               ? Scaffold(
+                  backgroundColor: const Color(0xff131313),
                   appBar: AppBar(
                       iconTheme: const IconThemeData(
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
@@ -132,6 +133,21 @@ class _EditProfileState extends State<EditProfile> {
                                     child: Form(
                                       key: _formKey,
                                       child: TextFormField(
+                                        decoration: const InputDecoration(
+                                          fillColor: Colors.grey,
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.grey,
+                                              width: 2,
+                                            ),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.white, width: 2)
+                                          ),
+                                        ),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                         initialValue: name,
                                         onChanged: (val) {
                                           setState(() => name = val);
@@ -156,6 +172,21 @@ class _EditProfileState extends State<EditProfile> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.6,
                                     child: TextFormField(
+                                      decoration: const InputDecoration(
+                                        fillColor: Colors.grey,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey,
+                                            width: 2,
+                                          ),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white, width: 2),
+                                        ),
+                                      ),
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                       initialValue: ex,
                                       onChanged: (val) {
                                         setState(() => ex = val);

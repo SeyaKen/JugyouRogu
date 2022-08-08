@@ -115,6 +115,7 @@ class _SignInState extends State<mailSignIn> {
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
                                 ),
+                                
                               ),
                             ),
                           ),
@@ -223,7 +224,7 @@ class _SignInState extends State<mailSignIn> {
                           child: const Text(
                             'パスワードを忘れた場合',
                             style: TextStyle(
-                              color: Color(0xff0283ff),
+                              color: Colors.blue,
                             ),
                           ),
                         ),
