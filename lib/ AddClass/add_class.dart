@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class AddClass extends StatefulWidget {
@@ -9,6 +10,8 @@ class AddClass extends StatefulWidget {
 }
 
 class _AddClassState extends State<AddClass> {
+  double? _ratingValue;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +23,48 @@ class _AddClassState extends State<AddClass> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: Container(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 200,
+              child: RatingBar(
+                  initialRating: 0,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  ratingWidget: RatingWidget(
+                      full: const Icon(Icons.star, color: Colors.orange),
+                      half: const Icon(
+                        Icons.star_half,
+                        color: Colors.orange,
+                      ),
+                      empty: const Icon(
+                        Icons.star_outline,
+                        color: Colors.orange,
+                      )),
+                  onRatingUpdate: (value) {
+                    setState(() {
+                      _ratingValue = value;
+                    });
+                  }),
+            ),
+                Container(
+                    width: 200,
+                    height: 200,
+                    decoration: const BoxDecoration(
+                        color: Colors.red, shape: BoxShape.circle),
+                    alignment: Alignment.center,
+                    child: Text(
+                      _ratingValue != null ? _ratingValue.toString() : 'Rate it!',
+                      style: const TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                  )
+          ],
+        ),
+      ),
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Container(
