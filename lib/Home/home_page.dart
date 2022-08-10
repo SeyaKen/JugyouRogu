@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
           toolbarHeight: 80,
           elevation: 0,
           title: Container(
-            margin: const EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 15),
             height: MediaQuery.of(context).size.width * 0.1,
             width: MediaQuery.of(context).size.width * 0.95,
             alignment: Alignment.bottomCenter,
@@ -128,22 +128,33 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.grey,
                     ))),
           )),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: banner != null
-                  ? AdWidget(
-                      ad: banner!,
-                    )
-                  : const SizedBox()),
-            Text(
-              'You have pushed the button this many times:',
+      body: Column(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            child: banner != null
+                ? AdWidget(
+                    ad: banner!,
+                  )
+                : const SizedBox()),
+        ],
+      ),
+      floatingActionButton: ClipRRect(
+        borderRadius: BorderRadius.circular(1000),
+        child: Container(
+          color: Colors.grey.withOpacity(0.35),
+          width: 65,
+          height: 65,
+          child: InkWell(
+            onTap: () {
+            },
+            child: const Icon(
+              Icons.add,
+              size: 40,
+              color: Colors.white,
             ),
-          ],
+          ),
         ),
       ),
     );
