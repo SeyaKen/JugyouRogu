@@ -26,24 +26,30 @@ class _AddClassState extends State<AddClass> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Text(
+              '内容充実度',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              )
+            ),
             SizedBox(
               width: 200,
               child: RatingBar(
                   initialRating: 0,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
+                  allowHalfRating: false,
                   itemCount: 5,
                   ratingWidget: RatingWidget(
-                      full: const Icon(Icons.star, color: Colors.orange),
+                      full: const Icon(Icons.star, color: Color(0XFF37EBFA)),
                       half: const Icon(
                         Icons.star_half,
-                        color: Colors.orange,
+                        color: Color(0XFF37EBFA),
                       ),
                       empty: const Icon(
                         Icons.star_outline,
-                        color: Colors.orange,
+                        color: Color(0XFF37EBFA),
                       )),
                   onRatingUpdate: (value) {
                     setState(() {
@@ -51,24 +57,17 @@ class _AddClassState extends State<AddClass> {
                     });
                   }),
             ),
-                Container(
-                    width: 200,
-                    height: 200,
-                    decoration: const BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
-                    alignment: Alignment.center,
-                    child: Text(
-                      _ratingValue != null ? _ratingValue.toString() : 'Rate it!',
-                      style: const TextStyle(color: Colors.white, fontSize: 30),
-                    ),
-                  )
+            Text(
+              _ratingValue != 0 ? _ratingValue.toString() : 'Rate it!',
+              style: const TextStyle(fontSize: 30),
+            ),
           ],
         ),
       ),
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Container(
-          color: const Color(0XFF37EBFA),
+          color: const Color(0XFF37EBFA).withOpacity(0.5),
           width: MediaQuery.of(context).size.width,
           height: 50,
           child: InkWell(
