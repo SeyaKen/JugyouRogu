@@ -181,8 +181,10 @@ class _EditProfileState extends State<EditProfile> {
                                           ),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.white, width: 2),
+                                          borderSide: BorderSide(
+                                            color: Colors.white,
+                                            width: 2
+                                          ),
                                         ),
                                       ),
                                       style:

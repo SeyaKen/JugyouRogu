@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:jugyourogu/%20AddClass/add_class.dart';
 import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/ad_state.dart';
 import 'package:provider/provider.dart';
@@ -72,7 +73,7 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,28 +132,34 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: 50,
-            child: banner != null
-                ? AdWidget(
-                    ad: banner!,
-                  )
-                : const SizedBox()),
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: banner != null
+                  ? AdWidget(
+                      ad: banner!,
+                    )
+                  : const SizedBox()),
         ],
       ),
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(1000),
         child: Container(
-          color: Colors.grey.withOpacity(0.35),
+          color: Colors.white,
           width: 65,
           height: 65,
           child: InkWell(
             onTap: () {
+              Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => const AddClass(),
+                    transitionDuration: const Duration(seconds: 0),
+                  ));
             },
             child: const Icon(
-              Icons.add,
-              size: 40,
-              color: Colors.white,
+              Icons.add_rounded,
+              size: 45,
+              color: Colors.black,
             ),
           ),
         ),

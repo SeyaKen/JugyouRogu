@@ -48,10 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return StreamBuilder<QuerySnapshot>(
         stream: profileListsStream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            print(uid);
-            print(snapshot.data!.docs);
-          }
           return snapshot.hasData
               ? Scaffold(
                 backgroundColor: const Color(0xff131313),
