@@ -131,7 +131,15 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: banner != null
+                  ? AdWidget(
+                      ad: banner!,
+                    )
+                  : const SizedBox()),
             Text(
               'You have pushed the button this many times:',
             ),

@@ -79,56 +79,39 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                             listen: false);
                                     try {
                                       provider.googleLogin().then((user) => {
-                                            if (FirebaseAuth.instance
-                                                .currentUser!.emailVerified)
-                                              {
+                                            FirebaseFirestore.instance
+                                                .collection('users')
+                                                .doc(FirebaseAuth
+                                                    .instance.currentUser!.uid)
+                                                .get()
+                                                .then((value) {
+                                              if (value.data() == null) {
                                                 FirebaseFirestore.instance
                                                     .collection('users')
                                                     .doc(FirebaseAuth.instance
                                                         .currentUser!.uid)
-                                                    .get()
-                                                    .then((value) {
-                                                  if (value.data() == null) {
-                                                    FirebaseFirestore.instance
-                                                        .collection('users')
-                                                        .doc(FirebaseAuth
-                                                            .instance
-                                                            .currentUser!
-                                                            .uid)
-                                                        .set({
-                                                      'ProfilePicture': '',
-                                                      'email': FirebaseAuth
-                                                          .instance
-                                                          .currentUser!
-                                                          .email,
-                                                      'name': '',
-                                                      'selfIntroduction': '',
-                                                      'uid': FirebaseAuth
-                                                          .instance
-                                                          .currentUser!
-                                                          .uid,
-                                                    });
-                                                  }
-                                                  SharedPreferenceHelper()
-                                                      .saveUserName('LogIned');
-                                                  Navigator.push(
-                                                      context,
-                                                      PageRouteBuilder(
-                                                        pageBuilder: (_, __,
-                                                                ___) =>
-                                                            MainPage(
-                                                                currenttab: 0),
-                                                        transitionDuration:
-                                                            const Duration(
-                                                                seconds: 0),
-                                                      ));
-                                                }),
+                                                    .set({
+                                                  'ProfilePicture': '',
+                                                  'email': FirebaseAuth.instance
+                                                      .currentUser!.email,
+                                                  'name': '',
+                                                  'selfIntroduction': '',
+                                                  'uid': FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                });
                                               }
-                                            else
-                                              {
-                                                AuthService().errorBox(
-                                                    context, 'メール認証が終わっていません。')
-                                              }
+                                              SharedPreferenceHelper()
+                                                  .saveUserName('LogIned');
+                                              Navigator.push(
+                                                  context,
+                                                  PageRouteBuilder(
+                                                    pageBuilder: (_, __, ___) =>
+                                                        MainPage(currenttab: 0),
+                                                    transitionDuration:
+                                                        const Duration(
+                                                            seconds: 0),
+                                                  ));
+                                            }),
                                           });
                                     } catch (e) {
                                       print(e.toString());
