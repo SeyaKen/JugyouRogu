@@ -18,6 +18,17 @@ class _AddClassState extends State<AddClass> {
   double _ratingValue5 = 1;
   double _ratingValue6 = 1;
 
+  List<int> stars_list = [5, 5, 3, 3, 3, 3, 2];
+
+  List<String> title_list = [
+    '内容充実度',
+    '楽単度',
+    'テスト形式(中間)',
+    'テスト形式(期末)',
+    'テスト時の持込',
+    '教科書',
+    '出席',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,316 +44,76 @@ class _AddClassState extends State<AddClass> {
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                '内容充実度',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(
-                          Icons.star,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Color(0XFF37EBFA),
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: title_list.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(title_list[index],
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue0 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue0 == 5
-                ? 'かなり充実'
-                : _ratingValue0 == 4
-                ? 'まぁ充実'
-                : _ratingValue0 == 3
-                ? '普通'
-                : _ratingValue0 == 2
-                ? 'やや物足りない'
-                : _ratingValue0 == 1
-                ? 'かなり物足りない'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                '楽単度',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Color(0XFF37EBFA),
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue1 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue1 == 5
-                ? 'かなり楽勝'
-                : _ratingValue1 == 4
-                ? 'まぁ楽勝'
-                : _ratingValue1 == 3
-                ? '普通'
-                : _ratingValue1 == 2
-                ? 'やや厳しい'
-                : _ratingValue1 == 1
-                ? 'かなり厳しい'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'テスト形式(中間)',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 3,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Color(0XFF37EBFA),
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue1 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue1 == 3
-                ? '普通'
-                : _ratingValue1 == 2
-                ? 'やや厳しい'
-                : _ratingValue1 == 1
-                ? 'かなり厳しい'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'テスト形式(期末)',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 3,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Color(0XFF37EBFA),
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue1 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue1 == 3
-                ? 'テスト・レポートなし'
-                : _ratingValue1 == 2
-                ? 'レポートのみ'
-                : _ratingValue1 == 1
-                ? 'テスト有り'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'テスト時の持込',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 3,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Color(0XFF37EBFA),
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue1 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue1 == 3
-                ? 'テスト・レポートなし'
-                : _ratingValue1 == 2
-                ? 'レポートのみ'
-                : _ratingValue1 == 1
-                ? 'テスト有り'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                '教科書',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 3,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.circle, color: Color(0XFF37EBFA)),
-                        half: const Icon(
-                          Icons.circle,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.circle_outlined,
-                          color: Color(0XFF37EBFA),
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue1 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue1 == 3
-                ? 'テスト・レポートなし'
-                : _ratingValue1 == 2
-                ? 'レポートのみ'
-                : _ratingValue1 == 1
-                ? 'テスト有り'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                '出席',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )
-              ),
-              SizedBox(
-                width: 200,
-                child: RatingBar(
-                    initialRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 3,
-                    itemSize: 30,
-                    ratingWidget: RatingWidget(
-                        full: const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                        half: const Icon(
-                          Icons.star_half,
-                          color: Color(0XFF37EBFA),
-                        ),
-                        empty: const Icon(
-                          Icons.star_outline,
-                          color: Color(0XFF37EBFA),
-                        )),
-                    onRatingUpdate: (value) {
-                      setState(() {
-                        _ratingValue1 = value;
-                      });
-                    }),
-              ),
-              Text(
-                _ratingValue1 == 3
-                ? 'テスト・レポートなし'
-                : _ratingValue1 == 2
-                ? 'レポートのみ'
-                : _ratingValue1 == 1
-                ? 'テスト有り'
-                : '',
-                style: const TextStyle(fontSize: 20),
-              ),
-            ],
-          ),
+                    SizedBox(
+                      width: 200,
+                      child: RatingBar(
+                          initialRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: stars_list[index],
+                          itemSize: 30,
+                          ratingWidget: RatingWidget(
+                              full: const Icon(
+                                Icons.star,
+                                color: Color(0XFF37EBFA),
+                              ),
+                              half: const Icon(
+                                Icons.star_half,
+                                color: Color(0XFF37EBFA),
+                              ),
+                              empty: const Icon(
+                                Icons.star_outline,
+                                color: Color(0XFF37EBFA),
+                              )),
+                          onRatingUpdate: (value) {
+                            setState(() {
+                              index == 0
+                                  ? _ratingValue0 = value
+                                  : index == 1
+                                      ? _ratingValue1 = value
+                                      : index == 2
+                                          ? _ratingValue2 = value
+                                          : index == 3
+                                              ? _ratingValue3 = value
+                                              : index == 4
+                                                  ? _ratingValue4 = value
+                                                  : index == 5
+                                                      ? _ratingValue5 = value
+                                                      : _ratingValue6 = value;
+                            });
+                          }),
+                    ),
+                    Text(
+                      _ratingValue0 == 5
+                          ? 'かなり充実'
+                          : _ratingValue0 == 4
+                              ? 'まぁ充実'
+                              : _ratingValue0 == 3
+                                  ? '普通'
+                                  : _ratingValue0 == 2
+                                      ? 'やや物足りない'
+                                      : 'かなり物足りない',
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ],
+                );
+              }),
         ),
       ),
       floatingActionButton: ClipRRect(
