@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jugyourogu/%20AddClass/add_class.dart';
+import 'package:jugyourogu/%20Reviews/add_reviews.dart';
 import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/ad_state.dart';
 import 'package:provider/provider.dart';
@@ -152,7 +153,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => const AddClass(),
+                    pageBuilder: (_, __, ___) => const AddReviews(),
                     transitionDuration: const Duration(seconds: 0),
                   ));
             },
