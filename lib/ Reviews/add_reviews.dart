@@ -11,16 +11,11 @@ class AddReviews extends StatefulWidget {
 }
 
 class _AddReviewsState extends State<AddReviews> {
-  double _ratingValue0 = 1;
-  double _ratingValue1 = 1;
-  double _ratingValue2 = 1;
-  double _ratingValue3 = 1;
-  double _ratingValue4 = 1;
-  double _ratingValue5 = 1;
-  double _ratingValue6 = 1;
-  int _selectedFruit = 0;
-
   double _kItemExtent = 32.0;
+
+  bool isBelowThreshold(currentValue) {
+    return currentValue == null;
+  }
 
   List<String> title_list = [
     '内容充実度',
@@ -32,12 +27,37 @@ class _AddReviewsState extends State<AddReviews> {
     '出席',
   ];
 
+  List Select_list = [
+    Juujitu_list,
+    Rakutan_list,
+    Shusseki_list,
+    Chukan_list,
+    Kimatu_list,
+    Motikomi_list,
+    Kyoukasho_list,
+  ];
+
+  List Rating = [
+    _ratingValue0,
+    _ratingValue1,
+    _ratingValue2,
+    _ratingValue3,
+    _ratingValue4,
+    _ratingValue5,
+    _ratingValue6,
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
         context: context,
         builder: (BuildContext context) => Container(
-              height: 216,
-              padding: const EdgeInsets.only(top: 6.0),
+              height: 250,
+              padding: const EdgeInsets.only(top: 0),
               margin: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
@@ -72,7 +92,7 @@ class _AddReviewsState extends State<AddReviews> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Text(title_list[index],
                         style: const TextStyle(
@@ -82,34 +102,44 @@ class _AddReviewsState extends State<AddReviews> {
                     SizedBox(
                       width: 200,
                       child: InkWell(
-                        child: const Text(
-                          '選択してください',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        onTap: () {
-                        _showDialog(
-                          CupertinoPicker(
-                            magnification: 1.22,
-                            squeeze: 1.2,
-                            useMagnifier: true,
-                            itemExtent: _kItemExtent,
-                            // This is called when selected item is changed.
-                            onSelectedItemChanged: (int selectedItem) {
-                              setState(() {
-                                _selectedFruit = selectedItem;
-                              });
-                            },
-                            children: List<Widget>.generate(title_list.length,
-                                (int index) {
-                              return Center(
-                                child: Text(
-                                  title_list[index],
-                                ),
-                              );
-                            }),
+                          child: Text(
+                            Rating[index] == null
+                                ? '選択してください'
+                                : Select_list[index][Rating[index]],
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Rating[index] == null
+                                  ? Colors.grey
+                                  : Colors.white,
+                            ),
                           ),
-                        );
-                      }),
+                          onTap: () {
+                            setState(() {
+                              Rating[index] = 0;
+                            });
+                            _showDialog(
+                              CupertinoPicker(
+                                magnification: 1.22,
+                                squeeze: 1.2,
+                                useMagnifier: true,
+                                itemExtent: _kItemExtent,
+                                // This is called when selected item is changed.
+                                onSelectedItemChanged: (int selectedItem) {
+                                  setState(() {
+                                    Rating[index] = selectedItem;
+                                  });
+                                },
+                                children: List<Widget>.generate(
+                                    Select_list[index].length, (int indexx) {
+                                  return Center(
+                                    child: Text(
+                                      Select_list[index][indexx],
+                                    ),
+                                  );
+                                }),
+                              ),
+                            );
+                          }),
                     ),
                   ],
                 );
@@ -119,7 +149,9 @@ class _AddReviewsState extends State<AddReviews> {
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Container(
-          color: const Color(0XFF37EBFA).withOpacity(0.5),
+          color: Rating.every(isBelowThreshold)
+              ? const Color(0XFF37EBFA).withOpacity(0.5)
+              : const Color(0XFF37EBFA),
           width: MediaQuery.of(context).size.width,
           height: 50,
           child: InkWell(
@@ -143,3 +175,58 @@ class _AddReviewsState extends State<AddReviews> {
     );
   }
 }
+
+List<String> Juujitu_list = [
+  'かなり充実',
+  'まぁ充実',
+  '普通',
+  'やや物足りない',
+  'かなり物足りない',
+];
+
+List<String> Rakutan_list = [
+  'かなり楽勝',
+  'まぁ楽勝',
+  '普通',
+  'やや厳しい',
+  'かなり厳しい',
+];
+
+List<String> Shusseki_list = [
+  'ほぼ毎回とる',
+  'たまにとる',
+  'とらない',
+];
+
+List<String> Chukan_list = [
+  'テストあり',
+  'レポートのみ',
+  'テスト・レポートなし',
+  '授業なし',
+];
+
+List<String> Kimatu_list = [
+  'テストあり',
+  'レポートのみ',
+  'テスト・レポートなし',
+  '授業なし',
+];
+
+List<String> Motikomi_list = [
+  'テストなし',
+  '教科書・ノート等持込 ○',
+  '教科書・ノート等持込 × ',
+];
+
+List<String> Kyoukasho_list = [
+  '教科書必要',
+  '教科書なし、または不要',
+];
+
+int? _ratingValue0;
+int? _ratingValue1;
+int? _ratingValue2;
+int? _ratingValue3;
+int? _ratingValue4;
+int? _ratingValue5;
+int? _ratingValue6;
