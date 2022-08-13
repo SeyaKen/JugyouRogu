@@ -124,7 +124,7 @@ class _HomeDetailState extends State<HomeDetail> {
                         ],
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 5,
                       ),
                       Row(
                         children: [
@@ -164,6 +164,27 @@ class _HomeDetailState extends State<HomeDetail> {
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Row(children: [
+                    const Text(
+                      '曜日・時限',
+                    ),
+                    Text(
+                      firebasesnapshot!.get('曜日・時限1'),
+                    ),
+                    firebasesnapshot!.get('曜日・時限1') != ''
+                        ? const Text(
+                            '-',
+                          )
+                        : const Text(''),
+                    firebasesnapshot!.get('曜日・時限2') == ''
+                        ? const Text('')
+                        : Text(
+                            firebasesnapshot!.get('曜日・時限2'),
+                          ),
+                  ]),
                 ]),
               )
             : const Center(child: CircularProgressIndicator()));
