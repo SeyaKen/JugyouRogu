@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jugyourogu/%20AddClass/add_class.dart';
 import 'package:jugyourogu/Service/database.dart';
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   int _currentMax = 20;
   BannerAd? banner;
+  double? _ratingValue;
 
   getHomeLists() async {
     jugyouListsStream = DatabaseService(uid).dataCollect();
@@ -139,6 +141,89 @@ class _HomePageState extends State<HomePage> {
                       ad: banner!,
                     )
                   : const SizedBox()),
+          Container(
+            child: Column(children: [
+              Row(
+                children: const [
+                  Text(
+                    'ビジネス英語I',
+                  ),
+                ],
+              ),
+              Row(
+                children: const [
+                  Text(
+                    'ビジネス英語I',
+                  ),
+                  Text(
+                    '山本慎吾' + '教授',
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '内容充実度:',
+                      ),
+                      RatingBar(
+                          initialRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 20,
+                          ratingWidget: RatingWidget(
+                              full:
+                                  const Icon(Icons.star, color: Color(0XFF37EBFA)),
+                              half: const Icon(
+                                Icons.star_half,
+                                color: Color(0XFF37EBFA),
+                              ),
+                              empty: const Icon(
+                                Icons.star_outline,
+                                color: Color(0XFF37EBFA),
+                              )),
+                          onRatingUpdate: (value) {
+                            setState(() {
+                              _ratingValue = value;
+                            });
+                          }),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        '楽単度:',
+                      ),
+                      RatingBar(
+                          initialRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 20,
+                          ratingWidget: RatingWidget(
+                              full:
+                                  const Icon(Icons.star, color: Color(0XFF37EBFA)),
+                              half: const Icon(
+                                Icons.star_half,
+                                color: Color(0XFF37EBFA),
+                              ),
+                              empty: const Icon(
+                                Icons.star_outline,
+                                color: Color(0XFF37EBFA),
+                              )),
+                          onRatingUpdate: (value) {
+                            setState(() {
+                              _ratingValue = value;
+                            });
+                          }),
+                    ],
+                  ),
+                ],
+              ),
+            ]),
+          ),
         ],
       ),
       floatingActionButton: ClipRRect(

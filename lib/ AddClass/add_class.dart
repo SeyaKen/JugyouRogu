@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/main_page.dart';
@@ -95,7 +96,11 @@ class _AddClassState extends State<AddClass> {
                                           : null,
                                       onChanged: (val) {
                                         setState(
-                                            () => title_value[index] = val);
+                                            () => index == 0 
+                                            ? ClassName0 = val
+                                            : index == 1
+                                            ? ClassName1 = val
+                                            : ClassName2 = val);
                                       },
                                       decoration: InputDecoration(
                                         fillColor: const Color(0xff333333),
@@ -130,7 +135,13 @@ class _AddClassState extends State<AddClass> {
                                                 (int selectedItem) {
                                               setState(() {
                                                 index == 3
-                                                    ? txt0.text = youbi[selectedItem]
+                                                    ? ClassName3 =
+                                                        youbi[selectedItem]
+                                                    : ClassName4 =
+                                                        youbi[selectedItem];
+                                                index == 3
+                                                    ? txt0.text =
+                                                        youbi[selectedItem]
                                                     : txt1.text =
                                                         youbi[selectedItem];
                                               });
@@ -177,11 +188,24 @@ class _AddClassState extends State<AddClass> {
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Container(
-          color: const Color(0XFF37EBFA).withOpacity(0.5),
+          color: ClassName0 != null ||
+                  ClassName1 != null ||
+                  ClassName2 != null ||
+                  ClassName3 != null ||
+                  ClassName4 != null
+              ? const Color(0XFF37EBFA)
+              : const Color(0XFF37EBFA).withOpacity(0.5),
           width: MediaQuery.of(context).size.width,
           height: 50,
           child: InkWell(
               onTap: () {
+                FirebaseFirestore.instance.collection('classes').doc().set({
+                  '授業名': ClassName0 ?? '',
+                  '学部': ClassName1 ?? '',
+                  '教授/講師名': ClassName2 ?? '',
+                  '曜日・時限1': ClassName3 ?? '',
+                  '曜日・時限2': ClassName4 ?? '',
+                });
                 Navigator.push(
                     context,
                     PageRouteBuilder(
