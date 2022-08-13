@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jugyourogu/%20AddClass/add_class.dart';
+import 'package:jugyourogu/Home/home_detail.dart';
 import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/ad_state.dart';
 import 'package:provider/provider.dart';
@@ -141,89 +141,155 @@ class _HomePageState extends State<HomePage> {
                       ad: banner!,
                     )
                   : const SizedBox()),
-          Container(
-            child: Column(children: [
-              Row(
-                children: const [
-                  Text(
-                    'ビジネス英語I',
-                  ),
-                ],
-              ),
-              Row(
-                children: const [
-                  Text(
-                    'ビジネス英語I',
-                  ),
-                  Text(
-                    '山本慎吾' + '教授',
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        '内容充実度:',
-                      ),
-                      RatingBar(
-                          initialRating: 0,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 20,
-                          ratingWidget: RatingWidget(
-                              full:
-                                  const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                              half: const Icon(
-                                Icons.star_half,
-                                color: Color(0XFF37EBFA),
-                              ),
-                              empty: const Icon(
-                                Icons.star_outline,
-                                color: Color(0XFF37EBFA),
+          StreamBuilder<QuerySnapshot>(
+              stream: jugyouListsStream,
+              builder: (context, snapshot) {
+                return snapshot.hasData
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (_, __, ___) => HomeDetail(
+                                          articleId:
+                                              snapshot.data!.docs[index].id,
+                                        ),
+                                        transitionDuration:
+                                            const Duration(seconds: 0),
+                                      ),
+                                    );
+                                  },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 15),
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                top: BorderSide(width: 0.5, color: Colors.white),
                               )),
-                          onRatingUpdate: (value) {
-                            setState(() {
-                              _ratingValue = value;
-                            });
-                          }),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Text(
-                        '楽単度:',
-                      ),
-                      RatingBar(
-                          initialRating: 0,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemSize: 20,
-                          ratingWidget: RatingWidget(
-                              full:
-                                  const Icon(Icons.star, color: Color(0XFF37EBFA)),
-                              half: const Icon(
-                                Icons.star_half,
-                                color: Color(0XFF37EBFA),
-                              ),
-                              empty: const Icon(
-                                Icons.star_outline,
-                                color: Color(0XFF37EBFA),
-                              )),
-                          onRatingUpdate: (value) {
-                            setState(() {
-                              _ratingValue = value;
-                            });
-                          }),
-                    ],
-                  ),
-                ],
-              ),
-            ]),
-          ),
+                              child: Column(children: [
+                                Row(
+                                  children: [
+                                    Text(snapshot.data!.docs[index]['授業名'],
+                                        style: const TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    snapshot.data!.docs[index]['学部'] != '' 
+                                    ?
+                                    Text(snapshot.data!.docs[index]['学部'],
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ))
+                                    : Container(),
+                                    snapshot.data!.docs[index]['学部'] != '' 
+                                    ? const SizedBox(
+                                      width: 10,
+                                    )
+                                    : Container(),
+                                    Text(snapshot.data!.docs[index]['教授・講師名'],
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          '内容充実度:',
+                                        ),
+                                        Row(
+                                          children: const [
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          '楽単度:',
+                                        ),
+                                        Row(
+                                          children: const [
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                            Icon(
+                                              Icons.star_outline,
+                                              color: Color(0XFF37EBFA),
+                                              size: 20,
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ]),
+                            ),
+                          );
+                        })
+                    : const Center(child: CircularProgressIndicator());
+              }),
         ],
       ),
       floatingActionButton: ClipRRect(

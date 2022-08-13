@@ -12,7 +12,6 @@ class AddClass extends StatefulWidget {
 
 class _AddClassState extends State<AddClass> {
   final _formKey = GlobalKey<FormState>();
-  String? ClassName0;
   double _kItemExtent = 32.0;
 
   void _showDialog(Widget child) {
@@ -202,7 +201,7 @@ class _AddClassState extends State<AddClass> {
                 FirebaseFirestore.instance.collection('classes').doc().set({
                   '授業名': ClassName0 ?? '',
                   '学部': ClassName1 ?? '',
-                  '教授/講師名': ClassName2 ?? '',
+                  '教授・講師名': ClassName2 ?? '',
                   '曜日・時限1': ClassName3 ?? '',
                   '曜日・時限2': ClassName4 ?? '',
                 });
@@ -231,7 +230,7 @@ var txt1 = TextEditingController();
 
 List title_list = [
   '授業名',
-  '教授/講師名',
+  '教授・講師名',
   '学部',
   '曜日・時限1',
   '曜日・時限2',

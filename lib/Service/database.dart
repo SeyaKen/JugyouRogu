@@ -18,9 +18,8 @@ class DatabaseService extends ChangeNotifier {
   // 質問一覧をうつす関数
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect() {
     return FirebaseFirestore.instance
-        .collection('jugyou')
-        .orderBy('date', descending: true)
-        .limit(10)
+        .collection('classes')
+        .limit(50)
         .snapshots();
   }
 
