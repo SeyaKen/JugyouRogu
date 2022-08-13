@@ -9,6 +9,8 @@ class AddClass extends StatefulWidget {
 }
 
 class _AddClassState extends State<AddClass> {
+  final _formKey = GlobalKey<FormState>();
+  String? ClassName;
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +21,73 @@ class _AddClassState extends State<AddClass> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        title: const Text(
-          '授業を作成',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          )
-        ),
+        title: const Text('授業を作成',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            )),
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(),
-        ),
+        child: GestureDetector(
+            onTap: () {
+              final FocusScopeNode currentScope = FocusScope.of(context);
+              if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                FocusManager.instance.primaryFocus!.unfocus();
+              }
+            },
+            child: Form(
+              key: _formKey,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                  Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [
+                      Row(
+                        children: const [
+                          Text(
+                            '授業名',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: TextFormField(
+                          style: const TextStyle(color: Colors.white),
+                          validator: (val) => val!.isEmpty ? '' : null,
+                          onChanged: (val) {
+                            setState(() => ClassName = val);
+                          },
+                          decoration: const InputDecoration(
+                            fillColor: Color(0xff333333),
+                            filled: true,
+                            hintText: '授業名',
+                            hintStyle: TextStyle(color: Colors.grey),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 13),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
+            )),
       ),
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
