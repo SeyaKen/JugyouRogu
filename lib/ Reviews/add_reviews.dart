@@ -56,7 +56,7 @@ class _AddReviewsState extends State<AddReviews> {
     showCupertinoModalPopup<void>(
         context: context,
         builder: (BuildContext context) => Container(
-              height: 250,
+              height: 200,
               padding: const EdgeInsets.only(top: 0),
               margin: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
