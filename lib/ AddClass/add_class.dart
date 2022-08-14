@@ -94,12 +94,11 @@ class _AddClassState extends State<AddClass> {
                                           ? '正確に${title_value[index]}を入力してください。'
                                           : null,
                                       onChanged: (val) {
-                                        setState(
-                                            () => index == 0 
+                                        setState(() => index == 0
                                             ? ClassName0 = val
                                             : index == 1
-                                            ? ClassName1 = val
-                                            : ClassName2 = val);
+                                                ? ClassName1 = val
+                                                : ClassName2 = val);
                                       },
                                       decoration: InputDecoration(
                                         fillColor: const Color(0xff333333),
@@ -187,30 +186,33 @@ class _AddClassState extends State<AddClass> {
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Container(
-          color: ClassName0 != null ||
-                  ClassName1 != null ||
-                  ClassName2 != null ||
-                  ClassName3 != null ||
-                  ClassName4 != null
+          color: ClassName0 != null
               ? const Color(0XFF37EBFA)
               : const Color(0XFF37EBFA).withOpacity(0.5),
           width: MediaQuery.of(context).size.width,
           height: 50,
           child: InkWell(
               onTap: () {
-                FirebaseFirestore.instance.collection('classes').doc().set({
+                if(ClassName0 != null) {
+                  FirebaseFirestore.instance.collection('classes').doc().set({
                   '授業名': ClassName0 ?? '',
                   '学部': ClassName1 ?? '',
                   '教授・講師名': ClassName2 ?? '',
                   '曜日・時限1': ClassName3 ?? '',
                   '曜日・時限2': ClassName4 ?? '',
+                  'Daytime': DateTime.now(),
                 });
+                ClassName3 = null;
+                ClassName4 = null;
                 Navigator.push(
                     context,
                     PageRouteBuilder(
                       pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
                       transitionDuration: const Duration(seconds: 0),
                     ));
+                } else {
+                  // ここで授業名を追加してくださいの警告？を出す
+                }
               },
               child: const Center(
                   child: Text('授業を作成する',

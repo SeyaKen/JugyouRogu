@@ -12,10 +12,6 @@ class AddReviews extends StatefulWidget {
 class _AddReviewsState extends State<AddReviews> {
   double _kItemExtent = 32.0;
 
-  bool isBelowThreshold(currentValue) {
-    return currentValue == null;
-  }
-
   List<String> title_list = [
     '内容充実度',
     '楽単度',
@@ -125,7 +121,29 @@ class _AddReviewsState extends State<AddReviews> {
                                 // This is called when selected item is changed.
                                 onSelectedItemChanged: (int selectedItem) {
                                   setState(() {
-                                    Rating[index] = selectedItem;
+                                    index == 0
+                                        ? _ratingValue0 = Juujitu_list[0]
+                                        : index == 1
+                                            ? _ratingValue1 =
+                                                _ratingValue1[selectedItem]
+                                            : index == 2
+                                                ? _ratingValue2 =
+                                                    Rating[index][selectedItem]
+                                                : index == 3
+                                                    ? _ratingValue3 =
+                                                        Rating[index]
+                                                            [selectedItem]
+                                                    : index == 4
+                                                        ? _ratingValue4 =
+                                                            Rating[index]
+                                                                [selectedItem]
+                                                        : index == 5
+                                                            ? _ratingValue5 =
+                                                                Rating[index][
+                                                                    selectedItem]
+                                                            : _ratingValue6 =
+                                                                Rating[index][
+                                                                    selectedItem];
                                   });
                                 },
                                 children: List<Widget>.generate(
@@ -148,19 +166,27 @@ class _AddReviewsState extends State<AddReviews> {
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(5),
         child: Container(
-          color: Rating.every(isBelowThreshold)
-              ? const Color(0XFF37EBFA).withOpacity(0.5)
-              : const Color(0XFF37EBFA),
+          color: _ratingValue0 != null &&
+                  _ratingValue1 != null &&
+                  _ratingValue2 != null &&
+                  _ratingValue3 != null &&
+                  _ratingValue4 != null &&
+                  _ratingValue5 != null &&
+                  _ratingValue6 != null
+              ? const Color(0XFF37EBFA)
+              : const Color(0XFF37EBFA).withOpacity(0.5),
           width: MediaQuery.of(context).size.width,
           height: 50,
           child: InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
-                      transitionDuration: const Duration(seconds: 0),
-                    ));
+                print(Rating);
+                print(_ratingValue0);
+                // Navigator.push(
+                //     context,
+                //     PageRouteBuilder(
+                //       pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
+                //       transitionDuration: const Duration(seconds: 0),
+                //     ));
               },
               child: const Center(
                   child: Text('投稿',
@@ -175,51 +201,51 @@ class _AddReviewsState extends State<AddReviews> {
   }
 }
 
-List<String> Juujitu_list = [
-  'かなり充実',
-  'まぁ充実',
-  '普通',
-  'やや物足りない',
-  'かなり物足りない',
+List<Map<int, String>> Juujitu_list = [
+  {0: 'かなり充実'},
+  {1: 'まぁ充実'},
+  {2: '普通'},
+  {3: 'やや物足りない'},
+  {4: 'かなり物足りない'},
 ];
 
-List<String> Rakutan_list = [
-  'かなり楽勝',
-  'まぁ楽勝',
-  '普通',
-  'やや厳しい',
-  'かなり厳しい',
+List<Map<int, String>> Rakutan_list = [
+  {0: 'かなり楽勝'},
+  {1: 'まぁ楽勝'},
+  {2: '普通'},
+  {3: 'やや厳しい'},
+  {4: 'かなり厳しい'},
 ];
 
-List<String> Shusseki_list = [
-  'ほぼ毎回とる',
-  'たまにとる',
-  'とらない',
+List<Map<int, String>> Shusseki_list = [
+  {0: 'ほぼ毎回とる'},
+  {1: 'たまにとる'},
+  {2: 'とらない'},
 ];
 
-List<String> Chukan_list = [
-  'テストあり',
-  'レポートのみ',
-  'テスト・レポートなし',
-  '授業なし',
+List<Map<int, String>> Chukan_list = [
+  {0: 'テストあり'},
+  {1: 'レポートのみ'},
+  {2: 'テスト・レポートなし'},
+  {3: '授業なし'},
 ];
 
-List<String> Kimatu_list = [
-  'テストあり',
-  'レポートのみ',
-  'テスト・レポートなし',
-  '授業なし',
+List<Map<int, String>> Kimatu_list = [
+  {0: 'テストあり'},
+  {1: 'レポートのみ'},
+  {2: 'テスト・レポートなし'},
+  {3: '授業なし'},
 ];
 
-List<String> Motikomi_list = [
-  'テストなし',
-  '教科書・ノート等持込 ○',
-  '教科書・ノート等持込 × ',
+List<Map<int, String>> Motikomi_list = [
+  {0: 'テストなし'},
+  {1: '教科書・ノート等持込 ○'},
+  {2: '教科書・ノート等持込 × '},
 ];
 
-List<String> Kyoukasho_list = [
-  '教科書必要',
-  '教科書なし、または不要',
+List<Map<int, String>> Kyoukasho_list = [
+  {0: '教科書必要'},
+  {1: '教科書なし、または不要'},
 ];
 
 int? _ratingValue0;

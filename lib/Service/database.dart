@@ -19,6 +19,7 @@ class DatabaseService extends ChangeNotifier {
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect() {
     return FirebaseFirestore.instance
         .collection('classes')
+        .orderBy('Daytime', descending: true)
         .limit(50)
         .snapshots();
   }
@@ -27,7 +28,7 @@ class DatabaseService extends ChangeNotifier {
   Future<Stream<QuerySnapshot>> fetchAdditionalData(int suuji) async {
     return FirebaseFirestore.instance
         .collection('jugyou')
-        .orderBy('date', descending: true)
+        .orderBy('Daytime', descending: true)
         .limit(suuji)
         .snapshots();
   }
@@ -56,7 +57,7 @@ class DatabaseService extends ChangeNotifier {
   Stream<QuerySnapshot<Map<String, dynamic>>> personalQuestinosCollect() {
     return FirebaseFirestore.instance
         .collection('jugyou')
-        .orderBy('date', descending: true)
+        .orderBy('Daytime', descending: true)
         .where('asker', isEqualTo: uid)
         .limit(10)
         .snapshots();
@@ -67,7 +68,7 @@ class DatabaseService extends ChangeNotifier {
       int personalJugyouSuuji) async {
     return FirebaseFirestore.instance
         .collection('jugyou')
-        .orderBy('date', descending: true)
+        .orderBy('Daytime', descending: true)
         .where('asker', isEqualTo: uid)
         .limit(personalJugyouSuuji)
         .snapshots();
@@ -77,7 +78,7 @@ class DatabaseService extends ChangeNotifier {
   Stream<QuerySnapshot<Map<String, dynamic>>> personalAnswersCollect() {
     return FirebaseFirestore.instance
         .collection('jugyou')
-        .orderBy('date', descending: true)
+        .orderBy('Daytime', descending: true)
         .where('answersList', arrayContains: uid)
         .limit(10)
         .snapshots();
@@ -88,7 +89,7 @@ class DatabaseService extends ChangeNotifier {
       int personalSuuji) async {
     return FirebaseFirestore.instance
         .collection('jugyou')
-        .orderBy('date', descending: true)
+        .orderBy('Daytime', descending: true)
         .where('answersList', arrayContains: uid)
         .limit(personalSuuji)
         .snapshots();

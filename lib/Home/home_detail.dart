@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/%20Reviews/add_reviews.dart';
 
 class HomeDetail extends StatefulWidget {
   HomeDetail({super.key, required this.articleId});
@@ -54,12 +55,35 @@ class _HomeDetailState extends State<HomeDetail> {
                     const EdgeInsets.symmetric(horizontal: 13, vertical: 15),
                 child: Column(children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(firebasesnapshot!.get('授業名'),
                           style: const TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
                           )),
+                       InkWell(
+                        onTap: () {
+
+                        },
+                         child: Row(
+                           children: const [
+                             Icon(
+                              Icons.edit,
+                              size: 20,
+                              color: Colors.blue,
+                             ),
+                             SizedBox(width: 5),
+                             Text('編集する',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                )),
+                           ],
+                         ),
+                       ),
                     ],
                   ),
                   const SizedBox(height: 5),
@@ -185,8 +209,46 @@ class _HomeDetailState extends State<HomeDetail> {
                             firebasesnapshot!.get('曜日・時限2'),
                           ),
                   ]),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: const [
+                      Text(
+                        '口コミ',
+                        style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )
+                      ),
+                    ],
+                  ),
                 ]),
               )
-            : const Center(child: CircularProgressIndicator()));
+            : const Center(child: CircularProgressIndicator()),
+            floatingActionButton: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: Container(
+              color: const Color(0XFF37EBFA),
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: 60,
+          child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const AddReviews(),
+                      transitionDuration: const Duration(seconds: 0),
+                    ));
+              },
+              child: const Center(
+                  child: Text('口コミを追加する',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      )))),
+        ),
+      ),
+            );
   }
 }
