@@ -25,20 +25,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => GoogleSignInProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.grey,
-          textTheme: const TextTheme(
-            bodyText1: TextStyle(),
-            bodyText2: TextStyle(),
-          ).apply(
-            bodyColor: Colors.white,
-            displayColor: Colors.white,
-          ),
-        ),
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const MySplashScreen(),
+        home: MySplashScreen(),
       ),
     );
   }

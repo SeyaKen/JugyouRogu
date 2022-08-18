@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff131313),
+      backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.transparent,
@@ -90,9 +90,9 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.of(context).size.width * 0.1,
             width: MediaQuery.of(context).size.width * 0.95,
             alignment: Alignment.bottomCenter,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color(0xff333333),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              color: Colors.grey[300],
             ),
             child: TextField(
                 onChanged: (text) async {
@@ -114,13 +114,13 @@ class _HomePageState extends State<HomePage> {
                 textAlignVertical: TextAlignVertical.center,
                 style: const TextStyle(
                   fontSize: 19,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 decoration: const InputDecoration(
                     prefixIcon: Icon(
                       Icons.search,
                       size: 19,
-                      color: Colors.grey,
+                      color: Colors.black,
                     ),
                     isDense: true,
                     border: InputBorder.none,
@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 19,
-                      color: Colors.grey,
+                      color: Colors.black,
                     ))),
           )),
       body: Column(
@@ -152,24 +152,24 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (_, __, ___) => HomeDetail(
-                                          articleId:
-                                              snapshot.data!.docs[index].id,
-                                        ),
-                                        transitionDuration:
-                                            const Duration(seconds: 0),
-                                      ),
-                                    );
-                                  },
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (_, __, ___) => HomeDetail(
+                                    articleId: snapshot.data!.docs[index].id,
+                                  ),
+                                  transitionDuration:
+                                      const Duration(seconds: 0),
+                                ),
+                              );
+                            },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 13, vertical: 15),
                               decoration: const BoxDecoration(
                                   border: Border(
-                                top: BorderSide(width: 0.5, color: Colors.white),
+                                top:
+                                    BorderSide(width: 0.5, color: Colors.black),
                               )),
                               child: Column(children: [
                                 Row(
@@ -184,19 +184,18 @@ class _HomePageState extends State<HomePage> {
                                 const SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    snapshot.data!.docs[index]['学部'] != '' 
-                                    ?
-                                    Text(snapshot.data!.docs[index]['学部'],
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ))
-                                    : Container(),
-                                    snapshot.data!.docs[index]['学部'] != '' 
-                                    ? const SizedBox(
-                                      width: 10,
-                                    )
-                                    : Container(),
+                                    snapshot.data!.docs[index]['学部'] != ''
+                                        ? Text(snapshot.data!.docs[index]['学部'],
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                            ))
+                                        : Container(),
+                                    snapshot.data!.docs[index]['学部'] != ''
+                                        ? const SizedBox(
+                                            width: 10,
+                                          )
+                                        : Container(),
                                     Text(snapshot.data!.docs[index]['教授・講師名'],
                                         style: const TextStyle(
                                           fontSize: 15,
@@ -216,27 +215,27 @@ class _HomePageState extends State<HomePage> {
                                           children: const [
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                           ],
@@ -255,27 +254,27 @@ class _HomePageState extends State<HomePage> {
                                           children: const [
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
                                               Icons.star_outline,
-                                              color: Color(0XFF37EBFA),
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                           ],
@@ -292,25 +291,29 @@ class _HomePageState extends State<HomePage> {
               }),
         ],
       ),
-      floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.circular(1000),
-        child: Container(
-          color: Colors.white,
-          width: 65,
-          height: 65,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => const AddClass(),
-                    transitionDuration: const Duration(seconds: 0),
-                  ));
-            },
-            child: const Icon(
-              Icons.add_rounded,
-              size: 45,
-              color: Colors.black,
+      floatingActionButton: SizedBox(
+        width: 65,
+        height: 65,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => const AddClass(),
+                  transitionDuration: const Duration(seconds: 0),
+                ));
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(1000),
+            child: Container(
+              color: Colors.orange,
+              width: 65,
+              height: 65,
+              child: const Icon(
+                Icons.add_rounded,
+                size: 50,
+                color: Colors.white,
+              ),
             ),
           ),
         ),

@@ -34,18 +34,19 @@ class _AddClassState extends State<AddClass> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff131313),
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(
-          color: Colors.white,
+          color: Colors.black,
         ),
         title: const Text('授業を作成',
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,
             )),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: GestureDetector(
@@ -84,132 +85,135 @@ class _AddClassState extends State<AddClass> {
                               height: 10,
                             ),
                             index == 0 || index == 1 || index == 2
-                                ? SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    child: TextFormField(
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      validator: (val) => val!.isEmpty
-                                          ? '正確に${title_value[index]}を入力してください。'
-                                          : null,
-                                      onChanged: (val) {
-                                        setState(() => index == 0
-                                            ? ClassName0 = val
-                                            : index == 1
-                                                ? ClassName1 = val
-                                                : ClassName2 = val);
-                                      },
-                                      decoration: InputDecoration(
-                                        fillColor: const Color(0xff333333),
-                                        filled: true,
-                                        hintText: title_list[index],
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 13),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      child: TextFormField(
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                        validator: (val) => val!.isEmpty
+                                            ? '正確に${title_value[index]}を入力してください。'
+                                            : null,
+                                        onChanged: (val) {
+                                          setState(() => index == 0
+                                              ? ClassName0 = val
+                                              : index == 1
+                                                  ? ClassName1 = val
+                                                  : ClassName2 = val);
+                                        },
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          fillColor: Colors.grey[300],
+                                          filled: true,
+                                          hintText: title_list[index],
+                                          hintStyle: const TextStyle(
+                                              color: Colors.black),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 13),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   )
-                                : SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    child: TextFormField(
-                                      controller: index == 3 ? txt0 : txt1,
-                                      onTap: () {
-                                        _showDialog(
-                                          CupertinoPicker(
-                                            magnification: 1.22,
-                                            squeeze: 1.2,
-                                            useMagnifier: true,
-                                            itemExtent: _kItemExtent,
-                                            onSelectedItemChanged:
-                                                (int selectedItem) {
-                                              setState(() {
-                                                index == 3
-                                                    ? ClassName3 =
-                                                        youbi[selectedItem]
-                                                    : ClassName4 =
-                                                        youbi[selectedItem];
-                                                index == 3
-                                                    ? txt0.text =
-                                                        youbi[selectedItem]
-                                                    : txt1.text =
-                                                        youbi[selectedItem];
-                                              });
-                                            },
-                                            children: List<Widget>.generate(
-                                                youbi.length, (int indexx) {
-                                              return Center(
-                                                child: Text(
-                                                  youbi[indexx],
-                                                ),
-                                              );
-                                            }),
-                                          ),
-                                        );
-                                      },
-                                      readOnly: true,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      validator: (val) => val!.isEmpty
-                                          ? '正確に${title_value[index]}を入力してください。'
-                                          : null,
-                                      decoration: InputDecoration(
-                                        fillColor: const Color(0xff333333),
-                                        filled: true,
-                                        hintText: title_list[index],
-                                        hintStyle:
-                                            const TextStyle(color: Colors.grey),
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 13),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                          ),
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      child: TextFormField(
+                                        controller: index == 3 ? txt0 : txt1,
+                                        onTap: () {
+                                          _showDialog(
+                                            CupertinoPicker(
+                                              magnification: 1.22,
+                                              squeeze: 1.2,
+                                              useMagnifier: true,
+                                              itemExtent: _kItemExtent,
+                                              onSelectedItemChanged:
+                                                  (int selectedItem) {
+                                                setState(() {
+                                                  index == 3
+                                                      ? ClassName3 =
+                                                          youbi[selectedItem]
+                                                      : ClassName4 =
+                                                          youbi[selectedItem];
+                                                  index == 3
+                                                      ? txt0.text =
+                                                          youbi[selectedItem]
+                                                      : txt1.text =
+                                                          youbi[selectedItem];
+                                                });
+                                              },
+                                              children: List<Widget>.generate(
+                                                  youbi.length, (int indexx) {
+                                                return Center(
+                                                  child: Text(
+                                                    youbi[indexx],
+                                                  ),
+                                                );
+                                              }),
+                                            ),
+                                          );
+                                        },
+                                        readOnly: true,
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                        validator: (val) => val!.isEmpty
+                                            ? '正確に${title_value[index]}を入力してください。'
+                                            : null,
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.grey[300],
+                                          filled: true,
+                                          hintText: title_list[index],
+                                          hintStyle: const TextStyle(
+                                              color: Colors.black),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 10, vertical: 13),
+                                          border: InputBorder.none,
                                         ),
                                       ),
-                                    ),
-                                  )
+                                    ))
                           ]);
                     }),
               )),
         ),
       ),
       floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(3),
         child: Container(
           color: ClassName0 != null
-              ? const Color(0XFF37EBFA)
-              : const Color(0XFF37EBFA).withOpacity(0.5),
-          width: MediaQuery.of(context).size.width,
+              ? Colors.orange
+              : Colors.orange.withOpacity(0.5),
+          width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(
               onTap: () {
-                if(ClassName0 != null) {
+                if (ClassName0 != null) {
                   FirebaseFirestore.instance.collection('classes').doc().set({
-                  '授業名': ClassName0 ?? '',
-                  '学部': ClassName1 ?? '',
-                  '教授・講師名': ClassName2 ?? '',
-                  '曜日・時限1': ClassName3 ?? '',
-                  '曜日・時限2': ClassName4 ?? '',
-                  'Daytime': DateTime.now(),
-                });
-                ClassName3 = null;
-                ClassName4 = null;
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
-                      transitionDuration: const Duration(seconds: 0),
-                    ));
+                    '授業名': ClassName0 ?? '',
+                    '学部': ClassName1 ?? '',
+                    '教授・講師名': ClassName2 ?? '',
+                    '曜日・時限1': ClassName3 ?? '',
+                    '曜日・時限2': ClassName4 ?? '',
+                    'Daytime': DateTime.now(),
+                  });
+                  ClassName3 = null;
+                  ClassName4 = null;
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
+                        transitionDuration: const Duration(seconds: 0),
+                      ));
                 } else {
                   // ここで授業名を追加してくださいの警告？を出す
                 }
@@ -219,6 +223,7 @@ class _AddClassState extends State<AddClass> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
+                        color: Colors.white,
                       )))),
         ),
       ),

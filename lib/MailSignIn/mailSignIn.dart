@@ -25,10 +25,10 @@ class _SignInState extends State<mailSignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: const Color(0xff131313),
+        backgroundColor: const Color(0xffffffff),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xff131313),
+          backgroundColor: const Color(0xffffffff),
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +45,7 @@ class _SignInState extends State<mailSignIn> {
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
               TextButton.icon(
@@ -57,7 +57,7 @@ class _SignInState extends State<mailSignIn> {
                   widget.toggleView();
                 },
                 style: TextButton.styleFrom(
-                  primary: const Color(0XFF37EBFA),
+                  primary: Colors.orange,
                 ),
               )
             ],
@@ -95,27 +95,25 @@ class _SignInState extends State<mailSignIn> {
                         const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            style: const TextStyle(color: Colors.white),
-                            validator: (val) =>
-                                val!.isEmpty ? 'メールアドレスを入力してください' : null,
-                            onChanged: (val) {
-                              setState(() => email = val);
-                            },
-                            decoration: const InputDecoration(
-                              fillColor: Color(0xff333333),
-                              filled: true,
-                              hintText: 'メールアドレス',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 13),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                ),
-                                
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: TextFormField(
+                              style: const TextStyle(color: Colors.black),
+                              validator: (val) =>
+                                  val!.isEmpty ? 'メールアドレスを入力してください' : null,
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.grey[300],
+                                filled: true,
+                                hintText: 'メールアドレス',
+                                hintStyle: const TextStyle(color: Colors.black),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 13),
+                                border: InputBorder.none,
                               ),
                             ),
                           ),
@@ -123,28 +121,27 @@ class _SignInState extends State<mailSignIn> {
                         const SizedBox(height: 30),
                         Stack(
                           children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              child: TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                validator: (val) => val!.length < 7
-                                    ? '7文字以上のパスワードを入力してください'
-                                    : null,
-                                obscureText: eye,
-                                onChanged: (val) {
-                                  setState(() => password = val);
-                                },
-                                decoration: const InputDecoration(
-                                  fillColor: Color(0xff333333),
-                                  filled: true,
-                                  hintText: 'パスワード',
-                                  hintStyle: TextStyle(color: Colors.grey),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 13),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                    ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(5.0),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: TextFormField(
+                                  style: const TextStyle(color: Colors.black),
+                                  validator: (val) => val!.length < 7
+                                      ? '7文字以上のパスワードを入力してください'
+                                      : null,
+                                  obscureText: eye,
+                                  onChanged: (val) {
+                                    setState(() => password = val);
+                                  },
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.grey[300],
+                                    filled: true,
+                                    hintText: 'パスワード',
+                                    hintStyle: const TextStyle(color: Colors.black),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 13),
+                                    border: InputBorder.none,
                                   ),
                                 ),
                               ),
@@ -163,7 +160,7 @@ class _SignInState extends State<mailSignIn> {
                                       ? FontAwesomeIcons.eyeSlash
                                       : FontAwesomeIcons.eye,
                                   size: 23,
-                                  color: Colors.grey,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -173,8 +170,8 @@ class _SignInState extends State<mailSignIn> {
                         Container(
                           decoration: BoxDecoration(
                             color: password.length >= 7
-                                ? const Color(0XFF37EBFA)
-                                : const Color(0XFF37EBFA).withOpacity(0.3),
+                                ? Colors.orange
+                                : Colors.orange.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -198,7 +195,10 @@ class _SignInState extends State<mailSignIn> {
                                   child: const Center(
                                     child: Text(
                                       'ログイン',
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),

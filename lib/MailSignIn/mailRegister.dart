@@ -34,10 +34,10 @@ class _mailRegisterState extends State<mailRegister> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: const Color(0xff131313),
+        backgroundColor: const Color(0xffffffff),
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: const Color(0xff131313),
+          backgroundColor: const Color(0xffffffff),
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -49,7 +49,7 @@ class _mailRegisterState extends State<mailRegister> {
                   widget.toggleView();
                 },
                 style: TextButton.styleFrom(
-                  primary: const Color(0XFF37EBFA),
+                  primary: Colors.orange,
                 ),
               )
             ],
@@ -76,7 +76,7 @@ class _mailRegisterState extends State<mailRegister> {
                         Text(
                           '新規登録',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -86,55 +86,64 @@ class _mailRegisterState extends State<mailRegister> {
                     const SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: TextFormField(
-                        style: const TextStyle(color: Colors.white),
-                        validator: (val) =>
-                            val!.isEmpty ? '正しいメールアドレスを入力してください' : null,
-                        onChanged: (val) {
-                          setState(() => email = val);
-                        },
-                        decoration: const InputDecoration(
-                          fillColor: Color(0xff333333),
-                          filled: true,
-                          hintText: 'メールアドレス',
-                          hintStyle: TextStyle(color: Colors.grey),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 13),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
+                    ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: TextFormField(
+                          style: const TextStyle(color: Colors.black),
+                          validator: (val) =>
+                              val!.isEmpty ? '正しいメールアドレスを入力してください' : null,
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            fillColor:Colors.grey[300],
+                            filled: true,
+                            hintText: 'メールアドレス',
+                            hintStyle: const TextStyle(color: Colors.black),
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 13),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                              ),
                             ),
                           ),
+                          
                         ),
                       ),
                     ),
                     const SizedBox(height: 30),
                     Stack(
                       children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            style: const TextStyle(color: Colors.white),
-                            controller: _usernameController,
-                            validator: (val) => password.length >= 7
-                                ? null
-                                : '7文字以上でパスワードを設定してください',
-                            obscureText: eye,
-                            onChanged: (val) {
-                              setState(() => password = val);
-                            },
-                            decoration: const InputDecoration(
-                              fillColor: Color(0xff333333),
-                              filled: true,
-                              hintText: 'パスワード',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 13),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: TextFormField(
+                              style: const TextStyle(color: Colors.black),
+                              controller: _usernameController,
+                              validator: (val) => password.length >= 7
+                                  ? null
+                                  : '7文字以上でパスワードを設定してください',
+                              obscureText: eye,
+                              onChanged: (val) {
+                                setState(() => password = val);
+                              },
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                fillColor: Colors.grey[300],
+                                filled: true,
+                                hintText: 'パスワード',
+                                hintStyle: const TextStyle(color: Colors.black),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 13),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                  ),
                                 ),
                               ),
                             ),
@@ -154,7 +163,7 @@ class _mailRegisterState extends State<mailRegister> {
                                   ? FontAwesomeIcons.eyeSlash
                                   : FontAwesomeIcons.eye,
                               size: 23,
-                              color: Colors.grey,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -164,8 +173,8 @@ class _mailRegisterState extends State<mailRegister> {
                     Container(
                       decoration: BoxDecoration(
                         color: password.length >= 7
-                            ? const Color(0XFF37EBFA)
-                            : const Color(0XFF37EBFA).withOpacity(0.3),
+                            ? Colors.orange
+                            : Colors.orange.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(3),
                       ),
                       width: MediaQuery.of(context).size.width * 0.8,
@@ -179,8 +188,8 @@ class _mailRegisterState extends State<mailRegister> {
                                 try {
                                   await auth
                                       .createUserWithEmailAndPassword(
-                                          email: email, password: password).then((value) => 
-                                          user = auth.currentUser!)
+                                          email: email, password: password)
+                                      .then((value) => user = auth.currentUser!)
                                       .then((value) async =>
                                           await FirebaseFirestore.instance
                                               .collection('users')

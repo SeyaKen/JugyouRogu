@@ -46,7 +46,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                           child: Text('エラーが発生しました、もう一度やり直してください。'),
                         )
                       : Scaffold(
-                          backgroundColor: const Color(0xff131313),
+                          backgroundColor: Color(0xffffffff),
                           body: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,14 +57,14 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                   children: const [
                                     FaIcon(
                                       FontAwesomeIcons.chalkboard,
-                                      color: Color(0xFF37EBFA),
+                                      color: Colors.orange,
                                       size: 180,
                                     ),
                                     Text('授業ログ',
                                         style: TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
-                                          color: Color(0XFF37EBFA),
+                                          color: Colors.orange,
                                         )),
                                   ],
                                 ),
@@ -128,8 +128,8 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                   },
                                   child: Container(
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.white),
-                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(color: Colors.black),
+                                        borderRadius: BorderRadius.circular(3),
                                       ),
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20, vertical: 15),
@@ -149,7 +149,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                           const Text('Googleで始める',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white)),
+                                                  color: Colors.black)),
                                           const FaIcon(
                                             FontAwesomeIcons.google,
                                             color: Colors.transparent,
@@ -173,10 +173,10 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20, vertical: 15),
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: Colors.grey,
                                         border: Border.all(
-                                            color: Colors.white, width: 0.5),
-                                        borderRadius: BorderRadius.circular(5),
+                                            color: Colors.grey, width: 0.5),
+                                        borderRadius: BorderRadius.circular(3),
                                       ),
                                       width: MediaQuery.of(context).size.width *
                                           0.8,
@@ -207,7 +207,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                       MediaQuery.of(context).size.width * 0.8,
                                   child: RichText(
                                       text: TextSpan(
-                                    style: const TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.black),
                                     children: [
                                       const TextSpan(
                                         text: '登録またはログインすることで、',

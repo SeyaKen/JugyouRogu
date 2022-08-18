@@ -67,13 +67,19 @@ class _AddReviewsState extends State<AddReviews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff131313),
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        elevation: 0,
         iconTheme: const IconThemeData(
-          color: Colors.white,
+          color: Colors.black,
         ),
-        backgroundColor: Colors.transparent,
+        title: const Text('口コミを追加する',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            )),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -105,7 +111,7 @@ class _AddReviewsState extends State<AddReviews> {
                               fontSize: 20,
                               color: Rating[index] == null
                                   ? Colors.grey
-                                  : Colors.white,
+                                  : Colors.black,
                             ),
                           ),
                           onTap: () {
@@ -121,29 +127,29 @@ class _AddReviewsState extends State<AddReviews> {
                                 // This is called when selected item is changed.
                                 onSelectedItemChanged: (int selectedItem) {
                                   setState(() {
-                                    index == 0
-                                        ? _ratingValue0 = Juujitu_list[0]
-                                        : index == 1
-                                            ? _ratingValue1 =
-                                                _ratingValue1[selectedItem]
-                                            : index == 2
-                                                ? _ratingValue2 =
-                                                    Rating[index][selectedItem]
-                                                : index == 3
-                                                    ? _ratingValue3 =
-                                                        Rating[index]
-                                                            [selectedItem]
-                                                    : index == 4
-                                                        ? _ratingValue4 =
-                                                            Rating[index]
-                                                                [selectedItem]
-                                                        : index == 5
-                                                            ? _ratingValue5 =
-                                                                Rating[index][
-                                                                    selectedItem]
-                                                            : _ratingValue6 =
-                                                                Rating[index][
-                                                                    selectedItem];
+                                    // index == 0
+                                    //     ? _ratingValue0 = Juujitu_list[0] as int?
+                                    //     : index == 1
+                                    //         ? _ratingValue1 =
+                                    //             _ratingValue1![selectedItem]
+                                    //         : index == 2
+                                    //             ? _ratingValue2 =
+                                    //                 Rating[index][selectedItem]
+                                    //             : index == 3
+                                    //                 ? _ratingValue3 =
+                                    //                     Rating[index]
+                                    //                         [selectedItem]
+                                    //                 : index == 4
+                                    //                     ? _ratingValue4 =
+                                    //                         Rating[index]
+                                    //                             [selectedItem]
+                                    //                     : index == 5
+                                    //                         ? _ratingValue5 =
+                                    //                             Rating[index][
+                                    //                                 selectedItem]
+                                    //                         : _ratingValue6 =
+                                    //                             Rating[index][
+                                    //                                 selectedItem];
                                   });
                                 },
                                 children: List<Widget>.generate(
@@ -164,7 +170,7 @@ class _AddReviewsState extends State<AddReviews> {
         ),
       ),
       floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(3),
         child: Container(
           color: _ratingValue0 != null &&
                   _ratingValue1 != null &&
@@ -173,9 +179,9 @@ class _AddReviewsState extends State<AddReviews> {
                   _ratingValue4 != null &&
                   _ratingValue5 != null &&
                   _ratingValue6 != null
-              ? const Color(0XFF37EBFA)
-              : const Color(0XFF37EBFA).withOpacity(0.5),
-          width: MediaQuery.of(context).size.width,
+              ? Colors.orange
+              : Colors.orange.withOpacity(0.5),
+          width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(
               onTap: () {
@@ -193,6 +199,7 @@ class _AddReviewsState extends State<AddReviews> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 17,
+                        color: Colors.white,
                       )))),
         ),
       ),

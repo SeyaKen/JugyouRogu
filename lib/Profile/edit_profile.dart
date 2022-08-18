@@ -44,10 +44,10 @@ class _EditProfileState extends State<EditProfile> {
         builder: (context, snapshot) {
           return snapshot.hasData
               ? Scaffold(
-                  backgroundColor: const Color(0xff131313),
+                  backgroundColor: Color(0xffffffff),
                   appBar: AppBar(
                       iconTheme: const IconThemeData(
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
@@ -142,12 +142,12 @@ class _EditProfileState extends State<EditProfile> {
                                             ),
                                           ),
                                           focusedBorder: UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white, width: 2)
-                                          ),
+                                              borderSide: BorderSide(
+                                                  color: Colors.black,
+                                                  width: 2)),
                                         ),
                                         style: const TextStyle(
-                                            color: Colors.white),
+                                            color: Colors.black),
                                         initialValue: name,
                                         onChanged: (val) {
                                           setState(() => name = val);
@@ -182,13 +182,11 @@ class _EditProfileState extends State<EditProfile> {
                                         ),
                                         focusedBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: Colors.white,
-                                            width: 2
-                                          ),
+                                              color: Colors.black, width: 2),
                                         ),
                                       ),
                                       style:
-                                          const TextStyle(color: Colors.white),
+                                          const TextStyle(color: Colors.black),
                                       initialValue: ex,
                                       onChanged: (val) {
                                         setState(() => ex = val);

@@ -20,10 +20,10 @@ class _SignInState extends State<PasswordReset> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black,
         appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.black,
             elevation: 0,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +51,7 @@ class _SignInState extends State<PasswordReset> {
             key: _formKey,
             child: Center(
               child: Container(
-                color: Colors.white,
+                color: Colors.black,
                 height: MediaQuery.of(context).size.height * 0.85,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
@@ -79,7 +79,7 @@ class _SignInState extends State<PasswordReset> {
                                   horizontal: 10, vertical: 13),
                               focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: const Color(0XFF37EBFA),
+                                  color: Colors.orange,
                                 ),
                               ),
                               enabledBorder: OutlineInputBorder(
@@ -95,8 +95,8 @@ class _SignInState extends State<PasswordReset> {
                         Container(
                           decoration: BoxDecoration(
                             color: email.contains('@')
-                                ? const Color(0XFF37EBFA)
-                                : const Color(0XFF37EBFA).withOpacity(0.3),
+                                ? Colors.orange
+                                : Colors.orange.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -135,7 +135,7 @@ class _SignInState extends State<PasswordReset> {
                                     child: Text(
                                       'ログインリンクを送信',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
+                                          color: Colors.black, fontSize: 20),
                                     ),
                                   ),
                                 ),

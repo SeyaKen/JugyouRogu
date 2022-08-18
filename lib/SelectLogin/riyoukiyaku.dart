@@ -12,7 +12,7 @@ class _RiyoukiyakuState extends State<Riyoukiyaku> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.black,
             automaticallyImplyLeading: false,
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -39,7 +39,7 @@ class _RiyoukiyakuState extends State<Riyoukiyaku> {
                 const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   size: 30,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ],
             )),
@@ -465,9 +465,6 @@ class _RiyoukiyakuState extends State<Riyoukiyaku> {
                       height: 0,
                     ),
                   ],
-                )
-              )
-            )
-          );
+                ))));
   }
 }
