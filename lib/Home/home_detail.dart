@@ -190,11 +190,12 @@ class _HomeDetailState extends State<HomeDetail> {
                 ),
                 Row(children: [
                   const Text(
-                    '曜日・時限',
+                    '曜日・時限:  ',
                   ),
                   Text(
                     firebasesnapshot!.get('曜日・時限1'),
                   ),
+                  
                   firebasesnapshot!.get('曜日・時限1') != ''
                       ? const Text(
                           '-',
