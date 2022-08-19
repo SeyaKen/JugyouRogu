@@ -128,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 19,
-                      color: Colors.black,
+                      color: Colors.grey,
                     ))),
           )),
       body: Column(

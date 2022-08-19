@@ -109,7 +109,7 @@ class _AddClassState extends State<AddClass> {
                                           filled: true,
                                           hintText: title_list[index],
                                           hintStyle: const TextStyle(
-                                              color: Colors.black),
+                                              color: Colors.grey),
                                           contentPadding:
                                               const EdgeInsets.symmetric(
                                                   horizontal: 10, vertical: 13),
@@ -174,7 +174,7 @@ class _AddClassState extends State<AddClass> {
                                           filled: true,
                                           hintText: title_list[index],
                                           hintStyle: const TextStyle(
-                                              color: Colors.black),
+                                              color: Colors.grey),
                                           contentPadding:
                                               const EdgeInsets.symmetric(
                                                   horizontal: 10, vertical: 13),

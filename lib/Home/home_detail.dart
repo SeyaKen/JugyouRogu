@@ -35,7 +35,7 @@ class _HomeDetailState extends State<HomeDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffffffff),
+      backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
         iconTheme: const IconThemeData(
           color: Colors.black,

@@ -110,7 +110,7 @@ class _SignInState extends State<mailSignIn> {
                                 fillColor: Colors.grey[300],
                                 filled: true,
                                 hintText: 'メールアドレス',
-                                hintStyle: const TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.grey),
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 13),
                                 border: InputBorder.none,
@@ -138,7 +138,7 @@ class _SignInState extends State<mailSignIn> {
                                     fillColor: Colors.grey[300],
                                     filled: true,
                                     hintText: 'パスワード',
-                                    hintStyle: const TextStyle(color: Colors.black),
+                                    hintStyle: const TextStyle(color: Colors.grey),
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 13),
                                     border: InputBorder.none,
