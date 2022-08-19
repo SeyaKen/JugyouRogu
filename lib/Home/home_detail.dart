@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/%20Reviews/add_reviews.dart';
+import 'package:jugyourogu/Service/database.dart';
 
 class HomeDetail extends StatefulWidget {
   HomeDetail({super.key, required this.articleId});
@@ -15,6 +16,7 @@ class HomeDetail extends StatefulWidget {
 class _HomeDetailState extends State<HomeDetail> {
   DocumentSnapshot? firebasesnapshot;
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  Stream<QuerySnapshot<Object?>>? kutikomiListsStream;
   String articleId;
   _HomeDetailState(this.articleId);
 
@@ -23,6 +25,7 @@ class _HomeDetailState extends State<HomeDetail> {
         .collection('classes')
         .doc(articleId)
         .get();
+    kutikomiListsStream = DatabaseService(uid).kutikomiCollect(articleId);
     setState(() {});
   }
 
@@ -57,11 +60,15 @@ class _HomeDetailState extends State<HomeDetail> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(firebasesnapshot!.get('授業名'),
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        )),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: Text(firebasesnapshot!.get('授業名'),
+                          style: const TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                    ),
                     InkWell(
                       onTap: () {},
                       child: Row(
@@ -218,6 +225,9 @@ class _HomeDetailState extends State<HomeDetail> {
                         )),
                   ],
                 ),
+                // StreamBuilder(
+                //   builder: ,
+                // )
               ]),
             )
           : const Center(child: CircularProgressIndicator()),

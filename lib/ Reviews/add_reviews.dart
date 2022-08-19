@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class AddReviews extends StatefulWidget {
@@ -15,6 +16,8 @@ class AddReviews extends StatefulWidget {
 
 class _AddReviewsState extends State<AddReviews> {
   double _kItemExtent = 32.0;
+  DocumentSnapshot? firebasesnapshot;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
   String articleId, jugyoumei;
   _AddReviewsState(this.articleId, this.jugyoumei);
@@ -39,8 +42,36 @@ class _AddReviewsState extends State<AddReviews> {
     Kyoukasho_list,
   ];
 
+  getHomeLists() async {
+    firebasesnapshot = await FirebaseFirestore.instance
+        .collection('classes')
+        .doc(articleId)
+        .collection('reviews')
+        .doc(uid)
+        .get();
+    
+    setState(() {});
+  }
+
   @override
   void initState() {
+    try {
+      setState(() {
+        if (firebasesnapshot != null) {
+          _ratingValue0 = Juujitu_list[firebasesnapshot!.get('Juujitu')];
+          _ratingValue1 = Rakutan_list[firebasesnapshot!.get('Rakutan')];
+          _ratingValue2 = Chukan_list[firebasesnapshot!.get('Chukan')];
+          _ratingValue3 = Kimatu_list[firebasesnapshot!.get('Kimatu')];
+          _ratingValue4 = Motikomi_list[firebasesnapshot!.get('Motikomi')];
+          _ratingValue5 = Kyoukasho_list[firebasesnapshot!.get('Kyoukasho')];
+          _ratingValue6 = Shusseki_list[firebasesnapshot!.get('Shusseki')];
+          kutikomi = firebasesnapshot!.get('Kutikomi');
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+    getHomeLists();
     super.initState();
   }
 
@@ -79,13 +110,16 @@ class _AddReviewsState extends State<AddReviews> {
             InkWell(
               onTap: () {
                 Navigator.pop(context);
-                _ratingValue0 = null;
-                _ratingValue1 = null;
-                _ratingValue2 = null;
-                _ratingValue3 = null;
-                _ratingValue4 = null;
-                _ratingValue5 = null;
-                _ratingValue6 = null;
+                setState(() {
+                  _ratingValue0 = null;
+                  _ratingValue1 = null;
+                  _ratingValue2 = null;
+                  _ratingValue3 = null;
+                  _ratingValue4 = null;
+                  _ratingValue5 = null;
+                  _ratingValue6 = null;
+                  kutikomi = '';
+                });
               },
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -335,6 +369,7 @@ class _AddReviewsState extends State<AddReviews> {
                                     onChanged: (val) {
                                       setState(() => kutikomi = val);
                                     },
+                                    initialValue: kutikomi,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       fillColor: Colors.grey[300],
@@ -342,8 +377,9 @@ class _AddReviewsState extends State<AddReviews> {
                                       hintText: '口コミを入力する',
                                       hintStyle:
                                           const TextStyle(color: Colors.grey),
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 13),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 13),
                                       focusedBorder: const OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
@@ -402,6 +438,7 @@ class _AddReviewsState extends State<AddReviews> {
                     'Kyoukasho': Kyoukasho_list.indexOf(_ratingValue5),
                     'Shusseki': Shusseki_list.indexOf(_ratingValue6),
                     'Kutikomi': kutikomi,
+                    'Daytime': DateTime.now(),
                   });
                   _ratingValue0 = null;
                   _ratingValue1 = null;
@@ -486,4 +523,4 @@ String? _ratingValue3;
 String? _ratingValue4;
 String? _ratingValue5;
 String? _ratingValue6;
-String kutikomi = '';
+String? kutikomi;

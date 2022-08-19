@@ -24,6 +24,17 @@ class DatabaseService extends ChangeNotifier {
         .snapshots();
   }
 
+  // 口コミ一覧をうつす関数
+  Stream<QuerySnapshot<Map<String, dynamic>>> kutikomiCollect(String articleId) {
+    return FirebaseFirestore.instance
+        .collection('classes')
+        .doc(articleId)
+        .collection('reviews')
+        .orderBy('Daytime', descending: true)
+        .limit(50)
+        .snapshots();
+  }
+
   // 追加の質問一欄？をうつす関数
   Future<Stream<QuerySnapshot>> fetchAdditionalData(int suuji) async {
     return FirebaseFirestore.instance
