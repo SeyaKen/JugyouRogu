@@ -150,7 +150,7 @@ class _HomeDetailState extends State<HomeDetail> {
                     Row(
                       children: [
                         const Text(
-                          '楽単度:',
+                          '単位取得度:',
                         ),
                         Row(
                           children: const [
@@ -195,7 +195,6 @@ class _HomeDetailState extends State<HomeDetail> {
                   Text(
                     firebasesnapshot!.get('曜日・時限1'),
                   ),
-                  
                   firebasesnapshot!.get('曜日・時限1') != ''
                       ? const Text(
                           '-',
@@ -233,7 +232,10 @@ class _HomeDetailState extends State<HomeDetail> {
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const AddReviews(),
+                      pageBuilder: (_, __, ___) => AddReviews(
+                        articleId: articleId,
+                        jugyoumei: firebasesnapshot!.get('授業名'),
+                      ),
                       transitionDuration: const Duration(seconds: 0),
                     ));
               },
