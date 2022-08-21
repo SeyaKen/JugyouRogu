@@ -200,8 +200,8 @@ class _AddClassState extends State<AddClass> {
                 if (ClassName0 != null) {
                   FirebaseFirestore.instance.collection('classes').doc().set({
                     '授業名': ClassName0 ?? '',
-                    '学部': ClassName1 ?? '',
-                    '教授・講師名': ClassName2 ?? '',
+                    '教授・講師名': ClassName1 ?? '',
+                    '学部': ClassName2 ?? '',
                     '曜日・時限1': ClassName3 ?? '',
                     '曜日・時限2': ClassName4 ?? '',
                     'Daytime': DateTime.now(),

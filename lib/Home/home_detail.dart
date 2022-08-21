@@ -97,6 +97,13 @@ class _HomeDetailState extends State<HomeDetail> {
                     const SizedBox(height: 5),
                     Row(
                       children: [
+                        const Text(
+                          '学部:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          )
+                        ),
                         firebasesnapshot!.get('学部') != ''
                             ? Text(firebasesnapshot!.get('学部'),
                                 style: const TextStyle(
@@ -109,11 +116,20 @@ class _HomeDetailState extends State<HomeDetail> {
                                 width: 10,
                               )
                             : Container(),
-                        Text(firebasesnapshot!.get('教授・講師名'),
+                        const Text(
+                          '教授:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          )
+                        ),
+                        Text(
+                          firebasesnapshot!.get('教授・講師名'),
                             style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                            )),
+                            )
+                          ),
                       ],
                     ),
                     const SizedBox(height: 5),
@@ -121,9 +137,10 @@ class _HomeDetailState extends State<HomeDetail> {
                       children: [
                         Row(
                           children: [
-                            const Text(
-                              '内容充実度:',
-                            ),
+                            const Text('内容充実度:',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
                             Row(
                               children: const [
                                 Icon(
@@ -160,9 +177,10 @@ class _HomeDetailState extends State<HomeDetail> {
                         ),
                         Row(
                           children: [
-                            const Text(
-                              '単位取得度:',
-                            ),
+                            const Text('楽単度:',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
                             Row(
                               children: const [
                                 Icon(
@@ -200,9 +218,10 @@ class _HomeDetailState extends State<HomeDetail> {
                       height: 5,
                     ),
                     Row(children: [
-                      const Text(
-                        '曜日・時限:  ',
-                      ),
+                      const Text('曜日・時限:  ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          )),
                       Text(
                         firebasesnapshot!.get('曜日・時限1'),
                       ),
@@ -240,142 +259,277 @@ class _HomeDetailState extends State<HomeDetail> {
                               controller: _scrollController,
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (BuildContext context, int index) {
-                                return InkWell(
-                                    onTap: () {},
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 13, vertical: 15),
-                                      decoration: const BoxDecoration(
-                                          border: Border(
-                                        top: BorderSide(
-                                            width: 0.5, color: Colors.black),
-                                      )),
-                                      child: Column(children: [
-                                        Row(children: [
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 13, vertical: 15),
+                                  decoration: const BoxDecoration(
+                                      border: Border(
+                                    top: BorderSide(
+                                        width: 0.5, color: Colors.black),
+                                  )),
+                                  child: Column(children: [
+                                    Row(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const Text('内容充実度:',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Juujitu'] > 0
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                 Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Juujitu'] > 1
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                 Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Juujitu'] > 2
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                 Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Juujitu'] > 3
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                          width: 5,
+                        ),
+                                        Row(
+                                          children: [
+                                            const Text('楽単度:',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.star,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Rakutan'] > 0
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                 Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Rakutan'] > 1
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                 Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Rakutan'] > 2
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                                 Icon(
+                                                  snapshot
+                                              .data!.docs[index]['Rakutan'] > 3
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                  color: Colors.orange,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Row(children: [
+                                      Row(
+                                        children: [
+                                          const Text('出席:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
                                           Text(Shusseki_list[snapshot
                                               .data!.docs[index]['Shusseki']]),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('教科書:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
                                           Text(Kyoukasho_list[snapshot
                                               .data!.docs[index]['Kyoukasho']]),
-                                        ]),
-                                        Row(children: [
+                                        ],
+                                      ),
+                                    ]),
+                                    Row(children: [
+                                      Row(
+                                        children: [
+                                          const Text('中間:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
                                           Text(Chukan_list[snapshot
                                               .data!.docs[index]['Chukan']]),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('期末:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
                                           Text(Kimatu_list[snapshot
                                               .data!.docs[index]['Kimatu']]),
-                                          Text(Motikomi_list[snapshot
-                                              .data!.docs[index]['Motikomi']]),
-                                        ]),
-                                        const SizedBox(height: 10),
-                                        Row(children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(150.0),
-                                            child: SizedBox(
-                                              width: 30,
-                                              height: 30,
-                                              child: StreamBuilder<
-                                                      QuerySnapshot>(
-                                                  stream: FirebaseFirestore
-                                                      .instance
-                                                      .collection('users')
-                                                      .where('uid',
-                                                          isEqualTo: snapshot
-                                                                  .data!
-                                                                  .docs[index]
-                                                              ['uid'])
-                                                      .snapshots(),
-                                                  builder:
-                                                      (context, snapshot0) {
-                                                    return snapshot0.hasData
-                                                        ? Image.network(
-                                                            snapshot0.data!.docs[
-                                                                            0][
-                                                                        'ProfilePicture'] ==
-                                                                    ''
-                                                                ? 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b'
-                                                                : snapshot0
-                                                                        .data!
-                                                                        .docs[0]
-                                                                    [
-                                                                    'ProfilePicture'],
-                                                            fit: BoxFit.cover,
-                                                          )
-                                                        : Image.network(
-                                                            'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b',
-                                                            fit: BoxFit.cover,
-                                                          );
-                                                  }),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Column(
+                                        ],
+                                      ),
+                                    ]),
+                                    Row(
+                                      children: [
+                                        const Text('持ち込み:',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                        Text(Motikomi_list[snapshot
+                                            .data!.docs[index]['Motikomi']]),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(150.0),
+                                        child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: StreamBuilder<QuerySnapshot>(
+                                              stream: FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .where('uid',
+                                                      isEqualTo: snapshot.data!
+                                                          .docs[index]['uid'])
+                                                  .snapshots(),
+                                              builder: (context, snapshot0) {
+                                                return snapshot0.hasData
+                                                    ? Image.network(
+                                                        snapshot0.data!.docs[0][
+                                                                    'ProfilePicture'] ==
+                                                                ''
+                                                            ? 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b'
+                                                            : snapshot0.data!
+                                                                    .docs[0][
+                                                                'ProfilePicture'],
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.network(
+                                                        'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b',
+                                                        fit: BoxFit.cover,
+                                                      );
+                                              }),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    StreamBuilder<QuerySnapshot>(
-                                                        stream: FirebaseFirestore
-                                                            .instance
-                                                            .collection('users')
-                                                            .where('uid',
-                                                                isEqualTo: snapshot
-                                                                        .data!
-                                                                        .docs[index]
-                                                                    ['uid'])
-                                                            .snapshots(),
-                                                        builder: (context,
-                                                            snapshot1) {
-                                                          return snapshot1
-                                                                  .hasData
-                                                              ? SizedBox(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.8,
-                                                                  child: Text(
-                                                                    snapshot1
-                                                                            .data!
-                                                                            .docs[0]
-                                                                        [
-                                                                        'name'],
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontSize:
-                                                                          10,
-                                                                    ),
-                                                                  ),
-                                                                )
-                                                              : const Text('');
-                                                        }),
-                                                    const SizedBox(height: 5),
-                                                    Text(
-                                                      snapshot
-                                                          .data!
-                                                          .docs[index]
-                                                              ['Daytime']
-                                                          .toDate()
-                                                          .toString()
-                                                          .substring(0, 16),
-                                                      style: const TextStyle(
-                                                        fontSize: 10,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                StreamBuilder<QuerySnapshot>(
+                                                    stream: FirebaseFirestore
+                                                        .instance
+                                                        .collection('users')
+                                                        .where('uid',
+                                                            isEqualTo: snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['uid'])
+                                                        .snapshots(),
+                                                    builder:
+                                                        (context, snapshot1) {
+                                                      return snapshot1.hasData
+                                                          ? SizedBox(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.8,
+                                                              child: Text(
+                                                                snapshot1.data!
+                                                                        .docs[0]
+                                                                    ['name'],
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                style:
+                                                                    const TextStyle(
+                                                                  fontSize: 10,
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const Text('');
+                                                    }),
+                                                const SizedBox(height: 5),
+                                                Text(
+                                                  snapshot.data!
+                                                      .docs[index]['Daytime']
+                                                      .toDate()
+                                                      .toString()
+                                                      .substring(0, 16),
+                                                  style: const TextStyle(
+                                                    fontSize: 10,
+                                                  ),
                                                 ),
-                                              ]),
-                                        ]),
-                                      ]),
-                                    ));
+                                              ],
+                                            ),
+                                          ]),
+                                    ]),
+                                  ]),
+                                );
                               })
                           : const Center(child: CircularProgressIndicator());
                     })

@@ -248,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                                     Row(
                                       children: [
                                         const Text(
-                                          '単位取得度:',
+                                          '楽単度:',
                                         ),
                                         Row(
                                           children: const [

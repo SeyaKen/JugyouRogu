@@ -25,7 +25,7 @@ class _AddReviewsState extends State<AddReviews> {
 
   List<String> title_list = [
     '内容充実度',
-    '単位取得度',
+    '楽単度',
     'テスト形式(中間)',
     'テスト形式(期末)',
     'テスト時の持込',
@@ -470,19 +470,19 @@ class _AddReviewsState extends State<AddReviews> {
 }
 
 List Juujitu_list = [
-  'かなり充実',
-  'まぁ充実',
-  '普通',
-  'やや物足りない',
   'かなり物足りない',
+  'やや物足りない',
+  '普通',
+  'まぁ充実',
+  'かなり充実',
 ];
 
 List Rakutan_list = [
-  'かなり楽勝',
-  'まぁ楽勝',
-  '普通',
-  'やや厳しい',
   'かなり厳しい',
+  'やや厳しい',
+  '普通',
+  'まぁ楽勝',
+  'かなり楽勝',
 ];
 
 List Shusseki_list = [
