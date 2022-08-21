@@ -307,7 +307,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                                   }),
                                             ),
                                           ),
-                                          const SizedBox(width: 5),
+                                          const SizedBox(width: 10),
                                           Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
