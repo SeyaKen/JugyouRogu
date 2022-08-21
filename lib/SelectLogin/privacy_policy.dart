@@ -14,7 +14,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
             title: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +41,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   size: 30,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ],
             )),
@@ -116,7 +116,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                                 '授業ログは，ユーザーが利用登録をする際に入力されたメールアドレス・パスワードを保存します。 それと共に入力されたメモ情報や出席・欠席・遅刻回数等の情報も保存します。 また、授業ログでは、利用状況を把握するためのツールとして「Google Analytics」を利用しています。「Google Analytics」から提供されるクッキー（Cookie）を使用していますが、匿名で収集されており、個人を特定するものではありません。 Google Analyticsにより収集されたデータは、Google社の',
                           ),
                           TextSpan(
-                            style: const TextStyle(color: Colors.orange),
+                            style: const TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
                                 await launch("");
@@ -127,7 +127,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                             text: '・',
                           ),
                           TextSpan(
-                            style: const TextStyle(color: Colors.orange),
+                            style: const TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
                                 await launch("");
@@ -395,7 +395,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                           },
                           child: const Text(
                             '「お問い合わせ窓口」はこちら',
-                            style: TextStyle(color: Colors.orange),
+                            style: TextStyle(color: Colors.blue),
                           )),
                     ],
                   )
