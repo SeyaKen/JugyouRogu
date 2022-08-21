@@ -241,33 +241,141 @@ class _HomeDetailState extends State<HomeDetail> {
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return InkWell(
-                                  onTap: () {},
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 13, vertical: 15),
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                      top: BorderSide(
-                                          width: 0.5, color: Colors.black),
-                                    )),
-                                    child: Column(children: [
-                                      Row(children: [
-                                        Text(Shusseki_list[snapshot
-                                            .data!.docs[index]['Shusseki']]),
-                                        Text(Kyoukasho_list[snapshot
-                                            .data!.docs[index]['Kyoukasho']]),
+                                    onTap: () {},
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 13, vertical: 15),
+                                      decoration: const BoxDecoration(
+                                          border: Border(
+                                        top: BorderSide(
+                                            width: 0.5, color: Colors.black),
+                                      )),
+                                      child: Column(children: [
+                                        Row(children: [
+                                          Text(Shusseki_list[snapshot
+                                              .data!.docs[index]['Shusseki']]),
+                                          Text(Kyoukasho_list[snapshot
+                                              .data!.docs[index]['Kyoukasho']]),
+                                        ]),
+                                        Row(children: [
+                                          Text(Chukan_list[snapshot
+                                              .data!.docs[index]['Chukan']]),
+                                          Text(Kimatu_list[snapshot
+                                              .data!.docs[index]['Kimatu']]),
+                                          Text(Motikomi_list[snapshot
+                                              .data!.docs[index]['Motikomi']]),
+                                        ]),
+                                        const SizedBox(height: 10),
+                                        Row(children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(150.0),
+                                            child: SizedBox(
+                                              width: 30,
+                                              height: 30,
+                                              child: StreamBuilder<
+                                                      QuerySnapshot>(
+                                                  stream: FirebaseFirestore
+                                                      .instance
+                                                      .collection('users')
+                                                      .where('uid',
+                                                          isEqualTo: snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                              ['uid'])
+                                                      .snapshots(),
+                                                  builder:
+                                                      (context, snapshot0) {
+                                                    return snapshot0.hasData
+                                                        ? Image.network(
+                                                            snapshot0.data!.docs[
+                                                                            0][
+                                                                        'ProfilePicture'] ==
+                                                                    ''
+                                                                ? 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b'
+                                                                : snapshot0
+                                                                        .data!
+                                                                        .docs[0]
+                                                                    [
+                                                                    'ProfilePicture'],
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        : Image.network(
+                                                            'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b',
+                                                            fit: BoxFit.cover,
+                                                          );
+                                                  }),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    StreamBuilder<QuerySnapshot>(
+                                                        stream: FirebaseFirestore
+                                                            .instance
+                                                            .collection('users')
+                                                            .where('uid',
+                                                                isEqualTo: snapshot
+                                                                        .data!
+                                                                        .docs[index]
+                                                                    ['uid'])
+                                                            .snapshots(),
+                                                        builder: (context,
+                                                            snapshot1) {
+                                                          return snapshot1
+                                                                  .hasData
+                                                              ? SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.8,
+                                                                  child: Text(
+                                                                    snapshot1
+                                                                            .data!
+                                                                            .docs[0]
+                                                                        [
+                                                                        'name'],
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                    style:
+                                                                        const TextStyle(
+                                                                      fontSize:
+                                                                          10,
+                                                                    ),
+                                                                  ),
+                                                                )
+                                                              : const Text('');
+                                                        }),
+                                                    const SizedBox(height: 5),
+                                                    Text(
+                                                      snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                              ['Daytime']
+                                                          .toDate()
+                                                          .toString()
+                                                          .substring(0, 16),
+                                                      style: const TextStyle(
+                                                        fontSize: 10,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ]),
+                                        ]),
                                       ]),
-                                      Row(children: [
-                                        Text(Chukan_list[snapshot
-                                            .data!.docs[index]['Chukan']]),
-                                        Text(Kimatu_list[snapshot
-                                            .data!.docs[index]['Kimatu']]),
-                                        Text(Motikomi_list[snapshot
-                                            .data!.docs[index]['Motikomi']]),
-                                      ]),
-                                    ]),
-                                  ),
-                                );
+                                    ));
                               })
                           : const Center(child: CircularProgressIndicator());
                     })
