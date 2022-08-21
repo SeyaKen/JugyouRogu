@@ -18,6 +18,7 @@ class _AddReviewsState extends State<AddReviews> {
   double _kItemExtent = 32.0;
   DocumentSnapshot? firebasesnapshot;
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  TextEditingController? _controller;
 
   String articleId, jugyoumei;
   _AddReviewsState(this.articleId, this.jugyoumei);
@@ -49,29 +50,29 @@ class _AddReviewsState extends State<AddReviews> {
         .collection('reviews')
         .doc(uid)
         .get();
-    
+    try {
+      if (firebasesnapshot != null) {
+        _ratingValue0 = Juujitu_list[firebasesnapshot!.get('Juujitu')];
+        _ratingValue1 = Rakutan_list[firebasesnapshot!.get('Rakutan')];
+        _ratingValue2 = Chukan_list[firebasesnapshot!.get('Chukan')];
+        _ratingValue3 = Kimatu_list[firebasesnapshot!.get('Kimatu')];
+        _ratingValue4 = Motikomi_list[firebasesnapshot!.get('Motikomi')];
+        _ratingValue5 = Kyoukasho_list[firebasesnapshot!.get('Kyoukasho')];
+        _ratingValue6 = Shusseki_list[firebasesnapshot!.get('Shusseki')];
+        _controller =
+            TextEditingController(text: firebasesnapshot!.get('Kutikomi'));
+        setState(() {});
+      }
+    } catch (e) {
+      print(e.toString());
+    }
     setState(() {});
   }
 
   @override
   void initState() {
-    try {
-      setState(() {
-        if (firebasesnapshot != null) {
-          _ratingValue0 = Juujitu_list[firebasesnapshot!.get('Juujitu')];
-          _ratingValue1 = Rakutan_list[firebasesnapshot!.get('Rakutan')];
-          _ratingValue2 = Chukan_list[firebasesnapshot!.get('Chukan')];
-          _ratingValue3 = Kimatu_list[firebasesnapshot!.get('Kimatu')];
-          _ratingValue4 = Motikomi_list[firebasesnapshot!.get('Motikomi')];
-          _ratingValue5 = Kyoukasho_list[firebasesnapshot!.get('Kyoukasho')];
-          _ratingValue6 = Shusseki_list[firebasesnapshot!.get('Shusseki')];
-          kutikomi = firebasesnapshot!.get('Kutikomi');
-        }
-      });
-    } catch (e) {
-      print(e.toString());
-    }
     getHomeLists();
+
     super.initState();
   }
 
@@ -110,16 +111,14 @@ class _AddReviewsState extends State<AddReviews> {
             InkWell(
               onTap: () {
                 Navigator.pop(context);
-                setState(() {
-                  _ratingValue0 = null;
-                  _ratingValue1 = null;
-                  _ratingValue2 = null;
-                  _ratingValue3 = null;
-                  _ratingValue4 = null;
-                  _ratingValue5 = null;
-                  _ratingValue6 = null;
-                  kutikomi = '';
-                });
+                _ratingValue0 = null;
+                _ratingValue1 = null;
+                _ratingValue2 = null;
+                _ratingValue3 = null;
+                _ratingValue4 = null;
+                _ratingValue5 = null;
+                _ratingValue6 = null;
+                kutikomi = '';
               },
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -369,7 +368,7 @@ class _AddReviewsState extends State<AddReviews> {
                                     onChanged: (val) {
                                       setState(() => kutikomi = val);
                                     },
-                                    initialValue: kutikomi,
+                                    controller: _controller,
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       fillColor: Colors.grey[300],
@@ -439,6 +438,7 @@ class _AddReviewsState extends State<AddReviews> {
                     'Shusseki': Shusseki_list.indexOf(_ratingValue6),
                     'Kutikomi': kutikomi,
                     'Daytime': DateTime.now(),
+                    'uid': uid,
                   });
                   _ratingValue0 = null;
                   _ratingValue1 = null;
