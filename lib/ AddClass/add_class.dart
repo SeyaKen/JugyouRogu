@@ -204,6 +204,8 @@ class _AddClassState extends State<AddClass> {
                     '学部': ClassName2 ?? '',
                     '曜日・時限1': ClassName3 ?? '',
                     '曜日・時限2': ClassName4 ?? '',
+                    'JuujituAverage':'0',
+                    'RakutanAverage':'0',
                     'Daytime': DateTime.now(),
                   });
                   ClassName3 = null;

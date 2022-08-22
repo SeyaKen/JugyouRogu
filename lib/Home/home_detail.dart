@@ -30,8 +30,15 @@ class _HomeDetailState extends State<HomeDetail> {
         .doc(articleId)
         .get();
     kutikomiListsStream = DatabaseService(uid).kutikomiCollect(articleId);
-    JuujituInt = double.parse(firebasesnapshot!.get('JuujituAverage'));
-    RakutanInt = double.parse(firebasesnapshot!.get('RakutanAverage'));
+    if (firebasesnapshot!.get('JuujituAverage') == '0' ||
+        firebasesnapshot!.get('RakutanAverage') == '0') {
+      JuujituInt = 0;
+      RakutanInt = 0;
+    } else {
+      JuujituInt = double.parse(firebasesnapshot!.get('JuujituAverage'));
+      RakutanInt = double.parse(firebasesnapshot!.get('RakutanAverage'));
+    }
+
     setState(() {});
   }
 
@@ -46,9 +53,7 @@ class _HomeDetailState extends State<HomeDetail> {
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       appBar: AppBar(
-        shape: const Border(
-          bottom: BorderSide(color: Colors.grey, width: 0.5)
-        ),
+        shape: const Border(bottom: BorderSide(color: Colors.grey, width: 0.5)),
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
@@ -144,8 +149,10 @@ class _HomeDetailState extends State<HomeDetail> {
                                   )),
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.star,
+                                  Icon(
+                                    JuujituInt != 0
+                                    ? Icons.star
+                                    : Icons.star_outline,
                                     color: Colors.orange,
                                     size: 20,
                                   ),
@@ -188,7 +195,9 @@ class _HomeDetailState extends State<HomeDetail> {
                                 ],
                               ),
                               Text(
-                                JuujituInt!.toString(),
+                                JuujituInt != 0
+                                ? JuujituInt!.toString()
+                                : 'データなし',
                                 style: const TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -208,8 +217,10 @@ class _HomeDetailState extends State<HomeDetail> {
                                   )),
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.star,
+                                  Icon(
+                                    RakutanInt != 0
+                                    ? Icons.star
+                                    : Icons.star_outline,
                                     color: Colors.orange,
                                     size: 20,
                                   ),
@@ -252,7 +263,9 @@ class _HomeDetailState extends State<HomeDetail> {
                                 ],
                               ),
                               Text(
-                                RakutanInt!.toString(),
+                                RakutanInt != 0
+                                ? RakutanInt!.toString()
+                                : 'データなし',
                                 style: const TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -315,8 +328,10 @@ class _HomeDetailState extends State<HomeDetail> {
                                           PageRouteBuilder(
                                             pageBuilder: (_, __, ___) =>
                                                 KutikomiDetail(
-                                              jugyoumei: firebasesnapshot!.get('授業名'),
-                                              AitenoUid: snapshot.data!.docs[index].id,
+                                              jugyoumei:
+                                                  firebasesnapshot!.get('授業名'),
+                                              AitenoUid:
+                                                  snapshot.data!.docs[index].id,
                                               articleId: articleId,
                                             ),
                                             transitionDuration:
