@@ -118,6 +118,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         ],
                       )),
                   appBar: AppBar(
+                    shape: const Border(
+                        bottom: BorderSide(color: Colors.grey, width: 0.5)),
                     iconTheme: const IconThemeData(
                       color: Colors.black,
                       size: 40,
@@ -188,7 +190,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Column(
                           children: [
                             ClipRRect(
-                          borderRadius: BorderRadius.circular(3.0),
+                              borderRadius: BorderRadius.circular(3.0),
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 height: 40,
@@ -209,7 +211,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ));
                                     },
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: const [
                                         Text(
                                           'プロフィールを編集する',

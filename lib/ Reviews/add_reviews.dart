@@ -465,9 +465,9 @@ class _AddReviewsState extends State<AddReviews> {
                             .collection('classes')
                             .doc(articleId)
                             .update({
-                              'JuujituAverage': JuujituIntString,
-                              'RakutanAverage': RakutanIntString,
-                            });
+                          'JuujituAverage': JuujituIntString,
+                          'RakutanAverage': RakutanIntString,
+                        });
                       }
                     }
                   });
