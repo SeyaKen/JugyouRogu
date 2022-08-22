@@ -19,6 +19,12 @@ class _AddReviewsState extends State<AddReviews> {
   DocumentSnapshot? firebasesnapshot;
   String uid = FirebaseAuth.instance.currentUser!.uid;
   TextEditingController? _controller;
+  QuerySnapshot? querySnapshot;
+  late final allData;
+  double JuujituInt = 0;
+  String? JuujituIntString;
+  double RakutanInt = 0;
+  String? RakutanIntString;
 
   String articleId, jugyoumei;
   _AddReviewsState(this.articleId, this.jugyoumei);
@@ -436,10 +442,42 @@ class _AddReviewsState extends State<AddReviews> {
                     'Motikomi': Motikomi_list.indexOf(_ratingValue4),
                     'Kyoukasho': Kyoukasho_list.indexOf(_ratingValue5),
                     'Shusseki': Shusseki_list.indexOf(_ratingValue6),
-                    'Kutikomi': kutikomi,
+                    'Kutikomi': kutikomi ?? '',
                     'Daytime': DateTime.now(),
                     'uid': uid,
+                  }).then((value) async {
+                    querySnapshot = await FirebaseFirestore.instance
+                        .collection('classes')
+                        .doc(articleId)
+                        .collection('reviews')
+                        .get();
+                    allData =
+                        querySnapshot!.docs.map((doc) => doc.data()).toList();
+                    for (var i = 0; i < allData.length; i++) {
+                      JuujituInt = JuujituInt + allData[i]['Juujitu'];
+                      RakutanInt = RakutanInt + allData[i]['Rakutan'];
+                      if (i == allData.length - 1) {
+                        JuujituInt = (JuujituInt / allData.length + 1.0);
+                        JuujituIntString = JuujituInt.toStringAsFixed(2);
+                        RakutanInt = (RakutanInt / allData.length + 1.0);
+                        RakutanIntString = RakutanInt.toStringAsFixed(2);
+                        FirebaseFirestore.instance
+                            .collection('classes')
+                            .doc(articleId)
+                            .update({
+                              'JuujituAverage': JuujituIntString,
+                              'RakutanAverage': RakutanIntString,
+                            });
+                      }
+                    }
                   });
+
+                  Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
+                        transitionDuration: const Duration(seconds: 0),
+                      ));
                   _ratingValue0 = null;
                   _ratingValue1 = null;
                   _ratingValue2 = null;
@@ -447,12 +485,6 @@ class _AddReviewsState extends State<AddReviews> {
                   _ratingValue4 = null;
                   _ratingValue5 = null;
                   _ratingValue6 = null;
-                  Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
-                        transitionDuration: const Duration(seconds: 0),
-                      ));
                 }
               },
               child: const Center(

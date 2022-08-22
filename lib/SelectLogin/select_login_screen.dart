@@ -64,7 +64,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                         style: TextStyle(
                                           fontSize: 30,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.orange,
+                                          color: Colors.black,
                                         )),
                                   ],
                                 ),

@@ -20,6 +20,8 @@ class _HomeDetailState extends State<HomeDetail> {
   String articleId;
   _HomeDetailState(this.articleId);
   final ScrollController _scrollController = ScrollController();
+  double? JuujituInt;
+  double? RakutanInt;
 
   getHomeLists() async {
     firebasesnapshot = await FirebaseFirestore.instance
@@ -27,6 +29,8 @@ class _HomeDetailState extends State<HomeDetail> {
         .doc(articleId)
         .get();
     kutikomiListsStream = DatabaseService(uid).kutikomiCollect(articleId);
+    JuujituInt = double.parse(firebasesnapshot!.get('JuujituAverage'));
+    RakutanInt = double.parse(firebasesnapshot!.get('RakutanAverage'));
     setState(() {});
   }
 
@@ -97,18 +101,15 @@ class _HomeDetailState extends State<HomeDetail> {
                     const SizedBox(height: 5),
                     Row(
                       children: [
-                        const Text(
-                          '学部:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          )
-                        ),
+                        const Text('学部:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            )),
                         firebasesnapshot!.get('学部') != ''
                             ? Text(firebasesnapshot!.get('学部'),
                                 style: const TextStyle(
                                   fontSize: 15,
-                                  fontWeight: FontWeight.bold,
                                 ))
                             : Container(),
                         firebasesnapshot!.get('学部') != ''
@@ -116,24 +117,19 @@ class _HomeDetailState extends State<HomeDetail> {
                                 width: 10,
                               )
                             : Container(),
-                        const Text(
-                          '教授:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
-                          )
-                        ),
-                        Text(
-                          firebasesnapshot!.get('教授・講師名'),
+                        const Text('教授:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            )),
+                        Text(firebasesnapshot!.get('教授・講師名'),
                             style: const TextStyle(
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            )
-                          ),
+                            )),
                       ],
                     ),
                     const SizedBox(height: 5),
-                    Row(
+                    Column(
                       children: [
                         Row(
                           children: [
@@ -142,34 +138,58 @@ class _HomeDetailState extends State<HomeDetail> {
                                   fontWeight: FontWeight.bold,
                                 )),
                             Row(
-                              children: const [
-                                Icon(
-                                  Icons.star_outline,
+                              children: [
+                                const Icon(
+                                  Icons.star,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  JuujituInt! >= 1.5 && JuujituInt! < 2
+                                      ? Icons.star_half_outlined
+                                      : JuujituInt! >= 2
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  JuujituInt! >= 2.5 && JuujituInt! < 3
+                                      ? Icons.star_half_outlined
+                                      : JuujituInt! >= 3
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  JuujituInt! >= 3.5 && JuujituInt! < 4
+                                      ? Icons.star_half_outlined
+                                      : JuujituInt! >= 4
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  JuujituInt! >= 4.5 && JuujituInt! < 5
+                                      ? Icons.star_half_outlined
+                                      : JuujituInt! >= 5
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                               ],
-                            )
+                            ),
+                            Text(
+                              JuujituInt!.toString(),
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -182,34 +202,58 @@ class _HomeDetailState extends State<HomeDetail> {
                                   fontWeight: FontWeight.bold,
                                 )),
                             Row(
-                              children: const [
-                                Icon(
-                                  Icons.star_outline,
+                              children: [
+                                const Icon(
+                                  Icons.star,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  RakutanInt! >= 1.5 && RakutanInt! < 2
+                                      ? Icons.star_half_outlined
+                                      : RakutanInt! >= 2
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  RakutanInt! >= 2.5 && RakutanInt! < 3
+                                      ? Icons.star_half_outlined
+                                      : RakutanInt! >= 3
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  RakutanInt! >= 3.5 && RakutanInt! < 4
+                                      ? Icons.star_half_outlined
+                                      : RakutanInt! >= 4
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                                 Icon(
-                                  Icons.star_outline,
+                                  RakutanInt! >= 4.5 && RakutanInt! < 5
+                                      ? Icons.star_half_outlined
+                                      : RakutanInt! >= 5
+                                          ? Icons.star
+                                          : Icons.star_outline,
                                   color: Colors.orange,
                                   size: 20,
                                 ),
                               ],
-                            )
+                            ),
+                            Text(
+                              RakutanInt!.toString(),
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -284,34 +328,38 @@ class _HomeDetailState extends State<HomeDetail> {
                                                   size: 20,
                                                 ),
                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Juujitu'] > 0
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                  snapshot.data!.docs[index]
+                                                              ['Juujitu'] >
+                                                          0
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
-                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Juujitu'] > 1
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                Icon(
+                                                  snapshot.data!.docs[index]
+                                                              ['Juujitu'] >
+                                                          1
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
-                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Juujitu'] > 2
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                Icon(
+                                                  snapshot.data!.docs[index]
+                                                              ['Juujitu'] >
+                                                          2
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
-                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Juujitu'] > 3
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                Icon(
+                                                  snapshot.data!.docs[index]
+                                                              ['Juujitu'] >
+                                                          3
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
@@ -320,8 +368,8 @@ class _HomeDetailState extends State<HomeDetail> {
                                           ],
                                         ),
                                         const SizedBox(
-                          width: 5,
-                        ),
+                                          width: 5,
+                                        ),
                                         Row(
                                           children: [
                                             const Text('楽単度:',
@@ -336,34 +384,38 @@ class _HomeDetailState extends State<HomeDetail> {
                                                   size: 20,
                                                 ),
                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Rakutan'] > 0
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                  snapshot.data!.docs[index]
+                                                              ['Rakutan'] >
+                                                          0
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
-                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Rakutan'] > 1
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                Icon(
+                                                  snapshot.data!.docs[index]
+                                                              ['Rakutan'] >
+                                                          1
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
-                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Rakutan'] > 2
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                Icon(
+                                                  snapshot.data!.docs[index]
+                                                              ['Rakutan'] >
+                                                          2
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
-                                                 Icon(
-                                                  snapshot
-                                              .data!.docs[index]['Rakutan'] > 3
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                Icon(
+                                                  snapshot.data!.docs[index]
+                                                              ['Rakutan'] >
+                                                          3
+                                                      ? Icons.star
+                                                      : Icons.star_outline,
                                                   color: Colors.orange,
                                                   size: 20,
                                                 ),
