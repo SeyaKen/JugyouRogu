@@ -15,7 +15,7 @@ class HomeDetail extends StatefulWidget {
 }
 
 class _HomeDetailState extends State<HomeDetail> {
-  DocumentSnapshot? firebasesnapshot;
+  DocumentSnapshot? firebasesnapshot, firebasesnapshot1;
   String uid = FirebaseAuth.instance.currentUser!.uid;
   Stream<QuerySnapshot<Object?>>? kutikomiListsStream;
   String articleId;
@@ -38,7 +38,18 @@ class _HomeDetailState extends State<HomeDetail> {
       JuujituInt = double.parse(firebasesnapshot!.get('JuujituAverage'));
       RakutanInt = double.parse(firebasesnapshot!.get('RakutanAverage'));
     }
-
+    try {
+      firebasesnapshot1 = await FirebaseFirestore.instance
+          .collection('classes')
+          .doc(articleId)
+          .collection('reviews')
+          .doc(uid)
+          .get();
+      firebasesnapshot1!.get('uid');
+    } catch (e) {
+      print(e.toString());
+      firebasesnapshot1 = null;
+    }
     setState(() {});
   }
 
@@ -151,8 +162,8 @@ class _HomeDetailState extends State<HomeDetail> {
                                 children: [
                                   Icon(
                                     JuujituInt != 0
-                                    ? Icons.star
-                                    : Icons.star_outline,
+                                        ? Icons.star
+                                        : Icons.star_outline,
                                     color: Colors.orange,
                                     size: 20,
                                   ),
@@ -196,8 +207,8 @@ class _HomeDetailState extends State<HomeDetail> {
                               ),
                               Text(
                                 JuujituInt != 0
-                                ? JuujituInt!.toString()
-                                : 'データなし',
+                                    ? JuujituInt!.toString()
+                                    : 'データなし',
                                 style: const TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -219,8 +230,8 @@ class _HomeDetailState extends State<HomeDetail> {
                                 children: [
                                   Icon(
                                     RakutanInt != 0
-                                    ? Icons.star
-                                    : Icons.star_outline,
+                                        ? Icons.star
+                                        : Icons.star_outline,
                                     color: Colors.orange,
                                     size: 20,
                                   ),
@@ -264,8 +275,8 @@ class _HomeDetailState extends State<HomeDetail> {
                               ),
                               Text(
                                 RakutanInt != 0
-                                ? RakutanInt!.toString()
-                                : 'データなし',
+                                    ? RakutanInt!.toString()
+                                    : 'データなし',
                                 style: const TextStyle(
                                   color: Colors.red,
                                   fontWeight: FontWeight.bold,
@@ -721,13 +732,14 @@ class _HomeDetailState extends State<HomeDetail> {
                       transitionDuration: const Duration(seconds: 0),
                     ));
               },
-              child: const Center(
-                  child: Text('口コミを追加する',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                        color: Colors.white,
-                      )))),
+              child: Center(
+                  child:
+                      Text(firebasesnapshot1 == null ? '口コミを追加する' : '口コミを編集する',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                            color: Colors.white,
+                          )))),
         ),
       ),
     );
