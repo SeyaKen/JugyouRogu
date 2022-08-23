@@ -13,6 +13,8 @@ class AddClass extends StatefulWidget {
 class _AddClassState extends State<AddClass> {
   final _formKey = GlobalKey<FormState>();
   double _kItemExtent = 32.0;
+  var forSearchList = {};
+  var allString = '';
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -58,10 +60,10 @@ class _AddClassState extends State<AddClass> {
               ),
             ),
             const Text('授業を作成',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            )),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                )),
             const Icon(
               Icons.arrow_back_ios_new_rounded,
               size: 30,
@@ -161,10 +163,8 @@ class _AddClassState extends State<AddClass> {
                                                 index == 3 ? txt0 : txt1,
                                             onTap: () {
                                               index == 3
-                                                          ? txt0.text = youbi[
-                                                              0]
-                                                          : txt1.text = youbi[
-                                                              0];
+                                                  ? txt0.text = youbi[0]
+                                                  : txt1.text = youbi[0];
                                               _showDialog(
                                                 CupertinoPicker(
                                                   magnification: 1.22,
@@ -294,27 +294,45 @@ class _AddClassState extends State<AddClass> {
           height: 50,
           child: InkWell(
               onTap: () {
-                if (ClassName0 != null) {
-                  FirebaseFirestore.instance.collection('classes').doc().set({
-                    '授業名': ClassName0 ?? '',
-                    '教授・講師名': ClassName1 ?? '',
-                    '学部': ClassName2 ?? '',
-                    '曜日・時限1': ClassName3 ?? '',
-                    '曜日・時限2': ClassName4 ?? '',
-                    'JuujituAverage': '0',
-                    'RakutanAverage': '0',
-                    'Daytime': DateTime.now(),
-                  });
-                  ClassName3 = null;
-                  ClassName4 = null;
-                  Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
-                        transitionDuration: const Duration(seconds: 0),
-                      ));
-                } else {
-                  // ここで授業名を追加してくださいの警告？を出す
+                allString =
+                    '$ClassName0$ClassName1$ClassName2$ClassName3$ClassName4';
+                for (int i = 0; i < allString.length - 1; i++) {
+                  forSearchList[allString.substring(i, i + 2)] = true;
+                  if (i == allString.length - 2) {
+                    // 全ての処理が終わったら、データベースに格納する関数。
+                    if (ClassName0 != null) {
+                      FirebaseFirestore.instance
+                          .collection('classes')
+                          .doc()
+                          .set({
+                        '授業名': ClassName0 ?? '',
+                        '教授・講師名': ClassName1?.replaceAll(RegExp(r'\s'), '') ?? '',
+                        '学部': ClassName2 ?? '',
+                        '曜日・時限1': ClassName3 ?? '',
+                        '曜日・時限2': ClassName4 ?? '',
+                        'JuujituAverage': '0',
+                        'RakutanAverage': '0',
+                        'Daytime': DateTime.now(),
+                        'forSearchList': forSearchList,
+                      });
+                      ClassName1 = null;
+                      ClassName2 = null;
+                      txt0.text = '';
+                      txt1.text = '';
+                      txt2.text = '';
+                      forSearchList = {};
+                      allString = '';
+                      Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) =>
+                                MainPage(currenttab: 0),
+                            transitionDuration: const Duration(seconds: 0),
+                          ));
+                    } else {
+                      // ここで授業名を追加してくださいの警告？を出す
+                    }
+                  }
                 }
               },
               child: const Center(

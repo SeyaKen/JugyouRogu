@@ -48,7 +48,7 @@ class DatabaseService extends ChangeNotifier {
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> searchDataCollect(
       searchWordsList) async {
     Query<Map<String, dynamic>> query =
-        FirebaseFirestore.instance.collection('jugyou');
+        FirebaseFirestore.instance.collection('classes');
     for (var i = 0; i < searchWordsList.length; i++) {
       try {
         query =

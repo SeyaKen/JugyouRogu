@@ -124,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     isDense: true,
                     border: InputBorder.none,
-                    hintText: '検索',
+                    hintText: '授業名・教員名など(2文字以上)',
                     hintStyle: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 19,
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                     )
                   : const SizedBox()),
           StreamBuilder<QuerySnapshot>(
-              stream: jugyouListsStream,
+              stream: searchStateStream ?? jugyouListsStream,
               builder: (context, snapshot) {
                 return snapshot.hasData
                     ? ListView.builder(
