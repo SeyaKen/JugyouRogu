@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class AddClass extends StatefulWidget {
@@ -15,6 +17,7 @@ class _AddClassState extends State<AddClass> {
   double _kItemExtent = 32.0;
   var forSearchList = {};
   var allString = '';
+  String uid = FirebaseAuth.instance.currentUser!.uid;
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -49,6 +52,11 @@ class _AddClassState extends State<AddClass> {
                 Navigator.pop(context);
                 ClassName1 = null;
                 ClassName2 = null;
+                ClassName0 = null;
+                ClassName1 = null;
+                ClassName2 = null;
+                ClassName3 = null;
+                ClassName4 = null;
                 txt0.text = '';
                 txt1.text = '';
                 txt2.text = '';
@@ -163,8 +171,8 @@ class _AddClassState extends State<AddClass> {
                                                 index == 3 ? txt0 : txt1,
                                             onTap: () {
                                               index == 3
-                                                  ? txt0.text = youbi[0]
-                                                  : txt1.text = youbi[0];
+                                                  ? txt0.text = ''
+                                                  : txt1.text = '';
                                               _showDialog(
                                                 CupertinoPicker(
                                                   magnification: 1.22,
@@ -230,7 +238,7 @@ class _AddClassState extends State<AddClass> {
                                           child: TextFormField(
                                             controller: txt2,
                                             onTap: () {
-                                              txt2.text = gakubu[0];
+                                              txt2.text = '';
                                               _showDialog(
                                                 CupertinoPicker(
                                                   magnification: 1.22,
@@ -287,53 +295,63 @@ class _AddClassState extends State<AddClass> {
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(3),
         child: Container(
-          color: ClassName0 != null
+          color: ClassName0 != null && ClassName1 != null
               ? Colors.orange
               : Colors.orange.withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(
               onTap: () {
-                allString =
-                    '$ClassName0$ClassName1$ClassName2$ClassName3$ClassName4';
-                for (int i = 0; i < allString.length - 1; i++) {
-                  forSearchList[allString.substring(i, i + 2)] = true;
-                  if (i == allString.length - 2) {
-                    // 全ての処理が終わったら、データベースに格納する関数。
-                    if (ClassName0 != null) {
-                      FirebaseFirestore.instance
-                          .collection('classes')
-                          .doc()
-                          .set({
-                        '授業名': ClassName0 ?? '',
-                        '教授・講師名': ClassName1?.replaceAll(RegExp(r'\s'), '') ?? '',
-                        '学部': ClassName2 ?? '',
-                        '曜日・時限1': ClassName3 ?? '',
-                        '曜日・時限2': ClassName4 ?? '',
-                        'JuujituAverage': '0',
-                        'RakutanAverage': '0',
-                        'Daytime': DateTime.now(),
-                        'forSearchList': forSearchList,
-                      });
-                      ClassName1 = null;
-                      ClassName2 = null;
-                      txt0.text = '';
-                      txt1.text = '';
-                      txt2.text = '';
-                      forSearchList = {};
-                      allString = '';
-                      Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) =>
-                                MainPage(currenttab: 0),
-                            transitionDuration: const Duration(seconds: 0),
-                          ));
-                    } else {
-                      // ここで授業名を追加してくださいの警告？を出す
+                DatabaseService(uid)
+                    .ChouhukuKakunin(
+                        ClassName0, ClassName1!.replaceAll(RegExp(r'\s'), ''))
+                    .then((value) {
+                  print(value.length);
+                  allString =
+                      '$ClassName0$ClassName1$ClassName2$ClassName3$ClassName4';
+                  for (int i = 0; i < allString.length - 1; i++) {
+                    forSearchList[allString.substring(i, i + 2)] = true;
+                    if (i == allString.length - 2) {
+                      // 全ての処理が終わったら、データベースに格納する関数。
+                      if (ClassName0 != null && ClassName1 != null) {
+                        FirebaseFirestore.instance
+                            .collection('classes')
+                            .doc()
+                            .set({
+                          '授業名': ClassName0 ?? '',
+                          '教授・講師名':
+                              ClassName1?.replaceAll(RegExp(r'\s'), '') ?? '',
+                          '学部': ClassName2 ?? '',
+                          '曜日・時限1': ClassName3 ?? '',
+                          '曜日・時限2': ClassName4 ?? '',
+                          'JuujituAverage': '0',
+                          'RakutanAverage': '0',
+                          'Daytime': DateTime.now(),
+                          'forSearchList': forSearchList,
+                        });
+                        ClassName0 = null;
+                        ClassName1 = null;
+                        ClassName2 = null;
+                        ClassName3 = null;
+                        ClassName4 = null;
+                        txt0.text = '';
+                        txt1.text = '';
+                        txt2.text = '';
+                        forSearchList = {};
+                        allString = '';
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) =>
+                                  MainPage(currenttab: 0),
+                              transitionDuration: const Duration(seconds: 0),
+                            ));
+                      } else {
+                        // ここで授業名を追加してくださいの警告？を出す
+                      }
                     }
                   }
-                }
+                });
               },
               child: const Center(
                   child: Text('授業を作成する',

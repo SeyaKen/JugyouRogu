@@ -131,241 +131,243 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.grey,
                     ))),
           )),
-      body: Column(
-        children: [
-          SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: banner != null
-                  ? AdWidget(
-                      ad: banner!,
-                    )
-                  : const SizedBox()),
-          StreamBuilder<QuerySnapshot>(
-              stream: searchStateStream ?? jugyouListsStream,
-              builder: (context, snapshot) {
-                return snapshot.hasData
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        controller: _scrollController,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                PageRouteBuilder(
-                                  pageBuilder: (_, __, ___) => HomeDetail(
-                                    articleId: snapshot.data!.docs[index].id,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                child: banner != null
+                    ? AdWidget(
+                        ad: banner!,
+                      )
+                    : const SizedBox()),
+            StreamBuilder<QuerySnapshot>(
+                stream: searchStateStream ?? jugyouListsStream,
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          controller: _scrollController,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (_, __, ___) => HomeDetail(
+                                      articleId: snapshot.data!.docs[index].id,
+                                    ),
+                                    transitionDuration:
+                                        const Duration(seconds: 0),
                                   ),
-                                  transitionDuration:
-                                      const Duration(seconds: 0),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 13, vertical: 15),
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                top:
-                                    BorderSide(width: 0.5, color: Colors.black),
-                              )),
-                              child: Column(children: [
-                                Row(
-                                  children: [
-                                    Text(snapshot.data!.docs[index]['授業名'],
-                                        style: const TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      '学部:',
-                                      style: TextStyle(
-                                              fontSize: 15,
-                                                                                            fontWeight: FontWeight.bold,
-
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 13, vertical: 15),
+                                decoration: const BoxDecoration(
+                                    border: Border(
+                                  top:
+                                      BorderSide(width: 0.5, color: Colors.black),
+                                )),
+                                child: Column(children: [
+                                  Row(
+                                    children: [
+                                      Text(snapshot.data!.docs[index]['授業名'],
+                                          style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '学部:',
+                                        style: TextStyle(
+                                                fontSize: 15,
+                                                                                              fontWeight: FontWeight.bold,
+      
+                                              )
+                                      ),
+                                      snapshot.data!.docs[index]['学部'] != ''
+                                          ? Text(snapshot.data!.docs[index]['学部'],
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                              ))
+                                          : Container(),
+                                      snapshot.data!.docs[index]['学部'] != ''
+                                          ? const SizedBox(
+                                              width: 10,
                                             )
-                                    ),
-                                    snapshot.data!.docs[index]['学部'] != ''
-                                        ? Text(snapshot.data!.docs[index]['学部'],
-                                            style: const TextStyle(
-                                              fontSize: 15,
-                                            ))
-                                        : Container(),
-                                    snapshot.data!.docs[index]['学部'] != ''
-                                        ? const SizedBox(
-                                            width: 10,
-                                          )
-                                        : Container(),
-                                    const Text(
-                                      '教授:',
-                                      style: TextStyle(
-                                              fontSize: 15,
-                                                                                            fontWeight: FontWeight.bold,
-
-                                            )
-                                    ),
-                                    Text(snapshot.data!.docs[index]['教授・講師名'],
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                        )),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          '内容充実度:',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            )
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['JuujituAverage']) != 0.0
+                                          : Container(),
+                                      const Text(
+                                        '教授:',
+                                        style: TextStyle(
+                                                fontSize: 15,
+                                                                                              fontWeight: FontWeight.bold,
+      
+                                              )
+                                      ),
+                                      Text(snapshot.data!.docs[index]['教授・講師名'],
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                          )),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            '内容充実度:',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) != 0.0
+                                                ? Icons.star
+                                                : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 1.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 2
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 2
                                               ? Icons.star
                                               : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 1.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 2
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 2
-                                            ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 2.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 3
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 3
-                                            ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                             double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 3.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 4
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 4
-                                            ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 4.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 5
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 5
-                                        ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                snapshot.data!.docs[index]['JuujituAverage'] != '0'
-                                ? snapshot.data!.docs[index]['JuujituAverage'].toString()
-                                : 'データなし',
-                                style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          '楽単度:',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            )
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['RakutanAverage']) != 0.0
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 2.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 3
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 3
                                               ? Icons.star
                                               : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 1.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 2
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 2
-                                            ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 2.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 3
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 3
-                                            ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                             double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 3.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 4
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 4
-                                            ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                            Icon(
-                                              double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 4.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 5
-                                        ? Icons.star_half_outlined
-                                        : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 5
-                                        ? Icons.star
-                                            : Icons.star_outline,
-                                              color: Colors.orange,
-                                              size: 20,
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                snapshot.data!.docs[index]['RakutanAverage'] != '0'
-                                ? snapshot.data!.docs[index]['RakutanAverage'].toString()
-                                : 'データなし',
-                                style: const TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                               double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 3.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 4
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 4
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 4.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 5
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 5
+                                          ? Icons.star
+                                              : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                  snapshot.data!.docs[index]['JuujituAverage'] != '0'
+                                  ? snapshot.data!.docs[index]['JuujituAverage'].toString()
+                                  : 'データなし',
+                                  style: const TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
                                 ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            '楽単度:',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) != 0.0
+                                                ? Icons.star
+                                                : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 1.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 2
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 2
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 2.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 3
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 3
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                               double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 3.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 4
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 4
+                                              ? Icons.star
+                                              : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                              Icon(
+                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 4.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 5
+                                          ? Icons.star_half_outlined
+                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 5
+                                          ? Icons.star
+                                              : Icons.star_outline,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                  snapshot.data!.docs[index]['RakutanAverage'] != '0'
+                                  ? snapshot.data!.docs[index]['RakutanAverage'].toString()
+                                  : 'データなし',
+                                  style: const TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ]),
                               ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ]),
-                            ),
-                          );
-                        })
-                    : const Center(child: CircularProgressIndicator());
-              }),
-        ],
+                            );
+                          })
+                      : const Center(child: CircularProgressIndicator());
+                }),
+          ],
+        ),
       ),
       floatingActionButton: SizedBox(
         width: 65,

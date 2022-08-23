@@ -214,4 +214,14 @@ class DatabaseService extends ChangeNotifier {
           .update({"ProfilePicture": ds['ProfilePicture']});
     });
   }
+
+  // 授業の重複がないか確認する関数
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> ChouhukuKakunin(jugyoumei, kyoujumei) async {
+    return await FirebaseFirestore.instance
+        .collection('classes')
+        .orderBy('Daytime', descending: true)
+        .where('授業名', isEqualTo: jugyoumei)
+        .where('教授・講師名', isEqualTo: kyoujumei)
+        .snapshots();
+  }
 }
