@@ -113,6 +113,18 @@ class _AddClassState extends State<AddClass> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                index == 0 || index == 1 
+                                ? const SizedBox(
+                                  width: 5,
+                                ): Container(),
+                                index == 0 || index == 1 ? const Text(
+                                  '※必須',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.red,
+                                  ),
+                                ) : Container(),
                               ],
                             ),
                             const SizedBox(
@@ -295,25 +307,32 @@ class _AddClassState extends State<AddClass> {
       floatingActionButton: ClipRRect(
         borderRadius: BorderRadius.circular(3),
         child: Container(
-          color: ClassName0 != null && ClassName1 != null
+          color: ClassName0 != null &&
+                  ClassName1 != null &&
+                  ClassName0 != '' &&
+                  ClassName1 != ''
               ? Colors.orange
               : Colors.orange.withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(
-              onTap: () {
-                DatabaseService(uid)
-                    .ChouhukuKakunin(
-                        ClassName0, ClassName1!.replaceAll(RegExp(r'\s'), ''))
-                    .then((value) {
-                  print(value.length);
-                  allString =
-                      '$ClassName0$ClassName1$ClassName2$ClassName3$ClassName4';
-                  for (int i = 0; i < allString.length - 1; i++) {
-                    forSearchList[allString.substring(i, i + 2)] = true;
-                    if (i == allString.length - 2) {
-                      // 全ての処理が終わったら、データベースに格納する関数。
-                      if (ClassName0 != null && ClassName1 != null) {
+              onTap: () async {
+                var dataLengthsource = DatabaseService(uid).ChouhukuKakunin(
+                    ClassName0, ClassName1!.replaceAll(RegExp(r'\s'), ''));
+                var querySnapshot = await dataLengthsource.get();
+                var totalEquals = querySnapshot.docs.length;
+                allString =
+                    '$ClassName0$ClassName1$ClassName2$ClassName3$ClassName4';
+                if (ClassName0 != null &&
+                    ClassName1 != null &&
+                    ClassName0 != '' &&
+                    ClassName1 != '') {
+                  // 授業が重複していない場合
+                  if (totalEquals == 0) {
+                    for (int i = 0; i < allString.length - 1; i++) {
+                      forSearchList[allString.substring(i, i + 2)] = true;
+                      if (i == allString.length - 2) {
+                        // 全ての処理が終わったら、データベースに格納する関数。
                         FirebaseFirestore.instance
                             .collection('classes')
                             .doc()
@@ -346,12 +365,30 @@ class _AddClassState extends State<AddClass> {
                                   MainPage(currenttab: 0),
                               transitionDuration: const Duration(seconds: 0),
                             ));
-                      } else {
-                        // ここで授業名を追加してくださいの警告？を出す
                       }
                     }
+                  } else {
+                    // 授業が元々入っている場合のアラート？
+                    // ここで授業名を追加してくださいの警告？を出す
+                    showCupertinoDialog(
+                      context: context,
+                      builder: (context) {
+                        return CupertinoAlertDialog(
+                          title: const Text('この授業は既に存在します'),
+                          content: const Text('ホーム画面から検索してください'),
+                          actions: [
+                            CupertinoDialogAction(
+                              child: const Text('閉じる'),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   }
-                });
+                }
               },
               child: const Center(
                   child: Text('授業を作成する',
