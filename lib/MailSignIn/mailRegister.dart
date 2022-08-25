@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jugyourogu/MailSignIn/daigaku_select.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
@@ -207,7 +208,7 @@ class _mailRegisterState extends State<mailRegister> {
                                               context,
                                               PageRouteBuilder(
                                                 pageBuilder: (_, __, ___) =>
-                                                    MainPage(currenttab: 0),
+                                                    DaigakuSelectScreen(),
                                                 transitionDuration:
                                                     const Duration(seconds: 0),
                                               ))));

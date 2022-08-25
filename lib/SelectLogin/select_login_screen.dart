@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jugyourogu/MailSignIn/daigaku_select.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
 import 'package:jugyourogu/MailSignIn/mailAuthenticate.dart';
 import 'package:jugyourogu/SelectLogin/privacy_policy.dart';
@@ -85,6 +86,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                                     .instance.currentUser!.uid)
                                                 .get()
                                                 .then((value) {
+                                                
                                               if (value.data() == null) {
                                                 FirebaseFirestore.instance
                                                     .collection('users')
@@ -100,13 +102,11 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                                       .currentUser!.uid,
                                                 });
                                               }
-                                              SharedPreferenceHelper()
-                                                  .saveUserName('LogIned');
                                               Navigator.push(
                                                   context,
                                                   PageRouteBuilder(
                                                     pageBuilder: (_, __, ___) =>
-                                                        MainPage(currenttab: 0),
+                                                        DaigakuSelectScreen(),
                                                     transitionDuration:
                                                         const Duration(
                                                             seconds: 0),
