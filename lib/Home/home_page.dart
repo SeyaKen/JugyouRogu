@@ -184,26 +184,23 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   const SizedBox(height: 5),
                                   Row(
-                                    children: [
-                                      const Text(
-                                        '学部:',
-                                        style: TextStyle(
-                                                fontSize: 15,
-                                                                                              fontWeight: FontWeight.bold,
-      
-                                              )
-                                      ),
-                                      snapshot.data!.docs[index]['学部'] != ''
-                                          ? Text(snapshot.data!.docs[index]['学部'],
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                              ))
-                                          : Container(),
-                                      snapshot.data!.docs[index]['学部'] != ''
-                                          ? const SizedBox(
-                                              width: 10,
-                                            )
-                                          : Container(),
+                                    children: [snapshot.data!.docs[index]['学部'] != ''
+                              ? const Text('学部:',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              )): Container(),
+                          snapshot.data!.docs[index]['学部'] != ''
+                              ? Text(snapshot.data!.docs[index]['学部'],
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                  ))
+                              : Container(),
+                          snapshot.data!.docs[index]['学部'] != ''
+                              ? const SizedBox(
+                                  width: 10,
+                                )
+                              : Container(),
                                       const Text(
                                         '教授:',
                                         style: TextStyle(
