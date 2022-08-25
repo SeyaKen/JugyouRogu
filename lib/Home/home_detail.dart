@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:jugyourogu/%20AddClass/edit_class.dart';
 import 'package:jugyourogu/%20Reviews/add_reviews.dart';
 import 'package:jugyourogu/Home/kutikomi_detail.dart';
@@ -101,21 +102,23 @@ class _HomeDetailState extends State<HomeDetail> {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (_, __, ___) =>
-                                        EditClass(
-                                          jugyoumei: firebasesnapshot!.get('授業名'),
-                                          kyouju: firebasesnapshot!.get('教授・講師名'),
-                                          gakubu2: firebasesnapshot!.get('学部'),
-                                          youbi0: firebasesnapshot!.get('曜日・時限1'),
-                                          youbi1: firebasesnapshot!.get('曜日・時限2'),
-                                          classId: firebasesnapshot!.id,
-                                        ),
-                                    transitionDuration:
-                                        const Duration(seconds: 0),
-                                  ));
+                              SchedulerBinding.instance
+                                  .addPostFrameCallback((_) {
+                                Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (_, __, ___) => EditClass(
+                                        jugyoumei: firebasesnapshot!.get('授業名'),
+                                        kyouju: firebasesnapshot!.get('教授・講師名'),
+                                        gakubu2: firebasesnapshot!.get('学部'),
+                                        youbi0: firebasesnapshot!.get('曜日・時限1'),
+                                        youbi1: firebasesnapshot!.get('曜日・時限2'),
+                                        classId: firebasesnapshot!.id,
+                                      ),
+                                      transitionDuration:
+                                          const Duration(seconds: 0),
+                                    ));
+                              });
                             },
                             child: Row(
                               children: const [
@@ -141,10 +144,11 @@ class _HomeDetailState extends State<HomeDetail> {
                         children: [
                           firebasesnapshot!.get('学部') != ''
                               ? const Text('学部:',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              )): Container(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ))
+                              : Container(),
                           firebasesnapshot!.get('学部') != ''
                               ? Text(firebasesnapshot!.get('学部'),
                                   style: const TextStyle(
