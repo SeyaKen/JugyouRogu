@@ -47,7 +47,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                           child: Text('エラーが発生しました、もう一度やり直してください。'),
                         )
                       : Scaffold(
-                          backgroundColor: Color(0xffffffff),
+                          backgroundColor: const Color(0xffffffff),
                           body: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -61,12 +61,6 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                       color: Colors.orange,
                                       size: 180,
                                     ),
-                                    Text('授業ログ',
-                                        style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        )),
                                   ],
                                 ),
                                 const SizedBox(

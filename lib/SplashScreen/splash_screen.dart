@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jugyourogu/SelectLogin/register_login.dart';
 import 'package:jugyourogu/SelectLogin/select_login_screen.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
@@ -24,7 +25,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
                   ? MainPage(
                       currenttab: 0,
                     )
-                  : const SelectLoginScreen()));
+                  : const RegisterLoginScreen()));
     });
   }
 
