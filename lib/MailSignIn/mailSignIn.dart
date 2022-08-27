@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
 import 'package:jugyourogu/Profile/password_reset.dart';
+import 'package:jugyourogu/SelectLogin/register_or_login.dart';
 import 'package:jugyourogu/SelectLogin/select_login_screen.dart';
 
 class mailSignIn extends StatefulWidget {
-  final Function toggleView;
-  const mailSignIn(this.toggleView);
-
   @override
   _SignInState createState() => _SignInState();
 }
@@ -35,31 +33,13 @@ class _SignInState extends State<mailSignIn> {
             children: [
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const SelectLoginScreen(),
-                      transitionDuration: const Duration(seconds: 0),
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
                 child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: Colors.black,
                 ),
               ),
-              TextButton.icon(
-                icon: const Icon(
-                  Icons.person,
-                ),
-                label: const Text('新規登録画面へ'),
-                onPressed: () async {
-                  widget.toggleView();
-                },
-                style: TextButton.styleFrom(
-                  primary: Colors.orange,
-                ),
-              )
             ],
           ),
         ),
@@ -138,7 +118,8 @@ class _SignInState extends State<mailSignIn> {
                                     fillColor: Colors.grey[300],
                                     filled: true,
                                     hintText: 'パスワード',
-                                    hintStyle: const TextStyle(color: Colors.grey),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey),
                                     contentPadding: const EdgeInsets.symmetric(
                                         horizontal: 10, vertical: 13),
                                     border: InputBorder.none,
@@ -170,8 +151,8 @@ class _SignInState extends State<mailSignIn> {
                         Container(
                           decoration: BoxDecoration(
                             color: password.length >= 7
-                                ? Colors.orange
-                                : Colors.orange.withOpacity(0.3),
+                                ? const Color(0xff92b82e)
+                                : const Color(0xff92b82e).withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,

@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/SelectLogin/select_register_screen.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
-import 'package:jugyourogu/main_page.dart';
 
 class DaigakuSelectScreen extends StatefulWidget {
   @override
@@ -123,17 +122,11 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
             height: 50,
             child: InkWell(
               onTap: () async {
-                SharedPreferenceHelper().saveUserName('LogIned');
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .update({
-                  'daigaku': daigaku[items.indexOf(_hasBeenPressed)],
-                });
+                SharedPreferenceHelper().saveUserDaigaku(_hasBeenPressed);
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => MainPage(currenttab: 0),
+                      pageBuilder: (_, __, ___) => const SelectRegisterScreen(),
                       transitionDuration: const Duration(seconds: 0),
                     ));
               },

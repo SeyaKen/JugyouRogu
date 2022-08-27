@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/SelectLogin/daigaku_select.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
-import 'package:jugyourogu/MailSignIn/mailSignIn.dart';
+import 'package:jugyourogu/MailSignIn/mailRegister.dart';
 import 'package:jugyourogu/Service/google_signIn.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 import 'package:provider/provider.dart';
 
-class SelectLoginScreen extends StatefulWidget {
-  const SelectLoginScreen({Key? key}) : super(key: key);
+class SelectRegisterScreen extends StatefulWidget {
+  const SelectRegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<SelectLoginScreen> createState() => _SelectLoginScreenState();
+  State<SelectRegisterScreen> createState() => _SelectRegisterScreenState();
 }
 
 String? loginCheck;
 
-class _SelectLoginScreenState extends State<SelectLoginScreen> {
+class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
   void Check() async {
     loginCheck = await SharedPreferenceHelper().getUserName();
   }
@@ -68,7 +68,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                     ),
                                     SizedBox(height: 10),
                                     Text(
-                                      'ログインする方法を選択してください。',
+                                      '新規登録する方法を選択してください。',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
@@ -93,6 +93,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                                     .instance.currentUser!.uid)
                                                 .get()
                                                 .then((value) {
+                                                
                                               if (value.data() == null) {
                                                 FirebaseFirestore.instance
                                                     .collection('users')
@@ -170,7 +171,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                         context,
                                         PageRouteBuilder(
                                           pageBuilder: (_, __, ___) =>
-                                              mailSignIn(),
+                                              mailRegister(),
                                           transitionDuration:
                                               const Duration(seconds: 0),
                                         ));

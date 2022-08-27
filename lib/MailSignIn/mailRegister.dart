@@ -2,15 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jugyourogu/MailSignIn/daigaku_select.dart';
+import 'package:jugyourogu/SelectLogin/daigaku_select.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
+import 'package:jugyourogu/SelectLogin/register_or_login.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class mailRegister extends StatefulWidget {
-  final Function toggleView;
-  const mailRegister(this.toggleView);
-
   @override
   _mailRegisterState createState() => _mailRegisterState();
 }
@@ -41,18 +39,17 @@ class _mailRegisterState extends State<mailRegister> {
           backgroundColor: const Color(0xffffffff),
           automaticallyImplyLeading: false,
           title: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton.icon(
-                icon: const Icon(Icons.person),
-                label: const Text('ログイン画面へ'),
-                onPressed: () async {
-                  widget.toggleView();
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
                 },
-                style: TextButton.styleFrom(
-                  primary: Colors.orange,
+                child: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.black,
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -88,7 +85,7 @@ class _mailRegisterState extends State<mailRegister> {
                       height: 10,
                     ),
                     ClipRRect(
-                          borderRadius: BorderRadius.circular(5.0),
+                      borderRadius: BorderRadius.circular(5.0),
                       child: SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: TextFormField(
@@ -100,7 +97,7 @@ class _mailRegisterState extends State<mailRegister> {
                           },
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            fillColor:Colors.grey[300],
+                            fillColor: Colors.grey[300],
                             filled: true,
                             hintText: 'メールアドレス',
                             hintStyle: const TextStyle(color: Colors.grey),
@@ -112,7 +109,6 @@ class _mailRegisterState extends State<mailRegister> {
                               ),
                             ),
                           ),
-                          
                         ),
                       ),
                     ),
@@ -174,8 +170,8 @@ class _mailRegisterState extends State<mailRegister> {
                     Container(
                       decoration: BoxDecoration(
                         color: password.length >= 7
-                            ? Colors.orange
-                            : Colors.orange.withOpacity(0.3),
+                            ? const Color(0xff92b82e)
+                            : const Color(0xff92b82e).withOpacity(0.3),
                         borderRadius: BorderRadius.circular(3),
                       ),
                       width: MediaQuery.of(context).size.width * 0.8,
