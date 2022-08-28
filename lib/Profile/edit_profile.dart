@@ -1,29 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/Profile/edit_daigaku.dart';
 import 'package:jugyourogu/Service/database.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class EditProfile extends StatefulWidget {
-  EditProfile({Key? key, required this.ex, required this.name})
-      : super(key: key);
-  String ex;
-  String name;
+  EditProfile({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  State<EditProfile> createState() => _EditProfileState(ex, name);
+  State<EditProfile> createState() => _EditProfileState();
 }
 
 class _EditProfileState extends State<EditProfile> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   Stream<QuerySnapshot<Object?>>? profileListsStream;
-  String ex, name;
-  _EditProfileState(this.ex, this.name);
+  String? daigakuMei, name, ex;
   final _formKey = GlobalKey<FormState>();
   final _exKey = GlobalKey<FormState>();
 
   getHomeLists() async {
     profileListsStream = await DatabaseService().fetchImage();
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     setState(() {});
   }
 
@@ -42,9 +43,13 @@ class _EditProfileState extends State<EditProfile> {
     return StreamBuilder<QuerySnapshot>(
         stream: profileListsStream,
         builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            name = snapshot.data!.docs[0]['name'];
+            ex = snapshot.data!.docs[0]['selfIntroduction'];
+          }
           return snapshot.hasData
               ? Scaffold(
-                  backgroundColor: Color(0xffffffff),
+                  backgroundColor: const Color(0xffffffff),
                   appBar: AppBar(
                       iconTheme: const IconThemeData(
                         color: Colors.black,
@@ -58,8 +63,8 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(width: 15),
                           InkWell(
                             onTap: () async {
-                              DatabaseService().updateUserName(name);
-                              DatabaseService().updateUserEx(ex);
+                              DatabaseService().updateUserName(name!);
+                              DatabaseService().updateUserEx(ex!);
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(
@@ -148,11 +153,54 @@ class _EditProfileState extends State<EditProfile> {
                                         ),
                                         style: const TextStyle(
                                             color: Colors.black),
-                                        initialValue: name,
+                                        initialValue: snapshot.data!.docs[0]
+                                            ['name'],
                                         onChanged: (val) {
                                           setState(() => name = val);
                                         },
                                       ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.80,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    '大学',
+                                  ),
+                                  const SizedBox(width: 10),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                            pageBuilder: (_, __, ___) =>
+                                                EditDaigakuScreen(),
+                                            transitionDuration:
+                                                const Duration(seconds: 0),
+                                          ));
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 13,
+                                      ),
+                                      decoration: const BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                              width: 2, color: Colors.grey),
+                                        ),
+                                      ),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.6,
+                                      child: Text(daigakuMei!,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          )),
                                     ),
                                   ),
                                 ],
@@ -187,7 +235,8 @@ class _EditProfileState extends State<EditProfile> {
                                       ),
                                       style:
                                           const TextStyle(color: Colors.black),
-                                      initialValue: ex,
+                                      initialValue: snapshot.data!.docs[0]
+                                          ['selfIntroduction'],
                                       onChanged: (val) {
                                         setState(() => ex = val);
                                       },

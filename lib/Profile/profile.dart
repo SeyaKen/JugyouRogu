@@ -201,11 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           context,
                                           PageRouteBuilder(
                                             pageBuilder: (_, __, ___) =>
-                                                EditProfile(
-                                                    name: snapshot.data!.docs[0]
-                                                        ['name'],
-                                                    ex: snapshot.data!.docs[0]
-                                                        ['selfIntroduction']),
+                                                EditProfile(),
                                             transitionDuration:
                                                 const Duration(seconds: 0),
                                           ));

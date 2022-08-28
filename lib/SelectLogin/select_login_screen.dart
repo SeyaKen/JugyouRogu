@@ -149,8 +149,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     decoration: BoxDecoration(
-                      color: Colors.grey,
-                      border: Border.all(color: Colors.grey, width: 0.5),
+                      color: const Color(0xff92b82e),
                       borderRadius: BorderRadius.circular(3),
                     ),
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -160,12 +159,12 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                       children: const [
                         Icon(
                           Icons.mail,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         Text('メールアドレスで始める',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                                color: Colors.white)),
                         FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.transparent,

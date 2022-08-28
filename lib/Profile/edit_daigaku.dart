@@ -1,13 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/Profile/edit_profile.dart';
 import 'package:jugyourogu/SelectLogin/select_register_screen.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
-class DaigakuSelectScreen extends StatefulWidget {
+class EditDaigakuScreen extends StatefulWidget {
   @override
-  _DaigakuSelectScreenState createState() => _DaigakuSelectScreenState();
+  _EditDaigakuScreenState createState() => _EditDaigakuScreenState();
 }
 
-class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
+class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   String _hasBeenPressed = '立教大学';
   final items = [
     '立教大学',
@@ -43,11 +47,11 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
               const Text('大学を選択',
                   style: TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black)),
-            const Icon(
-              Icons.arrow_back_ios_new_rounded,
-              size: 30,
-              color: Colors.white,
-            ),
+              const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 30,
+                color: Colors.white,
+              ),
             ],
           )),
       body: Padding(
@@ -120,10 +124,14 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
             child: InkWell(
               onTap: () async {
                 SharedPreferenceHelper().saveUserDaigaku(_hasBeenPressed);
+                FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(uid)
+                    .update({'daigaku': _hasBeenPressed});
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const SelectRegisterScreen(),
+                      pageBuilder: (_, __, ___) => EditProfile(),
                       transitionDuration: const Duration(seconds: 0),
                     ));
               },

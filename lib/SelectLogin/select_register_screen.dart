@@ -157,7 +157,7 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: const Color(0xff92b82e),
                       border: Border.all(color: Colors.grey, width: 0.5),
                       borderRadius: BorderRadius.circular(3),
                     ),
@@ -168,12 +168,12 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                       children: const [
                         Icon(
                           Icons.mail,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                         Text('メールアドレスで始める',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                                color: Colors.white)),
                         FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.transparent,
