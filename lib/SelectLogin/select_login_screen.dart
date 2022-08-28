@@ -20,13 +20,8 @@ class SelectLoginScreen extends StatefulWidget {
 String? loginCheck;
 
 class _SelectLoginScreenState extends State<SelectLoginScreen> {
-  void Check() async {
-    loginCheck = await SharedPreferenceHelper().getUserName();
-  }
-
   @override
   void initState() {
-    Check();
     super.initState();
   }
 
@@ -93,31 +88,29 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                                                     .instance.currentUser!.uid)
                                                 .get()
                                                 .then((value) {
-                                              if (value.data() == null) {
-                                                FirebaseFirestore.instance
-                                                    .collection('users')
-                                                    .doc(FirebaseAuth.instance
-                                                        .currentUser!.uid)
-                                                    .set({
-                                                  'ProfilePicture': '',
-                                                  'email': FirebaseAuth.instance
-                                                      .currentUser!.email,
-                                                  'name': '',
-                                                  'selfIntroduction': '',
-                                                  'uid': FirebaseAuth.instance
-                                                      .currentUser!.uid,
-                                                });
+                                              if (value.data() != null) {
+                                                SharedPreferenceHelper()
+                                                    .saveUserName('LogIned')
+                                                    .then(
+                                                      (value) => Navigator.push(
+                                                          context,
+                                                          PageRouteBuilder(
+                                                              pageBuilder: (_,
+                                                                      __,
+                                                                      ___) =>
+                                                                  MainPage(
+                                                                      currenttab:
+                                                                          0),
+                                                              transitionDuration:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          0))),
+                                                    );
+                                              } else {
+                                                AuthService().errorBox(context,
+                                                    '一致するユーザーが見つかりません。新規登録画面から登録してください。');
                                               }
-                                              Navigator.push(
-                                                  context,
-                                                  PageRouteBuilder(
-                                                    pageBuilder: (_, __, ___) =>
-                                                        MainPage(currenttab: 0),
-                                                    transitionDuration:
-                                                        const Duration(
-                                                            seconds: 0),
-                                                  ));
-                                            }),
+                                            })
                                           });
                                     } catch (e) {
                                       print(e.toString());

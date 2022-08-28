@@ -20,13 +20,15 @@ class SelectRegisterScreen extends StatefulWidget {
 String? loginCheck;
 
 class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
-  void Check() async {
-    loginCheck = await SharedPreferenceHelper().getUserName();
+  String? Daigakumei;
+
+  void Getdaigakumei() async {
+    Daigakumei = await SharedPreferenceHelper().getUserDaigaku();
   }
 
   @override
   void initState() {
-    Check();
+    Getdaigakumei();
     super.initState();
   }
 
@@ -93,7 +95,6 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                                                     .instance.currentUser!.uid)
                                                 .get()
                                                 .then((value) {
-                                                
                                               if (value.data() == null) {
                                                 FirebaseFirestore.instance
                                                     .collection('users')
@@ -107,18 +108,18 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                                                   'selfIntroduction': '',
                                                   'uid': FirebaseAuth.instance
                                                       .currentUser!.uid,
+                                                  'daigaku': Daigakumei,
                                                 });
                                               }
-                                              Navigator.push(
-                                                  context,
-                                                  PageRouteBuilder(
-                                                    pageBuilder: (_, __, ___) =>
-                                                        MainPage(currenttab: 0),
-                                                    transitionDuration:
-                                                        const Duration(
-                                                            seconds: 0),
-                                                  ));
-                                            }),
+                                            }).then((value) => SharedPreferenceHelper()
+                                                    .saveUserName('LogIned')
+                                                    .then((value) => Navigator.push(
+                                                        context,
+                                                        PageRouteBuilder(
+                                                            pageBuilder: (_, __, ___) => MainPage(
+                                                                currenttab: 0),
+                                                            transitionDuration:
+                                                                const Duration(seconds: 0))))),
                                           });
                                     } catch (e) {
                                       print(e.toString());
