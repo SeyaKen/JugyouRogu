@@ -20,10 +20,10 @@ class _SignInState extends State<PasswordReset> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             elevation: 0,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +51,6 @@ class _SignInState extends State<PasswordReset> {
             key: _formKey,
             child: Center(
               child: Container(
-                color: Colors.black,
                 height: MediaQuery.of(context).size.height * 0.85,
                 width: MediaQuery.of(context).size.width * 0.8,
                 child: Column(
@@ -63,30 +62,24 @@ class _SignInState extends State<PasswordReset> {
                         const SizedBox(
                           height: 20,
                         ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            validator: (val) =>
-                                val!.isEmpty ? 'メールアドレスを入力してください' : null,
-                            onChanged: (val) {
-                              setState(() => email = val);
-                            },
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey)),
-                              hintText: 'メールアドレス',
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 13),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.orange,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.grey,
-                                  width: 1.0,
-                                ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(5.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: TextFormField(
+                              validator: (val) =>
+                                  val!.isEmpty ? 'メールアドレスを入力してください' : null,
+                              onChanged: (val) {
+                                setState(() => email = val);
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.grey[300],
+                                filled: true,
+                                border: InputBorder.none,
+                                hintText: 'メールアドレス',
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 13),
+                                
                               ),
                             ),
                           ),
@@ -95,8 +88,8 @@ class _SignInState extends State<PasswordReset> {
                         Container(
                           decoration: BoxDecoration(
                             color: email.contains('@')
-                                ? Colors.orange
-                                : Colors.orange.withOpacity(0.3),
+                                ? const Color(0xff92b82e)
+                                : const Color(0xff92b82e).withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -135,7 +128,7 @@ class _SignInState extends State<PasswordReset> {
                                     child: Text(
                                       'ログインリンクを送信',
                                       style: TextStyle(
-                                          color: Colors.black, fontSize: 20),
+                                          color: Colors.white, fontSize: 20),
                                     ),
                                   ),
                                 ),

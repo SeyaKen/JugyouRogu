@@ -479,11 +479,14 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 65,
-        height: 65,
-        child: FloatingActionButton(
-          onPressed: () {
+      floatingActionButton: ClipRRect(
+        borderRadius: BorderRadius.circular(3),
+        child: Container(
+          color: const Color(0xff92b82e),
+          width: MediaQuery.of(context).size.width * 0.4,
+          height: 60,
+          child: InkWell(
+              onTap: () {
             Navigator.push(
                 context,
                 PageRouteBuilder(
@@ -491,21 +494,18 @@ class _HomePageState extends State<HomePage> {
                   transitionDuration: const Duration(seconds: 0),
                 ));
           },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(1000),
-            child: Container(
-              color: Colors.orange,
-              width: 65,
-              height: 65,
-              child: const Icon(
-                Icons.add_rounded,
-                size: 50,
-                color: Colors.white,
-              ),
+          child: const Center(
+            child: Text(
+                  '授業を作成',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
+          ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

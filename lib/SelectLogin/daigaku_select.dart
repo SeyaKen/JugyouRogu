@@ -20,8 +20,6 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
     '慶應義塾大学',
   ];
 
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

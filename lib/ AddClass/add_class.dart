@@ -327,8 +327,8 @@ class _AddClassState extends State<AddClass> {
                   ClassName1 != null &&
                   ClassName0 != '' &&
                   ClassName1 != ''
-              ? Colors.orange
-              : Colors.orange.withOpacity(0.5),
+              ? const Color(0xff92b82e)
+              : const Color(0xff92b82e).withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(

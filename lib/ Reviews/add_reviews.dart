@@ -52,13 +52,14 @@ class _AddReviewsState extends State<AddReviews> {
   ];
 
   getHomeLists() async {
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
+
     firebasesnapshot = await FirebaseFirestore.instance
         .collection(daigakuMei!)
         .doc(articleId)
         .collection('reviews')
         .doc(uid)
         .get();
-    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     try {
       if (firebasesnapshot != null) {
         _ratingValue0 = Juujitu_list[firebasesnapshot!.get('Juujitu')];
@@ -419,8 +420,8 @@ class _AddReviewsState extends State<AddReviews> {
                   _ratingValue4 != null &&
                   _ratingValue5 != null &&
                   _ratingValue6 != null
-              ? Colors.orange
-              : Colors.orange.withOpacity(0.5),
+              ? const Color(0xff92b82e)
+              : const Color(0xff92b82e).withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(

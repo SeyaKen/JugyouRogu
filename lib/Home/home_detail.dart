@@ -30,12 +30,12 @@ class _HomeDetailState extends State<HomeDetail> {
   String? daigakuMei;
 
   getHomeLists() async {
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     firebasesnapshot = await FirebaseFirestore.instance
         .collection(daigakuMei!)
         .doc(articleId)
         .get();
-    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
-    kutikomiListsStream = DatabaseService().kutikomiCollect(articleId, daigaku);
+    kutikomiListsStream = DatabaseService().kutikomiCollect(articleId, daigakuMei);
     if (firebasesnapshot!.get('JuujituAverage') == '0' ||
         firebasesnapshot!.get('RakutanAverage') == '0') {
       JuujituInt = 0;
@@ -741,9 +741,9 @@ class _HomeDetailState extends State<HomeDetail> {
             )
           : const Center(child: CircularProgressIndicator()),
       floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(3),
         child: Container(
-          color: Colors.orange,
+          color: const Color(0xff92b82e),
           width: MediaQuery.of(context).size.width * 0.4,
           height: 60,
           child: InkWell(
