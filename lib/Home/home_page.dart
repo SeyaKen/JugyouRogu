@@ -5,6 +5,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jugyourogu/%20AddClass/add_class.dart';
 import 'package:jugyourogu/Home/home_detail.dart';
 import 'package:jugyourogu/Service/database.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/ad_state.dart';
 import 'package:provider/provider.dart';
 
@@ -22,16 +23,18 @@ class _HomePageState extends State<HomePage> {
   int _currentMax = 20;
   BannerAd? banner;
   double? _ratingValue;
+  String? daigakuMei;
 
   getHomeLists() async {
-    jugyouListsStream = DatabaseService(uid).dataCollect();
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
+    jugyouListsStream = DatabaseService().dataCollect(daigakuMei!);
     setState(() {});
   }
 
   _getMoreData() async {
     _currentMax = _currentMax + 20;
     jugyouListsStream =
-        await DatabaseService(uid).fetchAdditionalData(_currentMax);
+        await DatabaseService().fetchAdditionalData(_currentMax);
     // UIを読み込み直す
     setState(() {});
   }
@@ -103,8 +106,8 @@ class _HomePageState extends State<HomePage> {
                         preForSearch.add(text.substring(i, i + 2));
                       }
                     }
-                    searchStateStream = await DatabaseService(uid)
-                        .searchDataCollect(preForSearch);
+                    searchStateStream = await DatabaseService()
+                        .searchDataCollect(preForSearch, daigakuMei!);
                     setState(() {});
                   } else {
                     searchStateStream = null;
@@ -169,8 +172,8 @@ class _HomePageState extends State<HomePage> {
                                     horizontal: 13, vertical: 15),
                                 decoration: const BoxDecoration(
                                     border: Border(
-                                  top:
-                                      BorderSide(width: 0.5, color: Colors.black),
+                                  top: BorderSide(
+                                      width: 0.5, color: Colors.black),
                                 )),
                                 child: Column(children: [
                                   Row(
@@ -184,31 +187,31 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   const SizedBox(height: 5),
                                   Row(
-                                    children: [snapshot.data!.docs[index]['学部'] != ''
-                              ? const Text('学部:',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              )): Container(),
-                          snapshot.data!.docs[index]['学部'] != ''
-                              ? Text(snapshot.data!.docs[index]['学部'],
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                  ))
-                              : Container(),
-                          snapshot.data!.docs[index]['学部'] != ''
-                              ? const SizedBox(
-                                  width: 10,
-                                )
-                              : Container(),
-                                      const Text(
-                                        '教授:',
-                                        style: TextStyle(
+                                    children: [
+                                      snapshot.data!.docs[index]['学部'] != ''
+                                          ? const Text('学部:',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
                                                 fontSize: 15,
-                                                                                              fontWeight: FontWeight.bold,
-      
-                                              )
-                                      ),
+                                              ))
+                                          : Container(),
+                                      snapshot.data!.docs[index]['学部'] != ''
+                                          ? Text(
+                                              snapshot.data!.docs[index]['学部'],
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                              ))
+                                          : Container(),
+                                      snapshot.data!.docs[index]['学部'] != ''
+                                          ? const SizedBox(
+                                              width: 10,
+                                            )
+                                          : Container(),
+                                      const Text('教授:',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold,
+                                          )),
                                       Text(snapshot.data!.docs[index]['教授・講師名'],
                                           style: const TextStyle(
                                             fontSize: 15,
@@ -220,69 +223,124 @@ class _HomePageState extends State<HomePage> {
                                     children: [
                                       Row(
                                         children: [
-                                          const Text(
-                                            '内容充実度:',
-                                            style: TextStyle(
+                                          const Text('内容充実度:',
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                              )
-                                          ),
+                                              )),
                                           Row(
                                             children: [
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) != 0.0
-                                                ? Icons.star
-                                                : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                .docs[index][
+                                                            'JuujituAverage']) !=
+                                                        0.0
+                                                    ? Icons.star
+                                                    : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 1.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 2
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 2
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) >=
+                                                            1.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) <
+                                                            2
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['JuujituAverage']) >=
+                                                            2
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 2.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 3
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 3
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) >=
+                                                            2.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) <
+                                                            3
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['JuujituAverage']) >=
+                                                            3
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                               double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 3.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 4
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 4
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) >=
+                                                            3.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) <
+                                                            4
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['JuujituAverage']) >=
+                                                            4
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 4.5 && double.parse(snapshot.data!.docs[index]['JuujituAverage']) < 5
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['JuujituAverage']) >= 5
-                                          ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) >=
+                                                            4.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'JuujituAverage']) <
+                                                            5
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['JuujituAverage']) >=
+                                                            5
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                             ],
                                           ),
                                           Text(
-                                  snapshot.data!.docs[index]['JuujituAverage'] != '0'
-                                  ? snapshot.data!.docs[index]['JuujituAverage'].toString()
-                                  : 'データなし',
-                                  style: const TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
+                                            snapshot.data!.docs[index]
+                                                        ['JuujituAverage'] !=
+                                                    '0'
+                                                ? snapshot
+                                                    .data!
+                                                    .docs[index]
+                                                        ['JuujituAverage']
+                                                    .toString()
+                                                : 'データなし',
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -290,69 +348,124 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       Row(
                                         children: [
-                                          const Text(
-                                            '楽単度:',
-                                            style: TextStyle(
+                                          const Text('楽単度:',
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                              )
-                                          ),
+                                              )),
                                           Row(
                                             children: [
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) != 0.0
-                                                ? Icons.star
-                                                : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                .docs[index][
+                                                            'RakutanAverage']) !=
+                                                        0.0
+                                                    ? Icons.star
+                                                    : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 1.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 2
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 2
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) >=
+                                                            1.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) <
+                                                            2
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['RakutanAverage']) >=
+                                                            2
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 2.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 3
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 3
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) >=
+                                                            2.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) <
+                                                            3
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['RakutanAverage']) >=
+                                                            3
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                               double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 3.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 4
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 4
-                                              ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) >=
+                                                            3.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) <
+                                                            4
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['RakutanAverage']) >=
+                                                            4
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                               Icon(
-                                                double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 4.5 && double.parse(snapshot.data!.docs[index]['RakutanAverage']) < 5
-                                          ? Icons.star_half_outlined
-                                          : double.parse(snapshot.data!.docs[index]['RakutanAverage']) >= 5
-                                          ? Icons.star
-                                              : Icons.star_outline,
+                                                double.parse(snapshot.data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) >=
+                                                            4.5 &&
+                                                        double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index][
+                                                                'RakutanAverage']) <
+                                                            5
+                                                    ? Icons.star_half_outlined
+                                                    : double.parse(snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                ['RakutanAverage']) >=
+                                                            5
+                                                        ? Icons.star
+                                                        : Icons.star_outline,
                                                 color: Colors.orange,
                                                 size: 20,
                                               ),
                                             ],
                                           ),
                                           Text(
-                                  snapshot.data!.docs[index]['RakutanAverage'] != '0'
-                                  ? snapshot.data!.docs[index]['RakutanAverage'].toString()
-                                  : 'データなし',
-                                  style: const TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
+                                            snapshot.data!.docs[index]
+                                                        ['RakutanAverage'] !=
+                                                    '0'
+                                                ? snapshot
+                                                    .data!
+                                                    .docs[index]
+                                                        ['RakutanAverage']
+                                                    .toString()
+                                                : 'データなし',
+                                            style: const TextStyle(
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],

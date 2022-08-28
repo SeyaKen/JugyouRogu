@@ -29,7 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   getHomeLists() async {
-    profileListsStream = await DatabaseService(uid).fetchImage();
+    profileListsStream = await DatabaseService().fetchImage();
     setState(() {});
   }
 

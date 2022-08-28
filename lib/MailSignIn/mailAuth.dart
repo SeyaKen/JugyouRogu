@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,15 +7,24 @@ import 'package:jugyourogu/main_page.dart';
 
 class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  DocumentSnapshot<Map<String, dynamic>>? firebasesnapshot;
+  String? daigakuMei;
 
   // メールアドレスとパスワードでログイン
   Future signInWithEmailAndPassword(
-      BuildContext context, String email, String password) async {
+      BuildContext context, String email, password) async {
     try {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((user) => {
+          .then((user) async => {
                 SharedPreferenceHelper().saveUserName('LogIned'),
+                firebasesnapshot = await FirebaseFirestore
+                                  .instance
+                                  .collection('users')
+                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .get(),
+                daigakuMei = firebasesnapshot!.get('daigaku'),
+                SharedPreferenceHelper().saveUserDaigaku(daigakuMei),
                 Navigator.push(
                     context,
                     PageRouteBuilder(

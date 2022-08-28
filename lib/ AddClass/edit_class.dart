@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/Service/database.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class EditClass extends StatefulWidget {
@@ -50,8 +51,16 @@ class _EditClassState extends State<EditClass> {
             ));
   }
 
+  String? daigakuMei;
+
+  Kansuu() async {
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
+    setState(() {});
+  }
+
   @override
   void initState() {
+    Kansuu();
     ClassName0 = jugyoumei;
     ClassName1 = kyouju;
     txt2.text = gakubu2;
@@ -360,7 +369,7 @@ class _EditClassState extends State<EditClass> {
                     if (i == allString.length - 2) {
                       // 全ての処理が終わったら、データベースに格納する関数。
                       FirebaseFirestore.instance
-                          .collection('classes')
+                          .collection(daigakuMei!)
                           .doc(classId)
                           .update({
                         '授業名': ClassName0 ?? '',

@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/SelectLogin/daigaku_select.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
-import 'package:jugyourogu/SelectLogin/register_or_login.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
-import 'package:jugyourogu/main_page.dart';
 
 class mailRegister extends StatefulWidget {
   @override
@@ -24,8 +22,15 @@ class _mailRegisterState extends State<mailRegister> {
   dynamic error;
   bool eye = true;
 
+  String? Daigakumei;
+
+  void Getdaigakumei() async {
+    Daigakumei = await SharedPreferenceHelper().getUserDaigaku();
+  }
+
   @override
   void initState() {
+    Getdaigakumei();
     super.initState();
   }
 
@@ -197,6 +202,7 @@ class _mailRegisterState extends State<mailRegister> {
                                             'name': '',
                                             'selfIntroduction': '',
                                             'uid': user.uid,
+                                            'daigaku': Daigakumei,
                                           }))
                                       .then((value) => SharedPreferenceHelper()
                                           .saveUserName('LogIned')

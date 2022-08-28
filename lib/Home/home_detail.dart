@@ -5,7 +5,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:jugyourogu/%20AddClass/edit_class.dart';
 import 'package:jugyourogu/%20Reviews/add_reviews.dart';
 import 'package:jugyourogu/Home/kutikomi_detail.dart';
+import 'package:jugyourogu/SelectLogin/daigaku_select.dart';
 import 'package:jugyourogu/Service/database.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
 class HomeDetail extends StatefulWidget {
   HomeDetail({super.key, required this.articleId});
@@ -25,13 +27,15 @@ class _HomeDetailState extends State<HomeDetail> {
   final ScrollController _scrollController = ScrollController();
   double? JuujituInt;
   double? RakutanInt;
+  String? daigakuMei;
 
   getHomeLists() async {
     firebasesnapshot = await FirebaseFirestore.instance
-        .collection('classes')
+        .collection(daigakuMei!)
         .doc(articleId)
         .get();
-    kutikomiListsStream = DatabaseService(uid).kutikomiCollect(articleId);
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
+    kutikomiListsStream = DatabaseService().kutikomiCollect(articleId, daigaku);
     if (firebasesnapshot!.get('JuujituAverage') == '0' ||
         firebasesnapshot!.get('RakutanAverage') == '0') {
       JuujituInt = 0;
@@ -42,7 +46,7 @@ class _HomeDetailState extends State<HomeDetail> {
     }
     try {
       firebasesnapshot1 = await FirebaseFirestore.instance
-          .collection('classes')
+          .collection(daigakuMei!)
           .doc(articleId)
           .collection('reviews')
           .doc(uid)

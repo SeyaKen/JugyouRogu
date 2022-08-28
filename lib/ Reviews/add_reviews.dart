@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class AddReviews extends StatefulWidget {
@@ -28,6 +29,8 @@ class _AddReviewsState extends State<AddReviews> {
   String articleId, jugyoumei;
   _AddReviewsState(this.articleId, this.jugyoumei);
 
+  String? daigakuMei;
+
   List<String> title_list = [
     '内容充実度',
     '楽単度',
@@ -50,11 +53,12 @@ class _AddReviewsState extends State<AddReviews> {
 
   getHomeLists() async {
     firebasesnapshot = await FirebaseFirestore.instance
-        .collection('classes')
+        .collection(daigakuMei!)
         .doc(articleId)
         .collection('reviews')
         .doc(uid)
         .get();
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     try {
       if (firebasesnapshot != null) {
         _ratingValue0 = Juujitu_list[firebasesnapshot!.get('Juujitu')];
@@ -429,7 +433,7 @@ class _AddReviewsState extends State<AddReviews> {
                     _ratingValue5 != null &&
                     _ratingValue6 != null) {
                   FirebaseFirestore.instance
-                      .collection('classes')
+                      .collection(daigakuMei!)
                       .doc(articleId)
                       .collection('reviews')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -446,7 +450,7 @@ class _AddReviewsState extends State<AddReviews> {
                     'uid': uid,
                   }).then((value) async {
                     querySnapshot = await FirebaseFirestore.instance
-                        .collection('classes')
+                        .collection(daigakuMei!)
                         .doc(articleId)
                         .collection('reviews')
                         .get();
@@ -461,7 +465,7 @@ class _AddReviewsState extends State<AddReviews> {
                         RakutanInt = (RakutanInt / allData.length + 1.0);
                         RakutanIntString = RakutanInt.toStringAsFixed(2);
                         FirebaseFirestore.instance
-                            .collection('classes')
+                            .collection(daigakuMei!)
                             .doc(articleId)
                             .update({
                           'JuujituAverage': JuujituIntString,

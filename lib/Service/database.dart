@@ -2,13 +2,13 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DatabaseService extends ChangeNotifier {
-  final String uid;
-  DatabaseService(this.uid);
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   File? imageFile;
   Image? imgs;
 
@@ -16,9 +16,9 @@ class DatabaseService extends ChangeNotifier {
       FirebaseFirestore.instance.collection('users');
 
   // 質問一覧をうつす関数
-  Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect() {
+  Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect(String daigakuMei) {
     return FirebaseFirestore.instance
-        .collection('classes')
+        .collection(daigakuMei)
         .orderBy('Daytime', descending: true)
         .limit(50)
         .snapshots();
@@ -26,9 +26,9 @@ class DatabaseService extends ChangeNotifier {
 
   // 口コミ一覧をうつす関数
   Stream<QuerySnapshot<Map<String, dynamic>>> kutikomiCollect(
-      String articleId) {
+      String articleId, daigakuMei) {
     return FirebaseFirestore.instance
-        .collection('classes')
+        .collection(daigakuMei)
         .doc(articleId)
         .collection('reviews')
         .orderBy('Daytime', descending: true)
@@ -47,9 +47,9 @@ class DatabaseService extends ChangeNotifier {
 
   // 検索した質問一覧をうつす関数
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> searchDataCollect(
-      searchWordsList) async {
+      searchWordsList, String daigakuMei) async {
     Query<Map<String, dynamic>> query =
-        FirebaseFirestore.instance.collection('classes');
+        FirebaseFirestore.instance.collection(daigakuMei);
     for (var i = 0; i < searchWordsList.length; i++) {
       try {
         query =
@@ -217,10 +217,9 @@ class DatabaseService extends ChangeNotifier {
   }
 
   // 授業の重複がないか確認する関数
-  Query<Map<String, dynamic>> ChouhukuKakunin(
-      jugyoumei, kyoujumei) {
+  Query<Map<String, dynamic>> ChouhukuKakunin(jugyoumei, kyoujumei, daigakuMei) {
     return FirebaseFirestore.instance
-        .collection('classes')
+        .collection(daigakuMei)
         .orderBy('Daytime', descending: true)
         .where('授業名', isEqualTo: jugyoumei)
         .where('教授・講師名', isEqualTo: kyoujumei);

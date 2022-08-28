@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/Service/database.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
 class AddClass extends StatefulWidget {
@@ -18,6 +19,18 @@ class _AddClassState extends State<AddClass> {
   var forSearchList = {};
   var allString = '';
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  String? daigakuMei;
+
+  Kansuu() async {
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    Kansuu();
+    super.initState();
+  }
 
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
@@ -113,18 +126,21 @@ class _AddClassState extends State<AddClass> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                index == 0 || index == 1 
-                                ? const SizedBox(
-                                  width: 5,
-                                ): Container(),
-                                index == 0 || index == 1 ? const Text(
-                                  '※必須',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red,
-                                  ),
-                                ) : Container(),
+                                index == 0 || index == 1
+                                    ? const SizedBox(
+                                        width: 5,
+                                      )
+                                    : Container(),
+                                index == 0 || index == 1
+                                    ? const Text(
+                                        '※必須',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    : Container(),
                               ],
                             ),
                             const SizedBox(
@@ -317,8 +333,8 @@ class _AddClassState extends State<AddClass> {
           height: 50,
           child: InkWell(
               onTap: () async {
-                var dataLengthsource = DatabaseService(uid).ChouhukuKakunin(
-                    ClassName0, ClassName1!.replaceAll(RegExp(r'\s'), ''));
+                var dataLengthsource = DatabaseService().ChouhukuKakunin(
+                    ClassName0, ClassName1!.replaceAll(RegExp(r'\s'), ''), daigakuMei);
                 var querySnapshot = await dataLengthsource.get();
                 var totalEquals = querySnapshot.docs.length;
                 allString =
@@ -334,7 +350,7 @@ class _AddClassState extends State<AddClass> {
                       if (i == allString.length - 2) {
                         // 全ての処理が終わったら、データベースに格納する関数。
                         FirebaseFirestore.instance
-                            .collection('classes')
+                            .collection(daigakuMei!)
                             .doc()
                             .set({
                           '授業名': ClassName0 ?? '',

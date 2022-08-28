@@ -23,7 +23,7 @@ class _EditProfileState extends State<EditProfile> {
   final _exKey = GlobalKey<FormState>();
 
   getHomeLists() async {
-    profileListsStream = await DatabaseService(uid).fetchImage();
+    profileListsStream = await DatabaseService().fetchImage();
     setState(() {});
   }
 
@@ -58,8 +58,8 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(width: 15),
                           InkWell(
                             onTap: () async {
-                              DatabaseService(uid).updateUserName(name);
-                              DatabaseService(uid).updateUserEx(ex);
+                              DatabaseService().updateUserName(name);
+                              DatabaseService().updateUserEx(ex);
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(
@@ -110,7 +110,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             TextButton(
                                 onPressed: () {
-                                  DatabaseService(uid).updateImage();
+                                  DatabaseService().updateImage();
                                 },
                                 child: const Text('プロフィール写真を変更',
                                     style: TextStyle(

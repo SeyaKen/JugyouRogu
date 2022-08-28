@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
 import 'package:jugyourogu/Profile/password_reset.dart';
-import 'package:jugyourogu/SelectLogin/register_or_login.dart';
-import 'package:jugyourogu/SelectLogin/select_login_screen.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
 class mailSignIn extends StatefulWidget {
   @override
@@ -13,11 +14,11 @@ class mailSignIn extends StatefulWidget {
 class _SignInState extends State<mailSignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
-
   String email = '';
   String password = '';
   dynamic error;
   bool eye = true;
+  DocumentSnapshot<Map<String, dynamic>>? firebasesnapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -163,11 +164,11 @@ class _SignInState extends State<mailSignIn> {
                               InkWell(
                                 onTap: () async {
                                   if (_formKey.currentState!.validate()) {
-                                    // ファイアベースでのメール認証の処理
                                     await _auth.signInWithEmailAndPassword(
-                                        context,
-                                        email.toString().trim(),
-                                        password.toString().trim());
+                                      context,
+                                      email.toString().trim(),
+                                      password.toString().trim(),
+                                    );
                                   }
                                 },
                                 child: SizedBox(

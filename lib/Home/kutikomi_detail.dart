@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/%20Reviews/add_reviews.dart';
+import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
 class KutikomiDetail extends StatefulWidget {
   KutikomiDetail(
@@ -21,14 +22,16 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
   String jugyoumei, AitenoUid, articleId;
   _KutikomiDetailState(this.jugyoumei, this.AitenoUid, this.articleId);
   DocumentSnapshot? firebasesnapshot, firebasesnapshot2;
+  String? daigakuMei;
 
   getHomeLists() async {
+    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     firebasesnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(AitenoUid)
         .get();
     firebasesnapshot2 = await FirebaseFirestore.instance
-        .collection('classes')
+        .collection(daigakuMei!)
         .doc(articleId)
         .collection('reviews')
         .doc(AitenoUid)
@@ -47,9 +50,8 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
         appBar: AppBar(
-          shape: const Border(
-          bottom: BorderSide(color: Colors.grey, width: 0.5)
-        ),
+          shape:
+              const Border(bottom: BorderSide(color: Colors.grey, width: 0.5)),
           iconTheme: const IconThemeData(
             color: Colors.black,
           ),
@@ -63,9 +65,10 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
         ),
         body: firebasesnapshot != null && firebasesnapshot2 != null
             ? SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-                child: Column(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 20.0),
+                  child: Column(
                     children: [
                       Row(children: [
                         ClipRRect(
@@ -112,8 +115,7 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                       Row(
                         children: [
                           Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
@@ -121,56 +123,49 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                       children: [
                                         const Text('内容充実度:',
                                             style: TextStyle(
-                                              fontWeight:
-                                                  FontWeight
-                                                      .bold,
+                                              fontWeight: FontWeight.bold,
                                             )),
                                         Row(
                                           children: [
                                             const Icon(
                                               Icons.star,
-                                              color:
-                                                  Colors.orange,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Juujitu') >
+                                              firebasesnapshot2!
+                                                          .get('Juujitu') >
                                                       0
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Juujitu') >
+                                              firebasesnapshot2!
+                                                          .get('Juujitu') >
                                                       1
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Juujitu') >
+                                              firebasesnapshot2!
+                                                          .get('Juujitu') >
                                                       2
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Juujitu') >
+                                              firebasesnapshot2!
+                                                          .get('Juujitu') >
                                                       3
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                           ],
@@ -184,56 +179,49 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                       children: [
                                         const Text('楽単度:',
                                             style: TextStyle(
-                                              fontWeight:
-                                                  FontWeight
-                                                      .bold,
+                                              fontWeight: FontWeight.bold,
                                             )),
                                         Row(
                                           children: [
                                             const Icon(
                                               Icons.star,
-                                              color:
-                                                  Colors.orange,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Rakutan') >
+                                              firebasesnapshot2!
+                                                          .get('Rakutan') >
                                                       0
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Rakutan') >
+                                              firebasesnapshot2!
+                                                          .get('Rakutan') >
                                                       1
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Rakutan') >
+                                              firebasesnapshot2!
+                                                          .get('Rakutan') >
                                                       2
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                             Icon(
-                                              firebasesnapshot2!.get('Rakutan') >
+                                              firebasesnapshot2!
+                                                          .get('Rakutan') >
                                                       3
                                                   ? Icons.star
-                                                  : Icons
-                                                      .star_outline,
-                                              color:
-                                                  Colors.orange,
+                                                  : Icons.star_outline,
+                                              color: Colors.orange,
                                               size: 20,
                                             ),
                                           ],
@@ -247,10 +235,10 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     children: [
                                       const Text('出席:',
                                           style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.bold,
+                                            fontWeight: FontWeight.bold,
                                           )),
-                                      Text(Shusseki_list[firebasesnapshot2!.get('Shusseki')]),
+                                      Text(Shusseki_list[
+                                          firebasesnapshot2!.get('Shusseki')]),
                                     ],
                                   ),
                                   const SizedBox(
@@ -260,10 +248,10 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     children: [
                                       const Text('教科書:',
                                           style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.bold,
+                                            fontWeight: FontWeight.bold,
                                           )),
-                                      Text(Kyoukasho_list[firebasesnapshot2!.get('Kyoukasho')]),
+                                      Text(Kyoukasho_list[
+                                          firebasesnapshot2!.get('Kyoukasho')]),
                                     ],
                                   ),
                                 ]),
@@ -272,10 +260,10 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     children: [
                                       const Text('中間:',
                                           style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.bold,
+                                            fontWeight: FontWeight.bold,
                                           )),
-                                      Text(Chukan_list[firebasesnapshot2!.get('Chukan')]),
+                                      Text(Chukan_list[
+                                          firebasesnapshot2!.get('Chukan')]),
                                     ],
                                   ),
                                   const SizedBox(
@@ -285,10 +273,10 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     children: [
                                       const Text('期末:',
                                           style: TextStyle(
-                                            fontWeight:
-                                                FontWeight.bold,
+                                            fontWeight: FontWeight.bold,
                                           )),
-                                      Text(Kimatu_list[firebasesnapshot2!.get('Kimatu')]),
+                                      Text(Kimatu_list[
+                                          firebasesnapshot2!.get('Kimatu')]),
                                     ],
                                   ),
                                 ]),
@@ -296,10 +284,10 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                   children: [
                                     const Text('持ち込み:',
                                         style: TextStyle(
-                                          fontWeight:
-                                              FontWeight.bold,
+                                          fontWeight: FontWeight.bold,
                                         )),
-                                    Text(Motikomi_list[firebasesnapshot2!.get('Motikomi')]),
+                                    Text(Motikomi_list[
+                                        firebasesnapshot2!.get('Motikomi')]),
                                   ],
                                 ),
                               ]),
@@ -325,8 +313,8 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                       ),
                     ],
                   ),
-              ),
-            )
+                ),
+              )
             : const Center(child: CircularProgressIndicator()));
   }
 }
