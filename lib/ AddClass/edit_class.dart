@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
@@ -103,7 +102,7 @@ class _EditClassState extends State<EditClass> {
                 color: Colors.black,
               ),
             ),
-            const Text('授業を作成',
+            const Text('授業を編集',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -352,8 +351,8 @@ class _EditClassState extends State<EditClass> {
                   ClassName1 != null &&
                   ClassName0 != '' &&
                   ClassName1 != ''
-              ? Colors.orange
-              : Colors.orange.withOpacity(0.5),
+              ? const Color(0xff92b82e)
+              : const Color(0xff92b82e).withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(

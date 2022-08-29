@@ -145,6 +145,28 @@ class _HomePageState extends State<HomePage> {
                         ad: banner!,
                       )
                     : const SizedBox()),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+              Icon(
+                Icons.arrow_drop_down,
+                size: 30,
+                color: Colors.black,
+              ),
+              Text(
+                '並び順',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                )
+              )
+                ],
+              ),
+            ),
             StreamBuilder<QuerySnapshot>(
                 stream: searchStateStream ?? jugyouListsStream,
                 builder: (context, snapshot) {
