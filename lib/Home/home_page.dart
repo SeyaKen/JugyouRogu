@@ -17,15 +17,18 @@ class HomePage extends StatefulWidget {
 }
 
 bool buttonCheck = false;
+List preForSearch = [];
 
 class _HomePageState extends State<HomePage> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
-  Stream<QuerySnapshot<Object?>>? jugyouListsStream, searchStateStream;
+  Stream<QuerySnapshot<Object?>>? jugyouListsStream,
+      searchStateStream,
+      searchAndNarabikaeStream;
   final ScrollController _scrollController = ScrollController();
   int _currentMax = 20;
   BannerAd? banner;
-  double? _ratingValue;
   String? daigakuMei;
+  int dore = 0;
 
   getHomeLists() async {
     daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
@@ -36,7 +39,7 @@ class _HomePageState extends State<HomePage> {
   _getMoreData() async {
     _currentMax = _currentMax + 20;
     jugyouListsStream =
-        await DatabaseService().fetchAdditionalData(_currentMax);
+        await DatabaseService().fetchAdditionalData(_currentMax, daigakuMei!);
     // UIを読み込み直す
     setState(() {});
   }
@@ -83,110 +86,115 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          buttonCheck = false;
-        });
-      },
-      child: Stack(
-        children: [
-          Scaffold(
-              backgroundColor: const Color(0xffffffff),
-              appBar: AppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: Colors.transparent,
-                  toolbarHeight: 80,
-                  elevation: 0,
-                  title: Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    height: MediaQuery.of(context).size.width * 0.1,
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    alignment: Alignment.bottomCenter,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      color: Colors.grey[300],
-                    ),
-                    child: TextField(
-                        onChanged: (text) async {
-                          List preForSearch = [];
-                          if (text.length > 1) {
-                            for (int i = 0; i < text.length - 1; i++) {
-                              if (!preForSearch
-                                  .contains(text.substring(i, i + 2))) {
-                                preForSearch.add(text.substring(i, i + 2));
-                              }
-                            }
-                            searchStateStream = await DatabaseService()
-                                .searchDataCollect(preForSearch, daigakuMei!);
-                            setState(() {});
-                          } else {
-                            searchStateStream = null;
-                            setState(() {});
-                          }
-                        },
-                        textAlignVertical: TextAlignVertical.center,
-                        style: const TextStyle(
-                          fontSize: 19,
-                          color: Colors.black,
-                        ),
-                        decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.search,
-                              size: 19,
-                              color: Colors.black,
-                            ),
-                            isDense: true,
-                            border: InputBorder.none,
-                            hintText: '授業名・教員名など(2文字以上)',
-                            hintStyle: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 19,
-                              color: Colors.grey,
-                            ))),
-                  )),
-              body: Column(
-                children: [
-                  SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      child: banner != null
-                          ? AdWidget(
-                              ad: banner!,
-                            )
-                          : const SizedBox()),
-                  const SizedBox(
-                    height: 20,
+    return Stack(
+      children: [
+        Scaffold(
+            backgroundColor: const Color(0xffffffff),
+            appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.transparent,
+                toolbarHeight: 80,
+                elevation: 0,
+                title: Container(
+                  margin: const EdgeInsets.only(top: 15),
+                  height: MediaQuery.of(context).size.width * 0.1,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  alignment: Alignment.bottomCenter,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: Colors.grey[300],
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 13, vertical: 10),
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          buttonCheck = !buttonCheck;
-                        });
+                  child: TextField(
+                      onChanged: (text) async {
+                        dore = 1;
+                        preForSearch = [];
+                        if (text.length > 1) {
+                          for (int i = 0; i < text.length - 1; i++) {
+                            if (!preForSearch
+                                .contains(text.substring(i, i + 2))) {
+                              preForSearch.add(text.substring(i, i + 2));
+                            }
+                          }
+                          searchStateStream = await DatabaseService()
+                              .searchDataCollect(preForSearch, daigakuMei!);
+                          setState(() {});
+                        } else {
+                          dore = 0;
+                          searchStateStream = null;
+                          setState(() {});
+                        }
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Icon(
-                            Icons.arrow_drop_down,
-                            size: 30,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: const TextStyle(
+                        fontSize: 19,
+                        color: Colors.black,
+                      ),
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.search,
+                            size: 19,
                             color: Colors.black,
                           ),
-                          Text('並び順',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ))
-                        ],
+                          isDense: true,
+                          border: InputBorder.none,
+                          hintText: '授業名・教員名など(2文字以上)',
+                          hintStyle: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 19,
+                            color: Colors.grey,
+                          ))),
+                )),
+            body: Column(
+              children: [
+                SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    child: banner != null
+                        ? AdWidget(
+                            ad: banner!,
+                          )
+                        : const SizedBox()),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            buttonCheck = !buttonCheck;
+                          });
+                        },
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.arrow_drop_down,
+                              size: 30,
+                              color: Colors.black,
+                            ),
+                            Text('並び順',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ))
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  Stack(
+                ),
+                Flexible(
+                  child: Stack(
                     children: [
                       StreamBuilder<QuerySnapshot>(
-                          stream: searchStateStream ?? jugyouListsStream,
+                          stream: dore == 0
+                              ? jugyouListsStream
+                              : dore == 1
+                                  ? searchStateStream
+                                  : searchAndNarabikaeStream,
                           builder: (context, snapshot) {
                             return snapshot.hasData
                                 ? ListView.builder(
@@ -556,6 +564,19 @@ class _HomePageState extends State<HomePage> {
                                     child: CircularProgressIndicator());
                           }),
                       buttonCheck
+                          ? InkWell(
+                              onTap: () {
+                                setState(() {
+                                  buttonCheck = false;
+                                });
+                              },
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                              ),
+                            )
+                          : Container(),
+                      buttonCheck
                           ? Positioned(
                               top: -10,
                               right: 20,
@@ -580,7 +601,17 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   children: [
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        dore = 2;
+                                        buttonCheck = false;
+                                        searchAndNarabikaeStream =
+                                            await DatabaseService()
+                                                .searchAndNarabikae(
+                                                    preForSearch,
+                                                    daigakuMei!,
+                                                    'JuujituAverage');
+                                        setState(() {});
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 20, vertical: 10),
@@ -594,39 +625,37 @@ class _HomePageState extends State<HomePage> {
                                         ),
                                         child: Row(
                                           children: const [
-                                            Text('編集する',
+                                            Text('内容充実度順',
                                                 style: TextStyle(
                                                   fontSize: 17,
                                                 )),
-                                            SizedBox(width: 10),
-                                            Icon(
-                                              Icons.edit,
-                                              size: 25,
-                                            )
                                           ],
                                         ),
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        dore = 2;
+                                        buttonCheck = false;
+                                        searchAndNarabikaeStream =
+                                            await DatabaseService()
+                                                .searchAndNarabikae(
+                                                    preForSearch,
+                                                    daigakuMei!,
+                                                    'RakutanAverage');
+                                        setState(() {});
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 10),
+                                            horizontal: 10, vertical: 10),
                                         child: Row(
                                           children: const [
                                             Text(
-                                              '削除する',
+                                              '楽単順',
                                               style: TextStyle(
                                                 fontSize: 17,
-                                                color: Colors.red,
                                               ),
                                             ),
-                                            SizedBox(width: 10),
-                                            Icon(
-                                              Icons.delete,
-                                              size: 25,
-                                              color: Colors.red,
-                                            )
                                           ],
                                         ),
                                       ),
@@ -638,49 +667,36 @@ class _HomePageState extends State<HomePage> {
                           : Container(),
                     ],
                   ),
-                ],
-              ),
-              floatingActionButton: ClipRRect(
-                borderRadius: BorderRadius.circular(3),
-                child: Container(
-                  color: const Color(0xff92b82e),
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  height: 60,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => const AddClass(),
-                            transitionDuration: const Duration(seconds: 0),
-                          ));
-                    },
-                    child: const Center(
-                      child: Text('授業を作成',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ),
+                ),
+              ],
+            ),
+            floatingActionButton: ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: Container(
+                color: const Color(0xff92b82e),
+                width: MediaQuery.of(context).size.width * 0.4,
+                height: 60,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => const AddClass(),
+                          transitionDuration: const Duration(seconds: 0),
+                        ));
+                  },
+                  child: const Center(
+                    child: Text('授業を作成',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        )),
                   ),
                 ),
-              )),
-          buttonCheck
-              ? InkWell(
-                  onTap: () {
-                    setState(() {
-                      buttonCheck = false;
-                    });
-                  },
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                  ),
-                )
-              : Container()
-        ],
-      ),
+              ),
+            )),
+      ],
     );
   }
 }

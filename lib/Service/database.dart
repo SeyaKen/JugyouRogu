@@ -37,9 +37,10 @@ class DatabaseService extends ChangeNotifier {
   }
 
   // 追加の質問一欄？をうつす関数
-  Future<Stream<QuerySnapshot>> fetchAdditionalData(int suuji) async {
+  Future<Stream<QuerySnapshot>> fetchAdditionalData(
+      int suuji, String Daigakumei) async {
     return FirebaseFirestore.instance
-        .collection('jugyou')
+        .collection(Daigakumei)
         .orderBy('Daytime', descending: true)
         .limit(suuji)
         .snapshots();
@@ -55,7 +56,7 @@ class DatabaseService extends ChangeNotifier {
         query =
             query.where('forSearchList.${searchWordsList[i]}', isEqualTo: true);
       } catch (e) {
-        // print(e.toString());
+        print(e.toString());
       }
       if (i == searchWordsList.length - 1) {
         return query.snapshots();
@@ -65,14 +66,30 @@ class DatabaseService extends ChangeNotifier {
     return null;
   }
 
-  // 個人的な？質問一覧をうつす関数
-  Stream<QuerySnapshot<Map<String, dynamic>>> personalQuestinosCollect() {
-    return FirebaseFirestore.instance
-        .collection('jugyou')
-        .orderBy('Daytime', descending: true)
-        .where('asker', isEqualTo: uid)
-        .limit(10)
-        .snapshots();
+  // 検索してかつ、並び替えをした関数
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> searchAndNarabikae(
+      searchWordsList, String daigakuMei, Jouken) async {
+    Query<Map<String, dynamic>> query =
+        FirebaseFirestore.instance.collection(daigakuMei);
+    if (searchWordsList.length <= 1) {
+      query = query.orderBy(Jouken, descending: true);
+      return query.snapshots();
+    } else {
+      for (var i = 0; i < searchWordsList.length; i++) {
+        try {
+          query = query
+              .where('forSearchList.${searchWordsList[i]}', isEqualTo: true)
+              .orderBy(Jouken, descending: true);
+        } catch (e) {
+          print(e.toString());
+        }
+        if (i == searchWordsList.length - 1) {
+          return query.snapshots();
+        }
+      }
+    }
+
+    return null;
   }
 
   // 追加の答えを持ってくる関数
@@ -83,16 +100,6 @@ class DatabaseService extends ChangeNotifier {
         .orderBy('Daytime', descending: true)
         .where('asker', isEqualTo: uid)
         .limit(personalJugyouSuuji)
-        .snapshots();
-  }
-
-  // 個人的な？答え一覧をうつす関数
-  Stream<QuerySnapshot<Map<String, dynamic>>> personalAnswersCollect() {
-    return FirebaseFirestore.instance
-        .collection('jugyou')
-        .orderBy('Daytime', descending: true)
-        .where('answersList', arrayContains: uid)
-        .limit(10)
         .snapshots();
   }
 
@@ -217,7 +224,8 @@ class DatabaseService extends ChangeNotifier {
   }
 
   // 授業の重複がないか確認する関数
-  Query<Map<String, dynamic>> ChouhukuKakunin(jugyoumei, kyoujumei, daigakuMei) {
+  Query<Map<String, dynamic>> ChouhukuKakunin(
+      jugyoumei, kyoujumei, daigakuMei) {
     return FirebaseFirestore.instance
         .collection(daigakuMei)
         .orderBy('Daytime', descending: true)
