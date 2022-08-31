@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/Profile/edit_profile.dart';
-import 'package:jugyourogu/SelectLogin/select_register_screen.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
 class EditDaigakuScreen extends StatefulWidget {
@@ -12,15 +11,15 @@ class EditDaigakuScreen extends StatefulWidget {
 
 class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
-  String _hasBeenPressed = '立教大学';
+  String _hasBeenPressed = '中央大学';
   final items = [
-    '立教大学',
+    // '立教大学',
     '中央大学',
-    '明治大学',
-    '法政大学',
-    '青山学院大学',
-    '早稲田大学',
-    '慶應義塾大学',
+    // '明治大学',
+    // '法政大学',
+    // '青山学院大学',
+    // '早稲田大学',
+    // '慶應義塾大学',
   ];
 
   @override
@@ -65,7 +64,7 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
                   height: 20,
                 ),
                 const Text(
-                  '学部を教えてください',
+                  '大学を教えてください',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -150,11 +149,11 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
 }
 
 List daigaku = [
-  'rikkyou',
+  // 'rikkyou',
   'chuou',
-  'meiji',
-  'housei',
-  'aogaku',
-  'waseda',
-  'keiou',
+  // 'meiji',
+  // 'housei',
+  // 'aogaku',
+  // 'waseda',
+  // 'keiou',
 ];

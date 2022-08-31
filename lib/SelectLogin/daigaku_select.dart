@@ -8,15 +8,15 @@ class DaigakuSelectScreen extends StatefulWidget {
 }
 
 class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
-  String _hasBeenPressed = '立教大学';
+  String _hasBeenPressed = '中央大学';
   final items = [
-    '立教大学',
+    // '立教大学',
     '中央大学',
-    '明治大学',
-    '法政大学',
-    '青山学院大学',
-    '早稲田大学',
-    '慶應義塾大学',
+    // '明治大学',
+    // '法政大学',
+    // '青山学院大学',
+    // '早稲田大学',
+    // '慶應義塾大学',
   ];
 
   @override
@@ -61,7 +61,7 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
                   height: 20,
                 ),
                 const Text(
-                  '学部を教えてください',
+                  '大学を教えてください',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -142,11 +142,11 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
 }
 
 List daigaku = [
-  'rikkyou',
+  // 'rikkyou',
   'chuou',
-  'meiji',
-  'housei',
-  'aogaku',
-  'waseda',
-  'keiou',
+  // 'meiji',
+  // 'housei',
+  // 'aogaku',
+  // 'waseda',
+  // 'keiou',
 ];
