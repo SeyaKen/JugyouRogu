@@ -119,7 +119,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                             style: const TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
-                                await launch("");
+                                await launch("https://marketingplatform.google.com/about/analytics/terms/jp/");
                               },
                             text: '利用規約',
                           ),
@@ -130,7 +130,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                             style: const TextStyle(color: Colors.blue),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
-                                await launch("");
+                                await launch("https://policies.google.com/privacy?hl=ja");
                               },
                             text: 'プライバシーポリシー',
                           ),
@@ -389,8 +389,8 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                     children: [
                       InkWell(
                           onTap: () async {
-                            if (await canLaunch("")) {
-                              await launch("");
+                            if (await canLaunch("https://forms.gle/s3kYnP94k2tZKboo8")) {
+                              await launch("https://forms.gle/s3kYnP94k2tZKboo8");
                             }
                           },
                           child: const Text(
