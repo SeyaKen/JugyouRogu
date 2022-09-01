@@ -86,6 +86,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xffffffff),
         appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -101,6 +102,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: TextField(
                   onChanged: (text) async {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     dore = 1;
                     preForSearch = [];
                     if (text.length > 1) {
@@ -275,7 +277,7 @@ class _HomePageState extends State<HomePage> {
                                                   ),
                                                 ],
                                               ),
-                                              const SizedBox(height: 5),
+                                              const SizedBox(height: 3),
                                               Row(
                                                 children: [
                                                   snapshot.data!.docs[index - 1]
@@ -321,7 +323,6 @@ class _HomePageState extends State<HomePage> {
                                                       )),
                                                 ],
                                               ),
-                                              const SizedBox(height: 5),
                                               Column(
                                                 children: [
                                                   Row(

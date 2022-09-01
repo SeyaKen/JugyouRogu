@@ -67,18 +67,15 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 const Text(
                   '大学を教えてください',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 20,
                       color: Colors.black,
                       decoration: TextDecoration.none),
-                ),
-                const SizedBox(
-                  height: 20,
                 ),
                 Expanded(
                   flex: 1,
@@ -97,7 +94,7 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
                                     items[index],
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 30,
+                                      fontSize: 20,
                                       color: _hasBeenPressed == items[index]
                                           ? Colors.black
                                           : Colors.grey,
@@ -143,7 +140,7 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
                   child: Text('大学を選択する',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                        fontSize: 15,
                         color: Colors.white,
                       ))),
             )),

@@ -25,7 +25,7 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
             const FaIcon(
               FontAwesomeIcons.chalkboard,
               color: Colors.orange,
-              size: 180,
+              size: 90,
             ),
             const Text(
               '授業ログ',
@@ -35,7 +35,7 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
                   color: Colors.black,
                 )),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(3),
@@ -56,12 +56,12 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
                         child: Text('アカウント登録',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                              fontSize: 15,
                               color: Colors.white,
                             ))),
                   )),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             ClipRRect(
               borderRadius: BorderRadius.circular(3),
               child: Container(
@@ -83,7 +83,7 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
                         child: Text('ログイン',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 17,
+                              fontSize: 15,
                               color: Color(0xff92b82e),
                             ))),
                   )),

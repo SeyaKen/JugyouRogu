@@ -128,7 +128,7 @@ class _SignInState extends State<PasswordReset> {
                                     child: Text(
                                       '送信',
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 20),
+                                          color: Colors.white, fontSize: 15),
                                     ),
                                   ),
                                 ),

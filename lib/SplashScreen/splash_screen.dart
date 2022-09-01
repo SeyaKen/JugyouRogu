@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/SelectLogin/register_or_login.dart';
-import 'package:jugyourogu/SelectLogin/select_login_screen.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 
@@ -17,7 +16,7 @@ class MySplashScreen extends StatefulWidget {
 class _MySplashScreenState extends State<MySplashScreen> {
   Future<void> starttimer() async {
     loginCheck = await SharedPreferenceHelper().getUserName();
-    Timer(const Duration(seconds: 1), () async {
+    Timer(const Duration(milliseconds: 200), () async {
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -51,14 +50,11 @@ class _MySplashScreenState extends State<MySplashScreen> {
               FaIcon(
                 FontAwesomeIcons.chalkboard,
                 color: Colors.orange,
-                size: 180,
-              ),
-              SizedBox(
-                height: 30,
+                size: 90,
               ),
               Text('授業ログ',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   )),

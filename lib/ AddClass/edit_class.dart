@@ -137,14 +137,14 @@ class _EditClassState extends State<EditClass> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 25,
+                              height: 15,
                             ),
                             Row(
                               children: [
                                 Text(
                                   title_list[index],
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -166,7 +166,7 @@ class _EditClassState extends State<EditClass> {
                               ],
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
                             index == 0 || index == 1
                                 ? ClipRRect(
@@ -178,7 +178,9 @@ class _EditClassState extends State<EditClass> {
                                         initialValue:
                                             index == 0 ? jugyoumei : kyouju,
                                         style: const TextStyle(
-                                            color: Colors.black),
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
                                         validator: (val) => val!.isEmpty
                                             ? '正確に${title_value[index]}を入力してください。'
                                             : null,
@@ -190,21 +192,25 @@ class _EditClassState extends State<EditClass> {
                                                   : ClassName2 = val);
                                         },
                                         decoration: InputDecoration(
+                                          contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 9,
+                                                      ),
+                                              isDense: true,
                                           border: InputBorder.none,
                                           fillColor: Colors.grey[300],
                                           filled: true,
                                           hintText: title_list[index],
                                           hintStyle: const TextStyle(
                                               color: Colors.grey),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 13),
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                             ),
                                           ),
+                                          
                                         ),
                                       ),
                                     ),
@@ -219,6 +225,7 @@ class _EditClassState extends State<EditClass> {
                                                   .width *
                                               0.9,
                                           child: TextFormField(
+                                            
                                             controller:
                                                 index == 3 ? txt0 : txt1,
                                             onTap: () {
@@ -261,20 +268,22 @@ class _EditClassState extends State<EditClass> {
                                             },
                                             readOnly: true,
                                             style: const TextStyle(
-                                                color: Colors.black),
+                                                color: Colors.black, fontSize: 15,),
                                             validator: (val) => val!.isEmpty
                                                 ? '正確に${title_value[index]}を入力してください。'
                                                 : null,
                                             decoration: InputDecoration(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 9,
+                                                      ),
+                                              isDense: true,
                                               fillColor: Colors.grey[300],
                                               filled: true,
                                               hintText: title_list[index],
                                               hintStyle: const TextStyle(
                                                   color: Colors.grey),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 13),
                                               border: InputBorder.none,
                                             ),
                                           ),
@@ -321,7 +330,8 @@ class _EditClassState extends State<EditClass> {
                                             },
                                             readOnly: true,
                                             style: const TextStyle(
-                                                color: Colors.black),
+                                                color: Colors.black, fontSize: 15,),
+                                            
                                             validator: (val) => val!.isEmpty
                                                 ? '正確に${title_value[index]}を入力してください。'
                                                 : null,
@@ -331,10 +341,12 @@ class _EditClassState extends State<EditClass> {
                                               hintText: title_list[index],
                                               hintStyle: const TextStyle(
                                                   color: Colors.grey),
-                                              contentPadding:
+                                                  contentPadding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 10,
-                                                      vertical: 13),
+                                                      vertical: 9,
+                                                      ),
+                                              isDense: true,
                                               border: InputBorder.none,
                                             ),
                                           ),

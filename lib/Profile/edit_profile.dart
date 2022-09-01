@@ -257,7 +257,7 @@ class _EditProfileState extends State<EditProfile> {
                       ],
                     ),
                   ))
-              : const Center(child: CircularProgressIndicator());
+              : CircularProgressIndicator();
         });
   }
 }

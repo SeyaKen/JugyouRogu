@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
 import 'package:jugyourogu/Profile/password_reset.dart';
-import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
 class mailSignIn extends StatefulWidget {
   @override
@@ -67,7 +65,7 @@ class _SignInState extends State<mailSignIn> {
                             Text(
                               'ログイン',
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -178,7 +176,7 @@ class _SignInState extends State<mailSignIn> {
                                     child: Text(
                                       'ログイン',
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                         color: Colors.white,
                                       ),
                                     ),

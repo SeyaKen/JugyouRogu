@@ -99,7 +99,7 @@ class _HomeDetailState extends State<HomeDetail> {
                             width: MediaQuery.of(context).size.width * 0.6,
                             child: Text(firebasesnapshot!.get('授業名'),
                                 style: const TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.ellipsis,
                                 )),
@@ -134,7 +134,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                 SizedBox(width: 5),
                                 Text('編集する',
                                     style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 12,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.blue,
                                     )),
@@ -150,13 +150,13 @@ class _HomeDetailState extends State<HomeDetail> {
                               ? const Text('学部:',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 15,
+                                    fontSize: 12,
                                   ))
                               : Container(),
                           firebasesnapshot!.get('学部') != ''
                               ? Text(firebasesnapshot!.get('学部'),
                                   style: const TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 12,
                                   ))
                               : Container(),
                           firebasesnapshot!.get('学部') != ''
@@ -167,11 +167,11 @@ class _HomeDetailState extends State<HomeDetail> {
                           const Text('教授:',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 12,
                               )),
                           Text(firebasesnapshot!.get('教授・講師名'),
                               style: const TextStyle(
-                                fontSize: 15,
+                                fontSize: 12,
                               )),
                         ],
                       ),
@@ -183,6 +183,7 @@ class _HomeDetailState extends State<HomeDetail> {
                               const Text('内容充実度:',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 12,
                                   )),
                               Row(
                                 children: [
@@ -251,6 +252,7 @@ class _HomeDetailState extends State<HomeDetail> {
                               const Text('楽単度:',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 12,
                                   )),
                               Row(
                                 children: [
@@ -320,29 +322,39 @@ class _HomeDetailState extends State<HomeDetail> {
                         const Text('曜日・時限:  ',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              fontSize: 12,
                             )),
                         Text(
                           firebasesnapshot!.get('曜日・時限1'),
+                          style: const TextStyle(
+                            fontSize: 12,
+                          )
                         ),
                         firebasesnapshot!.get('曜日・時限1') != ''
                             ? const Text(
                                 '-',
+                                 style: TextStyle(
+                            fontSize: 12,
+                          )
                               )
                             : const Text(''),
                         firebasesnapshot!.get('曜日・時限2') == ''
                             ? const Text('')
                             : Text(
                                 firebasesnapshot!.get('曜日・時限2'),
+ style: const TextStyle(
+                            fontSize: 12,
+                          )
                               ),
                       ]),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Row(
                         children: const [
                           Text('口コミ',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               )),
                         ],
@@ -377,7 +389,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                     },
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 13, vertical: 15),
+                                                horizontal: 13, vertical: 8),
                                       decoration: const BoxDecoration(
                                           border: Border(
                                         top: BorderSide(
@@ -398,6 +410,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
+                                                              fontSize: 12,
                                                             )),
                                                         Row(
                                                           children: [
@@ -473,6 +486,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
+                                                              fontSize: 12,
                                                             )),
                                                         Row(
                                                           children: [
@@ -547,11 +561,15 @@ class _HomeDetailState extends State<HomeDetail> {
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
+                                                                fontSize: 12,
                                                           )),
                                                       Text(Shusseki_list[
                                                           snapshot.data!
                                                                   .docs[index]
-                                                              ['Shusseki']]),
+                                                              ['Shusseki']],
+                                                               style: const TextStyle(
+                            fontSize: 12,
+                          )),
                                                     ],
                                                   ),
                                                   const SizedBox(
@@ -563,11 +581,15 @@ class _HomeDetailState extends State<HomeDetail> {
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
+                                                            fontSize: 12,
                                                           )),
                                                       Text(Kyoukasho_list[
                                                           snapshot.data!
                                                                   .docs[index]
-                                                              ['Kyoukasho']]),
+                                                              ['Kyoukasho']],
+                                                           style: const TextStyle(
+                            fontSize: 12,
+                          )),
                                                     ],
                                                   ),
                                                 ]),
@@ -578,10 +600,14 @@ class _HomeDetailState extends State<HomeDetail> {
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
+                                                                fontSize: 12,
                                                           )),
                                                       Text(Chukan_list[snapshot
                                                               .data!.docs[index]
-                                                          ['Chukan']]),
+                                                          ['Chukan']],
+                                                           style: const TextStyle(
+                            fontSize: 12,
+                          )),
                                                     ],
                                                   ),
                                                   const SizedBox(
@@ -593,10 +619,14 @@ class _HomeDetailState extends State<HomeDetail> {
                                                           style: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
+                                                            fontSize: 12,
                                                           )),
                                                       Text(Kimatu_list[snapshot
                                                               .data!.docs[index]
-                                                          ['Kimatu']]),
+                                                          ['Kimatu']],
+                                                           style: const TextStyle(
+                            fontSize: 12,
+                          )),
                                                     ],
                                                   ),
                                                 ]),
@@ -606,10 +636,14 @@ class _HomeDetailState extends State<HomeDetail> {
                                                         style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
+                                                          fontSize: 12,
                                                         )),
                                                     Text(Motikomi_list[snapshot
                                                             .data!.docs[index]
-                                                        ['Motikomi']]),
+                                                        ['Motikomi']],
+                                                         style: const TextStyle(
+                            fontSize: 12,
+                          )),
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10),
@@ -691,8 +725,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                                                           child:
                                                                               Text(
                                                                             snapshot1.data!.docs[0]['name'],
-                                                                            overflow:
-                                                                                TextOverflow.ellipsis,
+                                                                            overflow: TextOverflow.ellipsis,
                                                                             style:
                                                                                 const TextStyle(
                                                                               fontSize: 10,
@@ -702,8 +735,6 @@ class _HomeDetailState extends State<HomeDetail> {
                                                                       : const Text(
                                                                           '');
                                                                 }),
-                                                            const SizedBox(
-                                                                height: 5),
                                                             Text(
                                                               snapshot
                                                                   .data!
@@ -741,12 +772,12 @@ class _HomeDetailState extends State<HomeDetail> {
             )
           : const Center(child: CircularProgressIndicator()),
       floatingActionButton: ClipRRect(
-        borderRadius: BorderRadius.circular(3),
-        child: Container(
-          color: const Color(0xff92b82e),
-          width: MediaQuery.of(context).size.width * 0.4,
-          height: 60,
-          child: InkWell(
+          borderRadius: BorderRadius.circular(3),
+          child: Container(
+            color: const Color(0xff92b82e),
+            width: 140,
+            height: 50,
+            child: InkWell(
               onTap: () {
                 Navigator.push(
                     context,
@@ -763,7 +794,7 @@ class _HomeDetailState extends State<HomeDetail> {
                       Text(firebasesnapshot1 == null ? '口コミを追加する' : '口コミを編集する',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 17,
+                            fontSize: 12,
                             color: Colors.white,
                           )))),
         ),

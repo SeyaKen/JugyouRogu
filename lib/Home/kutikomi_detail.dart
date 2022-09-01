@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/%20Reviews/add_reviews.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
@@ -96,7 +95,7 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 3),
                               Text(
                                 firebasesnapshot2!
                                     .get('Daytime')
@@ -104,7 +103,7 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     .toString()
                                     .substring(0, 16),
                                 style: const TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 12,
                                 ),
                               ),
                             ]),
@@ -124,6 +123,7 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                         const Text('内容充実度:',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              fontSize: 12,
                                             )),
                                         Row(
                                           children: [
@@ -180,6 +180,7 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                         const Text('楽単度:',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              fontSize: 12,
                                             )),
                                         Row(
                                           children: [
@@ -236,9 +237,13 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                       const Text('出席:',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
+                                            fontSize: 12,
                                           )),
                                       Text(Shusseki_list[
-                                          firebasesnapshot2!.get('Shusseki')]),
+                                          firebasesnapshot2!.get('Shusseki')],
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          )),
                                     ],
                                   ),
                                   const SizedBox(
@@ -249,9 +254,14 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                       const Text('教科書:',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
+                                            fontSize: 12,
                                           )),
-                                      Text(Kyoukasho_list[
-                                          firebasesnapshot2!.get('Kyoukasho')]),
+                                      Text(
+                                        Kyoukasho_list[firebasesnapshot2!.get('Kyoukasho')],
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        )
+                                        ),
                                     ],
                                   ),
                                 ]),
@@ -261,9 +271,14 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                       const Text('中間:',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
+                                            fontSize: 12,
                                           )),
                                       Text(Chukan_list[
-                                          firebasesnapshot2!.get('Chukan')]),
+                                          firebasesnapshot2!.get('Chukan')],
+                                          style: const TextStyle(
+                                          fontSize: 12,
+                                        )
+                                        ),
                                     ],
                                   ),
                                   const SizedBox(
@@ -274,9 +289,13 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                       const Text('期末:',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
+                                            fontSize: 12,
                                           )),
                                       Text(Kimatu_list[
-                                          firebasesnapshot2!.get('Kimatu')]),
+                                          firebasesnapshot2!.get('Kimatu')], style: const TextStyle(
+                                          fontSize: 12,
+                                        )
+                                      )
                                     ],
                                   ),
                                 ]),
@@ -285,9 +304,13 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     const Text('持ち込み:',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
+                                          fontSize: 12,
                                         )),
                                     Text(Motikomi_list[
-                                        firebasesnapshot2!.get('Motikomi')]),
+                                        firebasesnapshot2!.get('Motikomi')], style: const TextStyle(
+                                          fontSize: 12,
+                                        )
+                                        ),
                                   ],
                                 ),
                               ]),
@@ -300,16 +323,23 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                         children: const [
                           Text('口コミ',
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               )),
                         ],
                       ),
-                      Text(
-                        firebasesnapshot2!.get('Kutikomi'),
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              firebasesnapshot2!.get('Kutikomi'),
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

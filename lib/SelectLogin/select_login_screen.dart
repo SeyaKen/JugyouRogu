@@ -45,7 +45,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                   FaIcon(
                     FontAwesomeIcons.chalkboard,
                     color: Colors.orange,
-                    size: 180,
+                    size: 90,
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -113,11 +113,10 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(3),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
@@ -127,7 +126,8 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                         const Text('Googleで始める',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                                color: Colors.black,
+                                fontSize: 15)),
                         const FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.transparent,
@@ -146,13 +146,14 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                       ));
                 },
                 child: Container(
+                  height: 50,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
+                        horizontal: 20),
                     decoration: BoxDecoration(
                       color: const Color(0xff92b82e),
                       borderRadius: BorderRadius.circular(3),
                     ),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -164,7 +165,7 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                         Text('メールアドレスで始める',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+                                color: Colors.white, fontSize: 15)),
                         FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.transparent,

@@ -160,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               snapshot.data!.docs[0]['name'],
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 20,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),

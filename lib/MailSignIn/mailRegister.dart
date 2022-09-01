@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jugyourogu/SelectLogin/daigaku_select.dart';
 import 'package:jugyourogu/MailSignIn/mailAuth.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
@@ -81,7 +80,7 @@ class _mailRegisterState extends State<mailRegister> {
                           '新規登録',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 30,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -239,7 +238,7 @@ class _mailRegisterState extends State<mailRegister> {
                                 child: Text(
                                   '新規登録する',
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                      color: Colors.white, fontSize: 15),
                                 ),
                               ),
                             ),

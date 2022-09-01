@@ -172,11 +172,11 @@ class _AddReviewsState extends State<AddReviews> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(
-                            height: 15,
+                            height: 5,
                           ),
                           Text(title_list[index],
                               style: const TextStyle(
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                               )),
                           SizedBox(
@@ -212,37 +212,9 @@ class _AddReviewsState extends State<AddReviews> {
                                                                   null
                                                               ? '選択してください'
                                                               : _ratingValue6!,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: index == 0
-                                        ? _ratingValue0 == null
-                                            ? Colors.grey
-                                            : Colors.black
-                                        : index == 1
-                                            ? _ratingValue1 == null
-                                                ? Colors.grey
-                                                : Colors.black
-                                            : index == 2
-                                                ? _ratingValue2 == null
-                                                    ? Colors.grey
-                                                    : Colors.black
-                                                : index == 3
-                                                    ? _ratingValue3 == null
-                                                        ? Colors.grey
-                                                        : Colors.black
-                                                    : index == 4
-                                                        ? _ratingValue4 == null
-                                                            ? Colors.grey
-                                                            : Colors.black
-                                                        : index == 5
-                                                            ? _ratingValue5 ==
-                                                                    null
-                                                                ? Colors.grey
-                                                                : Colors.black
-                                                            : _ratingValue6 ==
-                                                                    null
-                                                                ? Colors.grey
-                                                                : Colors.black,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey,
                                   ),
                                 ),
                                 onTap: () {
@@ -355,7 +327,7 @@ class _AddReviewsState extends State<AddReviews> {
                                 '口コミ',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -374,7 +346,10 @@ class _AddReviewsState extends State<AddReviews> {
                                   borderRadius: BorderRadius.circular(5.0),
                                   child: TextFormField(
                                     maxLines: 8,
-                                    style: const TextStyle(color: Colors.black),
+                                    style: const TextStyle(
+                                      color: Colors.black, 
+                                      fontSize: 13,
+                                    ),
                                     onChanged: (val) {
                                       setState(() => kutikomi = val);
                                     },
@@ -495,7 +470,7 @@ class _AddReviewsState extends State<AddReviews> {
                   child: Text('投稿',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                        fontSize: 15,
                         color: Colors.white,
                       )))),
         ),
