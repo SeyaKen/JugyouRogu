@@ -126,7 +126,7 @@ class _SignInState extends State<PasswordReset> {
                                       MediaQuery.of(context).size.width * 0.8,
                                   child: const Center(
                                     child: Text(
-                                      'ログインリンクを送信',
+                                      '送信',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20),
                                     ),

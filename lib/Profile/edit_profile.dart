@@ -9,22 +9,28 @@ import 'package:jugyourogu/main_page.dart';
 class EditProfile extends StatefulWidget {
   EditProfile({
     Key? key,
+    required this.daigakuMei,
+    required this.name,
+    required this.ex,
   }) : super(key: key);
 
+  String daigakuMei, name, ex;
+
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<EditProfile> createState() => _EditProfileState(daigakuMei, name, ex);
 }
 
 class _EditProfileState extends State<EditProfile> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   Stream<QuerySnapshot<Object?>>? profileListsStream;
-  String? daigakuMei, name, ex;
+  String daigakuMei, name, ex;
   final _formKey = GlobalKey<FormState>();
   final _exKey = GlobalKey<FormState>();
+  
+  _EditProfileState(this.daigakuMei, this.name, this.ex);
 
   getHomeLists() async {
     profileListsStream = await DatabaseService().fetchImage();
-    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     setState(() {});
   }
 
@@ -43,10 +49,6 @@ class _EditProfileState extends State<EditProfile> {
     return StreamBuilder<QuerySnapshot>(
         stream: profileListsStream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            name = snapshot.data!.docs[0]['name'];
-            ex = snapshot.data!.docs[0]['selfIntroduction'];
-          }
           return snapshot.hasData
               ? Scaffold(
                   backgroundColor: const Color(0xffffffff),
@@ -63,8 +65,10 @@ class _EditProfileState extends State<EditProfile> {
                           const SizedBox(width: 15),
                           InkWell(
                             onTap: () async {
-                              DatabaseService().updateUserName(name!);
-                              DatabaseService().updateUserEx(ex!);
+                              DatabaseService().updateUserName(name);
+                              DatabaseService().updateUserEx(ex);
+                              DatabaseService().updateUserDaigaku(daigakuMei);
+                              SharedPreferenceHelper().saveUserDaigaku(daigakuMei);
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(
@@ -180,7 +184,7 @@ class _EditProfileState extends State<EditProfile> {
                                           context,
                                           PageRouteBuilder(
                                             pageBuilder: (_, __, ___) =>
-                                                EditDaigakuScreen(),
+                                                EditDaigakuScreen(name: name, ex: ex,),
                                             transitionDuration:
                                                 const Duration(seconds: 0),
                                           ));
@@ -197,7 +201,7 @@ class _EditProfileState extends State<EditProfile> {
                                       ),
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
-                                      child: Text(daigakuMei!,
+                                      child: Text(daigakuMei,
                                           style: const TextStyle(
                                             color: Colors.black,
                                           )),

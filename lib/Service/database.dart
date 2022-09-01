@@ -12,9 +12,6 @@ class DatabaseService extends ChangeNotifier {
   File? imageFile;
   Image? imgs;
 
-  final CollectionReference brewCollection =
-      FirebaseFirestore.instance.collection('users');
-
   // 質問一覧をうつす関数
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect(String daigakuMei) {
     return FirebaseFirestore.instance
@@ -122,14 +119,20 @@ class DatabaseService extends ChangeNotifier {
   }
 
   Future updateUserName(String name) async {
-    await brewCollection.doc(uid).update({
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
       'name': name,
     });
   }
 
   Future updateUserEx(String ex) async {
-    await brewCollection.doc(uid).update({
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
       'selfIntroduction': ex,
+    });
+  }
+
+  Future updateUserDaigaku(String daigaku) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).update({
+      'daigaku': daigaku,
     });
   }
 
@@ -187,7 +190,7 @@ class DatabaseService extends ChangeNotifier {
   // ファイルをアップロードする関数
   Future<String> uploadFile() async {
     if (imageFile == null) {
-      return 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b';
+      return '';
     } else {
       final storage = FirebaseStorage.instance;
       final ref = storage.ref().child(uid).child('ProfilePicture');
@@ -205,11 +208,13 @@ class DatabaseService extends ChangeNotifier {
   Future addImage() async {
     final ProfilePicture = await uploadFile();
 
-    // firebaseに追加
-    await brewCollection.doc(uid).update({
-      'ProfilePicture': ProfilePicture,
-    });
-    fetchImage();
+    if (ProfilePicture != '') {
+      // firebaseに追加
+      await FirebaseFirestore.instance.collection('users').doc(uid).update({
+        'ProfilePicture': ProfilePicture,
+      });
+      fetchImage();
+    }
   }
 
   Future profilePictureUpdate(DocumentSnapshot<Object?>? ds) async {
@@ -217,7 +222,7 @@ class DatabaseService extends ChangeNotifier {
       await FirebaseStorage.instance.refFromURL(ds['ProfilePicture']).delete();
     }
     showImagePicker().then((valu) async {
-      await brewCollection
+      await FirebaseFirestore.instance.collection('users')
           .doc(uid)
           .update({"ProfilePicture": ds['ProfilePicture']});
     });

@@ -268,14 +268,17 @@ class _HomePageState extends State<HomePage> {
                                           child: Column(children: [
                                             Row(
                                               children: [
-                                                Text(
-                                                    snapshot.data!.docs[index]
-                                                        ['授業名'],
-                                                    style: const TextStyle(
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    )),
+                                                Flexible(
+                                                  child: Text(
+                                                      snapshot.data!.docs[index]
+                                                          ['授業名'],
+                                                      style: const TextStyle(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        overflow: TextOverflow.ellipsis,
+                                                      )),
+                                                ),
                                               ],
                                             ),
                                             const SizedBox(height: 5),

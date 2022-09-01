@@ -1,12 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jugyourogu/Profile/edit_profile.dart';
-import 'package:jugyourogu/Service/sharedpref_helper.dart';
 
 class EditDaigakuScreen extends StatefulWidget {
+  EditDaigakuScreen({super.key, required this.name, required this.ex});
+
+  String name, ex;
+
   @override
-  _EditDaigakuScreenState createState() => _EditDaigakuScreenState();
+  _EditDaigakuScreenState createState() => _EditDaigakuScreenState(name, ex);
 }
 
 class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
@@ -21,6 +23,10 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
     // '早稲田大学',
     // '慶應義塾大学',
   ];
+
+  String name, ex;
+
+  _EditDaigakuScreenState(this.name, this.ex);
 
   @override
   Widget build(BuildContext context) {
@@ -122,15 +128,14 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
             height: 50,
             child: InkWell(
               onTap: () async {
-                SharedPreferenceHelper().saveUserDaigaku(_hasBeenPressed);
-                FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(uid)
-                    .update({'daigaku': _hasBeenPressed});
                 Navigator.push(
                     context,
                     PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => EditProfile(),
+                      pageBuilder: (_, __, ___) => EditProfile(
+                        daigakuMei: _hasBeenPressed,
+                        name: name,
+                        ex: ex,
+                      ),
                       transitionDuration: const Duration(seconds: 0),
                     ));
               },
