@@ -102,7 +102,6 @@ class _HomePageState extends State<HomePage> {
               ),
               child: TextField(
                   onChanged: (text) async {
-                    FocusManager.instance.primaryFocus?.unfocus();
                     dore = 1;
                     preForSearch = [];
                     if (text.length > 1) {
