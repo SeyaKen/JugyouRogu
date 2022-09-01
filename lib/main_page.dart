@@ -43,20 +43,23 @@ class _MainPageState extends State<MainPage> {
           currentIndex: currenttab,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.black,
-          backgroundColor: Color(0xffffffff),
+          selectedFontSize: 8,
+          unselectedFontSize: 8,
+          backgroundColor: const Color(0xffffffff),
           unselectedItemColor: Colors.grey,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
-                size: 30,
+                size: 22,
               ),
               label: 'ホーム',
+              
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.account_circle,
-                size: 30,
+                size: 22,
               ),
               label: 'プロフィール',
             ),

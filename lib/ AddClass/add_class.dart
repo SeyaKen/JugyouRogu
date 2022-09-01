@@ -37,7 +37,6 @@ class _AddClassState extends State<AddClass> {
         context: context,
         builder: (BuildContext context) => Container(
               height: 200,
-              padding: const EdgeInsets.only(top: 0),
               margin: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
@@ -115,14 +114,14 @@ class _AddClassState extends State<AddClass> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 25,
+                              height: 15,
                             ),
                             Row(
                               children: [
                                 Text(
                                   title_list[index],
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -144,7 +143,7 @@ class _AddClassState extends State<AddClass> {
                               ],
                             ),
                             const SizedBox(
-                              height: 10,
+                              height: 5,
                             ),
                             index == 0 || index == 1
                                 ? ClipRRect(
@@ -154,7 +153,8 @@ class _AddClassState extends State<AddClass> {
                                           0.9,
                                       child: TextFormField(
                                         style: const TextStyle(
-                                            color: Colors.black),
+                                            color: Colors.black,
+                                            fontSize: 15),
                                         validator: (val) => val!.isEmpty
                                             ? '正確に${title_value[index]}を入力してください。'
                                             : null,
@@ -172,9 +172,12 @@ class _AddClassState extends State<AddClass> {
                                           hintText: title_list[index],
                                           hintStyle: const TextStyle(
                                               color: Colors.grey),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 13),
+                                         contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 9,
+                                                      ),
+                                              isDense: true,
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -195,6 +198,7 @@ class _AddClassState extends State<AddClass> {
                                                   .width *
                                               0.9,
                                           child: TextFormField(
+                                            
                                             controller:
                                                 index == 3 ? txt0 : txt1,
                                             onTap: () {
@@ -245,12 +249,17 @@ class _AddClassState extends State<AddClass> {
                                               fillColor: Colors.grey[300],
                                               filled: true,
                                               hintText: title_list[index],
+                                              
                                               hintStyle: const TextStyle(
-                                                  color: Colors.grey),
+                                                  color: Colors.grey,
+                                                  fontSize: 15,
+                                                  ),
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 10,
-                                                      vertical: 13),
+                                                      vertical: 9,
+                                                      ),
+                                              isDense: true,
                                               border: InputBorder.none,
                                             ),
                                           ),
@@ -310,7 +319,9 @@ class _AddClassState extends State<AddClass> {
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 10,
-                                                      vertical: 13),
+                                                      vertical: 9,
+                                                      ),
+                                              isDense: true,
                                               border: InputBorder.none,
                                             ),
                                           ),
@@ -410,7 +421,7 @@ class _AddClassState extends State<AddClass> {
                   child: Text('授業を作成する',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                        fontSize: 15,
                         color: Colors.white,
                       )))),
         ),
