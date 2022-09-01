@@ -159,28 +159,66 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            buttonCheck = !buttonCheck;
-                          });
-                        },
-                        child: Row(
-                          children: const [
-                            Icon(
-                              Icons.arrow_drop_down,
-                              size: 30,
-                              color: Colors.black,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.3,
+                        child: PopUpMen(
+                          menuList: [
+                            PopupMenuItem(
+                              onTap: () async {
+                                dore = 2;
+                                buttonCheck = false;
+                                searchAndNarabikaeStream =
+                                    await DatabaseService().searchAndNarabikae(
+                                        preForSearch,
+                                        daigakuMei!,
+                                        'JuujituAverage');
+                                setState(() {});
+                              },
+                              child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  child: const Text("内容充実度順")),
                             ),
-                            Text('並び順',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ))
+                            const PopupMenuDivider(),
+                            PopupMenuItem(
+                              onTap: () async {
+                                dore = 2;
+                                buttonCheck = false;
+                                searchAndNarabikaeStream =
+                                    await DatabaseService().searchAndNarabikae(
+                                        preForSearch,
+                                        daigakuMei!,
+                                        'RakutanAverage');
+                                setState(() {});
+                              },
+                              child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  child: const Text("楽単順")),
+                            ),
                           ],
+                          icon: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Flexible(
+                                child: Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 30,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Flexible(
+                                child: Text('並び順',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -697,6 +735,23 @@ class _HomePageState extends State<HomePage> {
               ),
             )),
       ],
+    );
+  }
+}
+
+class PopUpMen extends StatelessWidget {
+  final List<PopupMenuEntry> menuList;
+  final Widget? icon;
+  const PopUpMen({super.key, required this.menuList, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      itemBuilder: ((context) => menuList),
+      icon: icon,
     );
   }
 }
