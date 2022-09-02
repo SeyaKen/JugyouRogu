@@ -54,7 +54,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
               ),
               Text('授業ログ',
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   )),
