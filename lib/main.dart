@@ -4,6 +4,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jugyourogu/Service/google_signIn.dart';
 import 'package:jugyourogu/SplashScreen/splash_screen.dart';
 import 'package:jugyourogu/ad_state.dart';
+import 'package:jugyourogu/updater.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -23,9 +24,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => GoogleSignInProvider(),
-      child: const MaterialApp(
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MySplashScreen(),
+        home: Stack(
+          children: const  [
+            MySplashScreen(),
+            // Updater(appStoreUrl: '', playStoreUrl: '',),
+          ],
+        ),
       ),
     );
   }

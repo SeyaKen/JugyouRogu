@@ -91,8 +91,8 @@ class _HomeDetailState extends State<HomeDetail> {
               bottom: BorderSide(width: 1, color: Colors.grey),
             ),
           ),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 5),
+                padding: const EdgeInsets.only(
+                    left: 8, right: 8, top: 10, bottom: 5),
                 child: Column(children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -137,7 +137,7 @@ class _HomeDetailState extends State<HomeDetail> {
                             SizedBox(width: 5),
                             Text('編集する',
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blue,
                                 )),
@@ -204,7 +204,7 @@ class _HomeDetailState extends State<HomeDetail> {
                         ? const Text('')
                         : Text(
                             firebasesnapshot!.get('曜日・時限2'),
- style: const TextStyle(
+     style: const TextStyle(
                         fontSize: 12,
                       )
                           ),
@@ -746,7 +746,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                                                 .toDate()
                                                                 .toString()
                                                                 .substring(
-                                                                    0, 16),
+                                                                    0, 10),
                                                             style:
                                                                 const TextStyle(
                                                               fontSize: 10,
@@ -772,7 +772,8 @@ class _HomeDetailState extends State<HomeDetail> {
                         : const Center(child: CircularProgressIndicator());
                   }),
                   Container(
-            height: 60,
+                    padding: const EdgeInsets.only(bottom: 10),
+            height: 70,
             width: double.maxFinite,
             decoration: const BoxDecoration(
             color: Colors.white,
@@ -831,7 +832,7 @@ class _HomeDetailState extends State<HomeDetail> {
                           )))),
         ),
       ),
-      const SizedBox(width: 5),
+      const SizedBox(width: 10),
               ],
             ),
           ],

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -20,16 +22,33 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.427112080066-2ovejpj33dbm5fg183f42m9etk9qat8k</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-2820998332028532~2472674308</string>
+	<key>GADIsAdManagerApp</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-  <key>NSCameraUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
 	<string>カメラで撮影した画像を使い、プロフィール画面やトーク画面で使えるようにします。カメラへのアクセスを許可しますか？</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>マイクへのアクセスを許可しますか？</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ライブラリの画像を使い、プロフィール画面やトーク画面で使えるようにします。ライブラリへのアクセスを許可しますか？</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -49,24 +68,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleTypeRole</key>
-      <string>Editor</string>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>com.googleusercontent.apps.427112080066-2ovejpj33dbm5fg183f42m9etk9qat8k</string>
-      </array>
-    </dict>
-  </array>
-  <key>GADApplicationIdentifier</key>
-    <string>ca-app-pub-2820998332028532~2472674308</string>
-    <key>GADIsAdManagerApp</key>
-    <true/>
-  </dict>
+</dict>
 </plist>

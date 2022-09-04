@@ -62,8 +62,8 @@ class _AddReviewsState extends State<AddReviews> {
         .get();
     try {
       if (firebasesnapshot != null) {
-        _ratingValue0 = Juujitu_list[firebasesnapshot!.get('Juujitu')];
-        _ratingValue1 = Rakutan_list[firebasesnapshot!.get('Rakutan')];
+        _ratingValue0 = Juujitu_list[- firebasesnapshot!.get('Juujitu') + 4];
+        _ratingValue1 = Rakutan_list[- firebasesnapshot!.get('Rakutan') + 4];
         _ratingValue2 = Chukan_list[firebasesnapshot!.get('Chukan')];
         _ratingValue3 = Kimatu_list[firebasesnapshot!.get('Kimatu')];
         _ratingValue4 = Motikomi_list[firebasesnapshot!.get('Motikomi')];
@@ -174,11 +174,24 @@ class _AddReviewsState extends State<AddReviews> {
                           const SizedBox(
                             height: 5,
                           ),
-                          Text(title_list[index],
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              )),
+                          Row(
+                            children: [
+                              Text(title_list[index],
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                            const SizedBox(width: 5),
+                            const Text(
+                                        '※必須',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                            ],
+                          ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: InkWell(
@@ -414,8 +427,8 @@ class _AddReviewsState extends State<AddReviews> {
                       .collection('reviews')
                       .doc(FirebaseAuth.instance.currentUser!.uid)
                       .set({
-                    'Juujitu': Juujitu_list.indexOf(_ratingValue0),
-                    'Rakutan': Rakutan_list.indexOf(_ratingValue1),
+                    'Juujitu': - Juujitu_list.indexOf(_ratingValue0) + 4,
+                    'Rakutan': - Rakutan_list.indexOf(_ratingValue1) + 4,
                     'Chukan': Chukan_list.indexOf(_ratingValue2),
                     'Kimatu': Kimatu_list.indexOf(_ratingValue3),
                     'Motikomi': Motikomi_list.indexOf(_ratingValue4),
@@ -481,19 +494,19 @@ class _AddReviewsState extends State<AddReviews> {
 }
 
 List Juujitu_list = [
-  'かなり物足りない',
-  'やや物足りない',
-  '普通',
-  'まぁ充実',
   'かなり充実',
+  'まぁ充実',
+  '普通',
+  'やや物足りない',
+  'かなり物足りない',
 ];
 
 List Rakutan_list = [
-  'かなり厳しい',
-  'やや厳しい',
-  '普通',
-  'まぁ楽勝',
   'かなり楽勝',
+  'まぁ楽勝',
+  '普通',
+  'やや厳しい',
+  'かなり厳しい',
 ];
 
 List Shusseki_list = [

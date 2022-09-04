@@ -101,7 +101,7 @@ class _KutikomiDetailState extends State<KutikomiDetail> {
                                     .get('Daytime')
                                     .toDate()
                                     .toString()
-                                    .substring(0, 16),
+                                    .substring(0, 10),
                                 style: const TextStyle(
                                   fontSize: 12,
                                 ),
