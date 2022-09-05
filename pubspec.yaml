@@ -49,6 +49,7 @@ dependencies:
   firebase_remote_config: ^0.10.0
   pub_semver: ^2.0.0
   package_info: ^2.0.1
+  the_apple_sign_in: ^1.1.1
 
 dev_dependencies:
   flutter_test:

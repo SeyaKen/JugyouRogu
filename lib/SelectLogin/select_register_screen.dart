@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,9 @@ import 'package:jugyourogu/Service/google_signIn.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
 import 'package:jugyourogu/main_page.dart';
 import 'package:provider/provider.dart';
+
+import '../Apple/apple_service.dart';
+import '../Apple/apple_sign_in_available.dart';
 
 class SelectRegisterScreen extends StatefulWidget {
   const SelectRegisterScreen({Key? key}) : super(key: key);
@@ -25,6 +30,18 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
     Daigakumei = await SharedPreferenceHelper().getUserDaigaku();
   }
 
+  Future _signInWithApple(BuildContext context) async {
+    try {
+      final authService2 = Provider.of<AuthService2>(context, listen: false);
+      final user = await authService2.signInWithApple();
+      return user;
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
+      return null;
+    }
+  }
+
   @override
   void initState() {
     Getdaigakumei();
@@ -33,6 +50,8 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
     return Scaffold(
         backgroundColor: const Color(0xffffffff),
         appBar: AppBar(
@@ -71,8 +90,7 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
               ),
               InkWell(
                 onTap: () {
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
                   try {
                     provider.googleLogin().then((user) => {
                           FirebaseFirestore.instance
@@ -117,13 +135,12 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                   }
                 },
                 child: Container(
-                  height: 50,
+                    height: 50,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(3),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,8 +152,10 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                             child: Image.asset('assets/googleLogo.png')),
                         const Text('Googleで始める',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black, fontSize: 15,)),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 15,
+                            )),
                         const FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.transparent,
@@ -144,6 +163,79 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                       ],
                     )),
               ),
+              Platform.isIOS
+                  ? Column(
+                      children: [
+                        const SizedBox(height: 30),
+                        if (appleSignInAvailable.isAvailable)
+                          InkWell(
+                            onTap: () {
+                              _signInWithApple(context).then((user) =>
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(user.uid)
+                                      .get()
+                                      .then((value) {
+                                    if (value.data() == null) {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user.uid)
+                                          .set({
+                                        'ProfilePicture': '',
+                                        'email': FirebaseAuth
+                                            .instance.currentUser!.email,
+                                        'name': '',
+                                        'selfIntroduction': '',
+                                        'uid': FirebaseAuth
+                                            .instance.currentUser!.uid,
+                                        'daigaku': Daigakumei,
+                                      });
+                                    }
+                                  }).then((value) => SharedPreferenceHelper()
+                                          .saveUserName('LogIned')
+                                          .then((value) => Navigator.push(
+                                              context,
+                                              PageRouteBuilder(
+                                                  pageBuilder: (_, __, ___) =>
+                                                      MainPage(currenttab: 0),
+                                                  transitionDuration: const Duration(seconds: 0))))));
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  color: Colors.black,
+                                  height: 50,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.apple,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                      Text('Appleで始める',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: 15)),
+                                      FaIcon(
+                                        FontAwesomeIcons.google,
+                                        color: Colors.transparent,
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                          ),
+                      ],
+                    )
+                  : Container(),
               const SizedBox(height: 30),
               InkWell(
                 onTap: () {
@@ -155,9 +247,8 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                       ));
                 },
                 child: Container(
-                  height: 50,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20),
+                    height: 50,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
                       color: const Color(0xff92b82e),
                       border: Border.all(color: Colors.grey, width: 0.5),
@@ -174,9 +265,10 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                         ),
                         Text('メールアドレスで始める',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 15,)),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 15,
+                            )),
                         FaIcon(
                           FontAwesomeIcons.google,
                           color: Colors.transparent,

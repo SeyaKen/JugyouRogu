@@ -76,11 +76,17 @@ class _HomeDetailState extends State<HomeDetail> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title:
-            Text(firebasesnapshot != null ? firebasesnapshot!.get('授業名') : '',
+            Text(
+              firebasesnapshot != null ? firebasesnapshot!.get('授業名').length > 11 ?
+              firebasesnapshot!.get('授業名').substring(0, 12) + '...'
+              : ''
+              : '',
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                )),
+                ),
+                overflow: TextOverflow.ellipsis,
+                ),
       ),
       body: firebasesnapshot != null
           ? Column(

@@ -4,9 +4,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jugyourogu/SelectLogin/register_or_login.dart';
 import 'package:jugyourogu/SelectLogin/select_login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthMethods {
   final googleSignIn = GoogleSignIn();
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future signOut(context) async {

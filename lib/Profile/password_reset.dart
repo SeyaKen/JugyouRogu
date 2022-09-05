@@ -11,6 +11,7 @@ class _SignInState extends State<PasswordReset> {
   // ここでauth.dartで作ったクラスを_authに代入
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
+  bool onTapped = false;
 
   String email = '';
   dynamic error;
@@ -79,7 +80,6 @@ class _SignInState extends State<PasswordReset> {
                                 hintText: 'メールアドレス',
                                 contentPadding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 13),
-                                
                               ),
                             ),
                           ),
@@ -100,8 +100,11 @@ class _SignInState extends State<PasswordReset> {
                               InkWell(
                                 onTap: () {
                                   if (_formKey.currentState!.validate()) {
-                                    _auth.sendPasswordResetEmail(email: email);
-                                    Navigator.pop(context);
+                                    _auth
+                                        .sendPasswordResetEmail(email: email)
+                                        .then((value) => setState(() {
+                                              onTapped = true;
+                                            }));
                                   } else {
                                     showDialog(
                                         context: context,
@@ -138,6 +141,10 @@ class _SignInState extends State<PasswordReset> {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    onTapped ? const Text('送信しました') : Container()
                   ],
                 ),
               ),
