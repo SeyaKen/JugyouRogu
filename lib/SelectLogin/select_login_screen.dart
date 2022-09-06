@@ -85,35 +85,41 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                       Provider.of<GoogleSignInProvider>(context, listen: false);
                   try {
                     provider.googleLogin().then((user) => {
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(FirebaseAuth.instance.currentUser!.uid)
-                              .get()
-                              .then((value) async {
-                            if (value.data() != null) {
-                              firebasesnapshot = await FirebaseFirestore
-                                  .instance
+                          if (FirebaseAuth.instance.currentUser != null)
+                            {
+                              FirebaseFirestore.instance
                                   .collection('users')
                                   .doc(FirebaseAuth.instance.currentUser!.uid)
-                                  .get();
-                              daigakuMei = firebasesnapshot!.get('daigaku');
-                              SharedPreferenceHelper().saveUserName('LogIned');
-                              SharedPreferenceHelper()
-                                  .saveUserDaigaku(daigakuMei)
-                                  .then(
-                                    (value) => Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                            pageBuilder: (_, __, ___) =>
-                                                MainPage(currenttab: 0),
-                                            transitionDuration:
-                                                const Duration(seconds: 0))),
-                                  );
-                            } else {
-                              AuthService().errorBox(context,
-                                  '一致するユーザーが見つかりません。新規登録画面から登録してください。');
+                                  .get()
+                                  .then((value) async {
+                                if (value.data() != null) {
+                                  firebasesnapshot = await FirebaseFirestore
+                                      .instance
+                                      .collection('users')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .get();
+                                  daigakuMei = firebasesnapshot!.get('daigaku');
+                                  SharedPreferenceHelper()
+                                      .saveUserName('LogIned');
+                                  SharedPreferenceHelper()
+                                      .saveUserDaigaku(daigakuMei)
+                                      .then(
+                                        (value) => Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                                pageBuilder: (_, __, ___) =>
+                                                    MainPage(currenttab: 0),
+                                                transitionDuration:
+                                                    const Duration(
+                                                        seconds: 0))),
+                                      );
+                                } else {
+                                  AuthService().errorBox(context,
+                                      '一致するユーザーが見つかりません。新規登録画面から登録してください。');
+                                }
+                              })
                             }
-                          })
                         });
                   } catch (e) {
                     print(e.toString());
@@ -161,49 +167,56 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                         const SizedBox(height: 30),
                         if (appleSignInAvailable.isAvailable)
                           InkWell(
-                            onTap: () {try {
-                    _signInWithApple(context).then((user) => {
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .get()
-                              .then((value) async {
-                            if (value.data() != null) {
-                              firebasesnapshot = await FirebaseFirestore
-                                  .instance
-                                  .collection('users')
-                                  .doc(user.uid)
-                                  .get();
-                              daigakuMei = firebasesnapshot!.get('daigaku');
-                              SharedPreferenceHelper().saveUserName('LogIned');
-                              SharedPreferenceHelper()
-                                  .saveUserDaigaku(daigakuMei)
-                                  .then(
-                                    (value) => Navigator.push(
-                                        context,
-                                        PageRouteBuilder(
-                                            pageBuilder: (_, __, ___) =>
-                                                MainPage(currenttab: 0),
-                                            transitionDuration:
-                                                const Duration(seconds: 0))),
-                                  );
-                            } else {
-                              AuthService().errorBox(context,
-                                  '一致するユーザーが見つかりません。新規登録画面から登録してください。');
-                            }
-                          })
-                        });
-                  } catch (e) {
-                    print(e.toString());
-                    if (e.toString() ==
-                        '[firebase_auth/wrong-password] The password is invalid or the user does not have a password.') {
-                      AuthService().errorBox(context, 'パスワードが間違っています。');
-                    } else if (e.toString() ==
-                        '[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.') {
-                      AuthService().errorBox(
-                          context, '一致するユーザーが見つかりません。新規登録画面から登録してください。');
-                    }
-                  }
+                            onTap: () {
+                              try {
+                                _signInWithApple(context).then((user) => {
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user.uid)
+                                          .get()
+                                          .then((value) async {
+                                        if (value.data() != null) {
+                                          firebasesnapshot =
+                                              await FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(user.uid)
+                                                  .get();
+                                          daigakuMei =
+                                              firebasesnapshot!.get('daigaku');
+                                          SharedPreferenceHelper()
+                                              .saveUserName('LogIned');
+                                          SharedPreferenceHelper()
+                                              .saveUserDaigaku(daigakuMei)
+                                              .then(
+                                                (value) => Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                        pageBuilder: (_, __,
+                                                                ___) =>
+                                                            MainPage(
+                                                                currenttab: 0),
+                                                        transitionDuration:
+                                                            const Duration(
+                                                                seconds: 0))),
+                                              );
+                                        } else {
+                                          AuthService().errorBox(context,
+                                              '一致するユーザーが見つかりません。新規登録画面から登録してください。');
+                                        }
+                                      })
+                                    });
+                              } catch (e) {
+                                print(e.toString());
+                                if (e.toString() ==
+                                    '[firebase_auth/wrong-password] The password is invalid or the user does not have a password.') {
+                                  AuthService()
+                                      .errorBox(context, 'パスワードが間違っています。');
+                                } else if (e.toString() ==
+                                    '[firebase_auth/user-not-found] There is no user record corresponding to this identifier. The user may have been deleted.') {
+                                  AuthService().errorBox(context,
+                                      '一致するユーザーが見つかりません。新規登録画面から登録してください。');
+                                }
+                              }
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(4),

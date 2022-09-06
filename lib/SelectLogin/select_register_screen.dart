@@ -90,37 +90,44 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
               ),
               InkWell(
                 onTap: () {
-                  final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
                   try {
                     provider.googleLogin().then((user) => {
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(FirebaseAuth.instance.currentUser!.uid)
-                              .get()
-                              .then((value) {
-                            if (value.data() == null) {
+                          if (FirebaseAuth.instance.currentUser != null)
+                            {
                               FirebaseFirestore.instance
                                   .collection('users')
                                   .doc(FirebaseAuth.instance.currentUser!.uid)
-                                  .set({
-                                'ProfilePicture': '',
-                                'email':
-                                    FirebaseAuth.instance.currentUser!.email,
-                                'name': '',
-                                'selfIntroduction': '',
-                                'uid': FirebaseAuth.instance.currentUser!.uid,
-                                'daigaku': Daigakumei,
-                              });
+                                  .get()
+                                  .then((value) {
+                                if (value.data() == null) {
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .set({
+                                    'ProfilePicture': '',
+                                    'email': FirebaseAuth
+                                        .instance.currentUser!.email,
+                                    'name': '',
+                                    'selfIntroduction': '',
+                                    'uid':
+                                        FirebaseAuth.instance.currentUser!.uid,
+                                    'daigaku': Daigakumei,
+                                  });
+                                }
+                              }).then((value) => SharedPreferenceHelper()
+                                      .saveUserName('LogIned')
+                                      .then((value) => Navigator.push(
+                                          context,
+                                          PageRouteBuilder(
+                                              pageBuilder: (_, __, ___) =>
+                                                  MainPage(currenttab: 0),
+                                              transitionDuration:
+                                                  const Duration(
+                                                      seconds: 0))))),
                             }
-                          }).then((value) => SharedPreferenceHelper()
-                                  .saveUserName('LogIned')
-                                  .then((value) => Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                          pageBuilder: (_, __, ___) =>
-                                              MainPage(currenttab: 0),
-                                          transitionDuration:
-                                              const Duration(seconds: 0))))),
                         });
                   } catch (e) {
                     print(e.toString());
@@ -198,7 +205,9 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                                               PageRouteBuilder(
                                                   pageBuilder: (_, __, ___) =>
                                                       MainPage(currenttab: 0),
-                                                  transitionDuration: const Duration(seconds: 0))))));
+                                                  transitionDuration:
+                                                      const Duration(
+                                                          seconds: 0))))));
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(4),

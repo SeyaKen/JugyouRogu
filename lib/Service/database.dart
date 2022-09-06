@@ -222,7 +222,8 @@ class DatabaseService extends ChangeNotifier {
       await FirebaseStorage.instance.refFromURL(ds['ProfilePicture']).delete();
     }
     showImagePicker().then((valu) async {
-      await FirebaseFirestore.instance.collection('users')
+      await FirebaseFirestore.instance
+          .collection('users')
           .doc(uid)
           .update({"ProfilePicture": ds['ProfilePicture']});
     });
