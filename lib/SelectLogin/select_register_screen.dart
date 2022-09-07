@@ -177,37 +177,43 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                         if (appleSignInAvailable.isAvailable)
                           InkWell(
                             onTap: () {
-                              _signInWithApple(context).then((user) =>
-                                  FirebaseFirestore.instance
-                                      .collection('users')
-                                      .doc(user.uid)
-                                      .get()
-                                      .then((value) {
-                                    if (value.data() == null) {
-                                      FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(user.uid)
-                                          .set({
-                                        'ProfilePicture': '',
-                                        'email': FirebaseAuth
-                                            .instance.currentUser!.email,
-                                        'name': '',
-                                        'selfIntroduction': '',
-                                        'uid': FirebaseAuth
-                                            .instance.currentUser!.uid,
-                                        'daigaku': Daigakumei,
-                                      });
-                                    }
-                                  }).then((value) => SharedPreferenceHelper()
-                                          .saveUserName('LogIned')
-                                          .then((value) => Navigator.push(
-                                              context,
-                                              PageRouteBuilder(
-                                                  pageBuilder: (_, __, ___) =>
-                                                      MainPage(currenttab: 0),
-                                                  transitionDuration:
-                                                      const Duration(
-                                                          seconds: 0))))));
+                              _signInWithApple(context).then((user) => {
+                                    if (user != null)
+                                      {
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(user.uid)
+                                            .get()
+                                            .then((value) {
+                                          if (value.data() == null) {
+                                            FirebaseFirestore.instance
+                                                .collection('users')
+                                                .doc(user.uid)
+                                                .set({
+                                              'ProfilePicture': '',
+                                              'email': FirebaseAuth
+                                                  .instance.currentUser!.email,
+                                              'name': '',
+                                              'selfIntroduction': '',
+                                              'uid': FirebaseAuth
+                                                  .instance.currentUser!.uid,
+                                              'daigaku': Daigakumei,
+                                            });
+                                          }
+                                        }).then((value) => SharedPreferenceHelper()
+                                                .saveUserName('LogIned')
+                                                .then((value) => Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                        pageBuilder: (_, __,
+                                                                ___) =>
+                                                            MainPage(
+                                                                currenttab: 0),
+                                                        transitionDuration:
+                                                            const Duration(
+                                                                seconds: 0)))))
+                                      }
+                                  });
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(4),

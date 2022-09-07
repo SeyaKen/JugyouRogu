@@ -397,8 +397,8 @@ class _HomeDetailState extends State<HomeDetail> {
                                         ));
                                   },
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                              horizontal: 13, vertical: 8),
+                                    padding: const EdgeInsets.only(
+                                              left: 8, top: 8, bottom: 8),
                                     decoration: const BoxDecoration(
                                         border: Border(
                                       bottom: BorderSide(
@@ -763,12 +763,12 @@ class _HomeDetailState extends State<HomeDetail> {
                                                     ]),
                                               ]),
                                             ]),
-                                        const Flexible(
+                                        const Expanded(
                                           child: Icon(
                                             Icons.arrow_forward_ios_rounded,
                                             color: Colors.grey,
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),

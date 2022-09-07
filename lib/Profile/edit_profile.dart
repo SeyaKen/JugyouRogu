@@ -26,7 +26,7 @@ class _EditProfileState extends State<EditProfile> {
   String daigakuMei, name, ex;
   final _formKey = GlobalKey<FormState>();
   final _exKey = GlobalKey<FormState>();
-  
+
   _EditProfileState(this.daigakuMei, this.name, this.ex);
 
   getHomeLists() async {
@@ -53,6 +53,7 @@ class _EditProfileState extends State<EditProfile> {
               ? Scaffold(
                   backgroundColor: const Color(0xffffffff),
                   appBar: AppBar(
+                      automaticallyImplyLeading: false,
                       iconTheme: const IconThemeData(
                         color: Colors.black,
                       ),
@@ -60,15 +61,26 @@ class _EditProfileState extends State<EditProfile> {
                       elevation: 0,
                       toolbarHeight: 60,
                       title: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: 30,
+                              color: Colors.black,
+                            ),
+                          ),
                           const SizedBox(width: 15),
                           InkWell(
                             onTap: () async {
                               DatabaseService().updateUserName(name);
                               DatabaseService().updateUserEx(ex);
                               DatabaseService().updateUserDaigaku(daigakuMei);
-                              SharedPreferenceHelper().saveUserDaigaku(daigakuMei);
+                              SharedPreferenceHelper()
+                                  .saveUserDaigaku(daigakuMei);
                               Navigator.push(
                                   context,
                                   PageRouteBuilder(
@@ -184,7 +196,10 @@ class _EditProfileState extends State<EditProfile> {
                                           context,
                                           PageRouteBuilder(
                                             pageBuilder: (_, __, ___) =>
-                                                EditDaigakuScreen(name: name, ex: ex,),
+                                                EditDaigakuScreen(
+                                              name: name,
+                                              ex: ex,
+                                            ),
                                             transitionDuration:
                                                 const Duration(seconds: 0),
                                           ));

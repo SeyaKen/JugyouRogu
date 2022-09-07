@@ -170,40 +170,46 @@ class _SelectLoginScreenState extends State<SelectLoginScreen> {
                             onTap: () {
                               try {
                                 _signInWithApple(context).then((user) => {
-                                      FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(user.uid)
-                                          .get()
-                                          .then((value) async {
-                                        if (value.data() != null) {
-                                          firebasesnapshot =
-                                              await FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(user.uid)
-                                                  .get();
-                                          daigakuMei =
-                                              firebasesnapshot!.get('daigaku');
-                                          SharedPreferenceHelper()
-                                              .saveUserName('LogIned');
-                                          SharedPreferenceHelper()
-                                              .saveUserDaigaku(daigakuMei)
-                                              .then(
-                                                (value) => Navigator.push(
-                                                    context,
-                                                    PageRouteBuilder(
-                                                        pageBuilder: (_, __,
-                                                                ___) =>
-                                                            MainPage(
-                                                                currenttab: 0),
-                                                        transitionDuration:
-                                                            const Duration(
-                                                                seconds: 0))),
-                                              );
-                                        } else {
-                                          AuthService().errorBox(context,
-                                              '一致するユーザーが見つかりません。新規登録画面から登録してください。');
+                                      if (user != null)
+                                        {
+                                          FirebaseFirestore.instance
+                                              .collection('users')
+                                              .doc(user.uid)
+                                              .get()
+                                              .then((value) async {
+                                            if (value.data() != null) {
+                                              firebasesnapshot =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('users')
+                                                      .doc(user.uid)
+                                                      .get();
+                                              daigakuMei = firebasesnapshot!
+                                                  .get('daigaku');
+                                              SharedPreferenceHelper()
+                                                  .saveUserName('LogIned');
+                                              SharedPreferenceHelper()
+                                                  .saveUserDaigaku(daigakuMei)
+                                                  .then(
+                                                    (value) => Navigator.push(
+                                                        context,
+                                                        PageRouteBuilder(
+                                                            pageBuilder: (_, __,
+                                                                    ___) =>
+                                                                MainPage(
+                                                                    currenttab:
+                                                                        0),
+                                                            transitionDuration:
+                                                                const Duration(
+                                                                    seconds:
+                                                                        0))),
+                                                  );
+                                            } else {
+                                              AuthService().errorBox(context,
+                                                  '一致するユーザーが見つかりません。新規登録画面から登録してください。');
+                                            }
+                                          })
                                         }
-                                      })
                                     });
                               } catch (e) {
                                 print(e.toString());
