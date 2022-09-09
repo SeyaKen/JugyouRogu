@@ -18,17 +18,24 @@ class _AddClassState extends State<AddClass> {
   double _kItemExtent = 32.0;
   var forSearchList = {};
   var allString = '';
+  List? gakubu;
   String uid = FirebaseAuth.instance.currentUser!.uid;
+  DocumentSnapshot? firebasesnapshot;
   String? daigakuMei;
 
-  Kansuu() async {
+  void kansuu() async {
     daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
+    firebasesnapshot = await FirebaseFirestore.instance
+        .collection('daigaku')
+        .doc(daigakuMei)
+        .get();
+    gakubu = firebasesnapshot!.get('gakubu');
     setState(() {});
   }
 
   @override
   void initState() {
-    Kansuu();
+    kansuu();
     super.initState();
   }
 
@@ -106,7 +113,8 @@ class _AddClassState extends State<AddClass> {
               key: _formKey,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ListView.builder(
+                child: gakubu != null ?
+                ListView.builder(
                     shrinkWrap: true,
                     itemCount: title_list.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -153,8 +161,7 @@ class _AddClassState extends State<AddClass> {
                                           0.9,
                                       child: TextFormField(
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15),
+                                            color: Colors.black, fontSize: 15),
                                         validator: (val) => val!.isEmpty
                                             ? '正確に${title_value[index]}を入力してください。'
                                             : null,
@@ -172,12 +179,12 @@ class _AddClassState extends State<AddClass> {
                                           hintText: title_list[index],
                                           hintStyle: const TextStyle(
                                               color: Colors.grey),
-                                         contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 9,
-                                                      ),
-                                              isDense: true,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 9,
+                                          ),
+                                          isDense: true,
                                           focusedBorder:
                                               const OutlineInputBorder(
                                             borderSide: BorderSide(
@@ -198,7 +205,6 @@ class _AddClassState extends State<AddClass> {
                                                   .width *
                                               0.9,
                                           child: TextFormField(
-                                            
                                             controller:
                                                 index == 3 ? txt0 : txt1,
                                             onTap: () {
@@ -249,16 +255,15 @@ class _AddClassState extends State<AddClass> {
                                               fillColor: Colors.grey[300],
                                               filled: true,
                                               hintText: title_list[index],
-                                              
                                               hintStyle: const TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 15,
-                                                  ),
+                                                color: Colors.grey,
+                                                fontSize: 15,
+                                              ),
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 9,
-                                                      ),
+                                                horizontal: 10,
+                                                vertical: 9,
+                                              ),
                                               isDense: true,
                                               border: InputBorder.none,
                                             ),
@@ -286,18 +291,18 @@ class _AddClassState extends State<AddClass> {
                                                       (int selectedItem) {
                                                     setState(() {
                                                       ClassName2 =
-                                                          gakubu[selectedItem];
+                                                          gakubu![selectedItem];
                                                       txt2.text =
-                                                          gakubu[selectedItem];
+                                                          gakubu![selectedItem];
                                                     });
                                                   },
                                                   children:
                                                       List<Widget>.generate(
-                                                          gakubu.length,
+                                                          gakubu!.length,
                                                           (int indexxx) {
                                                     return Center(
                                                       child: Text(
-                                                        gakubu[indexxx],
+                                                        gakubu![indexxx],
                                                       ),
                                                     );
                                                   }),
@@ -318,16 +323,16 @@ class _AddClassState extends State<AddClass> {
                                                   color: Colors.grey),
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 9,
-                                                      ),
+                                                horizontal: 10,
+                                                vertical: 9,
+                                              ),
                                               isDense: true,
                                               border: InputBorder.none,
                                             ),
                                           ),
                                         )),
                           ]);
-                    }),
+                    }):  const CircularProgressIndicator()
               )),
         ),
       ),
@@ -345,7 +350,9 @@ class _AddClassState extends State<AddClass> {
           child: InkWell(
               onTap: () async {
                 var dataLengthsource = DatabaseService().ChouhukuKakunin(
-                    ClassName0, ClassName1!.replaceAll(RegExp(r'\s'), ''), daigakuMei);
+                    ClassName0,
+                    ClassName1!.replaceAll(RegExp(r'\s'), ''),
+                    daigakuMei);
                 var querySnapshot = await dataLengthsource.get();
                 var totalEquals = querySnapshot.docs.length;
                 allString =
@@ -455,17 +462,6 @@ List title_value = [
   ClassName2,
   ClassName3,
   ClassName4,
-];
-
-List gakubu = [
-  '法学部',
-  '経済学部',
-  '商学部',
-  '文学部',
-  '総合政策学部',
-  '国際経営学部',
-  '国際情報学部',
-  '理工学部',
 ];
 
 List youbi = [
