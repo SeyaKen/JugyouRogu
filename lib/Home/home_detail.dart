@@ -98,7 +98,7 @@ class _HomeDetailState extends State<HomeDetail> {
             ),
           ),
                 padding: const EdgeInsets.only(
-                    left: 8, right: 8, top: 10, bottom: 5),
+                    left: 10, right: 10, top: 10, bottom: 5),
                 child: Column(children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -398,7 +398,7 @@ class _HomeDetailState extends State<HomeDetail> {
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.only(
-                                              left: 8, top: 8, bottom: 8),
+                                              left: 10, top: 8, bottom: 8),
                                     decoration: const BoxDecoration(
                                         border: Border(
                                       bottom: BorderSide(

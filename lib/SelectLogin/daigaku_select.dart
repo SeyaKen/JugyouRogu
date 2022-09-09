@@ -10,7 +10,6 @@ class DaigakuSelectScreen extends StatefulWidget {
 class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
   String? _hasBeenPressed;
   FocusNode _focus = FocusNode();
-  final focusNode = FocusNode();
   bool keyboardIsOpened = false;
   List searchedNames = [];
   final items = [
@@ -27,14 +26,12 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
   void initState() {
     super.initState();
     _focus.addListener(_onFocusChange);
-    focusNode.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
     super.dispose();
     _focus.removeListener(_onFocusChange);
-    focusNode.removeListener(_onFocusChange);
     _focus.dispose();
   }
 
