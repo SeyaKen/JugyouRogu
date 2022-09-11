@@ -85,7 +85,7 @@ class _EditProfileState extends State<EditProfile> {
                                   context,
                                   PageRouteBuilder(
                                     pageBuilder: (_, __, ___) =>
-                                        MainPage(currenttab: 1),
+                                        MainPage(currenttab: 2),
                                     transitionDuration:
                                         const Duration(seconds: 0),
                                   ));

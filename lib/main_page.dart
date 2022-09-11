@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jugyourogu/%20Favorite/favorite_list.dart';
 import 'package:jugyourogu/Home/home_page.dart';
 import 'package:jugyourogu/Profile/profile.dart';
 
@@ -42,9 +43,9 @@ class _MainPageState extends State<MainPage> {
           },
           currentIndex: currenttab,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
-          selectedFontSize: 8,
-          unselectedFontSize: 8,
+          selectedItemColor: Colors.orange,
+          selectedFontSize: 10,
+          unselectedFontSize: 10,
           backgroundColor: const Color(0xffffffff),
           unselectedItemColor: Colors.grey,
           items: const <BottomNavigationBarItem>[
@@ -54,6 +55,14 @@ class _MainPageState extends State<MainPage> {
                 size: 22,
               ),
               label: 'ホーム',
+              
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.bookmark_outline_rounded,
+                size: 22,
+              ),
+              label: '保存ずみ',
               
             ),
             BottomNavigationBarItem(
@@ -68,6 +77,7 @@ class _MainPageState extends State<MainPage> {
         index: currenttab,
         children: const [
           HomePage(),
+          favoriteListScreen(),
           ProfilePage(),
         ],
       ),

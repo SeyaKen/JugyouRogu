@@ -12,7 +12,26 @@ class DatabaseService extends ChangeNotifier {
   File? imageFile;
   Image? imgs;
 
-  // 質問一覧をうつす関数
+  // Favorite一覧をうつす関数
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> searchDataCollect(
+      searchWordsList, String daigakuMei) async {
+    Query<Map<String, dynamic>> query =
+        FirebaseFirestore.instance.collection(daigakuMei);
+    for (var i = 0; i < searchWordsList.length; i++) {
+      try {
+        query =
+            query.where('forSearchList.${searchWordsList[i]}', isEqualTo: true);
+      } catch (e) {
+        print(e.toString());
+      }
+      if (i == searchWordsList.length - 1) {
+        return query.snapshots();
+      }
+    }
+
+    return null;
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect(String daigakuMei) {
     return FirebaseFirestore.instance
         .collection(daigakuMei)

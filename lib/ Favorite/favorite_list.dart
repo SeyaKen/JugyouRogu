@@ -1,63 +1,20 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:jugyourogu/%20AddClass/add_class.dart';
 import 'package:jugyourogu/Home/home_detail.dart';
-import 'package:jugyourogu/Service/database.dart';
-import 'package:jugyourogu/Service/sharedpref_helper.dart';
-import 'package:jugyourogu/ad_state.dart';
-import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class favoriteListScreen extends StatefulWidget {
+  const favoriteListScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<favoriteListScreen> createState() => _favoriteListScreenState();
 }
 
-List preForSearch = [];
-
-class _HomePageState extends State<HomePage> {
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-  Stream<QuerySnapshot<Object?>>? jugyouListsStream,
-      searchStateStream,
-      searchAndNarabikaeStream;
+class _favoriteListScreenState extends State<favoriteListScreen> {
   final ScrollController _scrollController = ScrollController();
-  int _currentMax = 20;
   BannerAd? banner;
-  String? daigakuMei;
-  int dore = 0;
-  String? _hasBeenPressed;
-  FocusNode _focus = FocusNode();
-  bool keyboardIsOpened = false;
-
-  getHomeLists() async {
-    daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
-    jugyouListsStream = DatabaseService().dataCollect(daigakuMei!);
-    setState(() {});
-  }
-
-  _getMoreData() async {
-    _currentMax = _currentMax + 20;
-    jugyouListsStream =
-        await DatabaseService().fetchAdditionalData(_currentMax, daigakuMei!);
-    // UIを読み込み直す
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _focus.removeListener(_onFocusChange);
-    _focus.dispose();
-  }
-
-  void _onFocusChange() {
-    keyboardIsOpened = !keyboardIsOpened;
-    print(keyboardIsOpened);
-    setState(() {});
-  }
+  Stream<QuerySnapshot<Object?>>? favoriteListStream;
 
   final BannerAdListener _adLister = BannerAdListener(
     // Called when an ad is successfully received.
@@ -77,193 +34,9 @@ class _HomePageState extends State<HomePage> {
   );
 
   @override
-  void initState() {
-    _focus.addListener(_onFocusChange);
-    final adState = Provider.of<AdState>(context, listen: false);
-    adState.initialization.then((status) {
-      setState(() {
-        banner = BannerAd(
-          adUnitId: adState.bannerAdUnitId,
-          size: AdSize.banner,
-          request: const AdRequest(),
-          listener: const BannerAdListener(),
-        )..load();
-      });
-    });
-    getHomeLists();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        _getMoreData();
-      }
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xffffffff),
-      appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Container(
-            height: MediaQuery.of(context).size.width * 0.097,
-            width: MediaQuery.of(context).size.width * 0.95,
-            alignment: Alignment.bottomCenter,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: Colors.grey[300],
-            ),
-            child: TextField(
-                focusNode: _focus,
-                onChanged: (text) async {
-                  dore = 1;
-                  preForSearch = [];
-                  if (text.length > 1) {
-                    for (int i = 0; i < text.length - 1; i++) {
-                      if (!preForSearch.contains(text.substring(i, i + 2))) {
-                        preForSearch.add(text.substring(i, i + 2));
-                      }
-                    }
-                    searchStateStream = await DatabaseService()
-                        .searchDataCollect(preForSearch, daigakuMei!);
-                    setState(() {});
-                  } else {
-                    dore = 0;
-                    searchStateStream = null;
-                    setState(() {});
-                  }
-                },
-                textAlignVertical: TextAlignVertical.center,
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                ),
-                decoration: const InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      size: 19,
-                      color: Colors.black,
-                    ),
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 0,
-                      vertical: 0,
-                    ),
-                    isDense: true,
-                    border: InputBorder.none,
-                    hintText: '授業名・教員名など(2文字以上)',
-                    hintStyle: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ))),
-          )),
-      body: Column(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-                border: Border(
-              bottom: BorderSide(width: 0.5, color: Colors.black),
-            )),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => const AddClass(),
-                            transitionDuration: const Duration(seconds: 0),
-                          ));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Flexible(
-                          child: Icon(
-                            Icons.add_box_outlined,
-                            size: 26,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text('授業作成',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: PopUpMen(
-                    menuList: [
-                      PopupMenuItem(
-                        onTap: () async {
-                          dore = 2;
-                          searchAndNarabikaeStream = await DatabaseService()
-                              .searchAndNarabikae(
-                                  preForSearch, daigakuMei!, 'JuujituAverage');
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: const Text("内容充実度順")),
-                      ),
-                      const PopupMenuDivider(),
-                      PopupMenuItem(
-                        onTap: () async {
-                          dore = 2;
-                          searchAndNarabikaeStream = await DatabaseService()
-                              .searchAndNarabikae(
-                                  preForSearch, daigakuMei!, 'RakutanAverage');
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.3,
-                            child: const Text("楽単順")),
-                      ),
-                    ],
-                    icon: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Flexible(
-                          child: Icon(
-                            Icons.arrow_drop_down,
-                            size: 30,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Flexible(
-                          child: Text('並び順',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12,
-                              )),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Flexible(
-            child: StreamBuilder<QuerySnapshot>(
-                stream: dore == 0
-                    ? jugyouListsStream
-                    : dore == 1
-                        ? searchStateStream
-                        : searchAndNarabikaeStream,
+    return StreamBuilder<QuerySnapshot>(
+                stream: favoriteListStream,
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? Stack(
@@ -636,43 +409,9 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         );
                                 }),
-                            keyboardIsOpened && dore == 0
-                                ? InkWell(
-                                    onTap: () {
-                                      FocusScope.of(context).unfocus();
-                                    },
-                                    child: Container(
-                                      color: Colors.transparent,
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                      width: MediaQuery.of(context).size.width,
-                                    ),
-                                  )
-                                : Container()
                           ],
                         )
                       : const Center(child: CircularProgressIndicator());
-                }),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class PopUpMen extends StatelessWidget {
-  final List<PopupMenuEntry> menuList;
-  final Widget? icon;
-  const PopUpMen({super.key, required this.menuList, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      itemBuilder: ((context) => menuList),
-      icon: icon,
-    );
+                });
   }
 }
