@@ -20,7 +20,10 @@ class HomeDetail extends StatefulWidget {
 }
 
 class _HomeDetailState extends State<HomeDetail> {
-  DocumentSnapshot? firebasesnapshot, firebasesnapshot1, firebasesnapshot2;
+  DocumentSnapshot? firebasesnapshot,
+      firebasesnapshot1,
+      firebasesnapshot2,
+      firebasesnapshot3;
   String uid = FirebaseAuth.instance.currentUser!.uid;
   Stream<QuerySnapshot<Object?>>? kutikomiListsStream;
   String articleId;
@@ -33,8 +36,14 @@ class _HomeDetailState extends State<HomeDetail> {
   List favoriteListDaigakubetu = [];
   bool? hukumu;
   int fromTag;
+  List usersUid = [];
 
   getHomeLists() async {
+    firebasesnapshot3 = await FirebaseFirestore.instance
+        .collection('deletedusers')
+        .doc('deletedusers')
+        .get();
+    usersUid = firebasesnapshot3!.get('uid');
     daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
     firebasesnapshot = await FirebaseFirestore.instance
         .collection(daigakuMei!)
@@ -110,11 +119,12 @@ class _HomeDetailState extends State<HomeDetail> {
             InkWell(
               onTap: () {
                 Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => MainPage(currenttab: fromTag),
-                            transitionDuration: const Duration(seconds: 0),
-                          ));
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) =>
+                          MainPage(currenttab: fromTag),
+                      transitionDuration: const Duration(seconds: 0),
+                    ));
               },
               child: const Icon(
                 Icons.arrow_back_ios_new_rounded,
@@ -427,20 +437,23 @@ class _HomeDetailState extends State<HomeDetail> {
                                       (BuildContext context, int index) {
                                     return InkWell(
                                       onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            PageRouteBuilder(
-                                              pageBuilder: (_, __, ___) =>
-                                                  KutikomiDetail(
-                                                jugyoumei: firebasesnapshot!
-                                                    .get('授業名'),
-                                                AitenoUid: snapshot
-                                                    .data!.docs[index].id,
-                                                articleId: articleId,
-                                              ),
-                                              transitionDuration:
-                                                  const Duration(seconds: 0),
-                                            ));
+                                        if (!usersUid.contains(snapshot
+                                            .data!.docs[index]['uid'])) {
+                                          Navigator.push(
+                                              context,
+                                              PageRouteBuilder(
+                                                pageBuilder: (_, __, ___) =>
+                                                    KutikomiDetail(
+                                                  jugyoumei: firebasesnapshot!
+                                                      .get('授業名'),
+                                                  AitenoUid: snapshot
+                                                      .data!.docs[index].id,
+                                                  articleId: articleId,
+                                                ),
+                                                transitionDuration:
+                                                    const Duration(seconds: 0),
+                                              ));
+                                        }
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.only(
@@ -711,65 +724,71 @@ class _HomeDetailState extends State<HomeDetail> {
                                                     ],
                                                   ),
                                                   const SizedBox(height: 10),
-                                                  Row(children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              150.0),
-                                                      child: SizedBox(
-                                                        width: 30,
-                                                        height: 30,
-                                                        child: StreamBuilder<
-                                                                QuerySnapshot>(
-                                                            stream: FirebaseFirestore
-                                                                .instance
-                                                                .collection(
-                                                                    'users')
-                                                                .where('uid',
-                                                                    isEqualTo: snapshot
-                                                                            .data!
-                                                                            .docs[index]
-                                                                        ['uid'])
-                                                                .snapshots(),
-                                                            builder: (context,
-                                                                snapshot0) {
-                                                              return snapshot0
-                                                                      .hasData
-                                                                  ? Image
-                                                                      .network(
-                                                                      snapshot0.data!.docs[0]['ProfilePicture'] ==
-                                                                              ''
-                                                                          ? 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b'
-                                                                          : snapshot0
-                                                                              .data!
-                                                                              .docs[0]['ProfilePicture'],
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    )
-                                                                  : Image
-                                                                      .network(
-                                                                      'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b',
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    );
-                                                            }),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
+                                                  usersUid.contains(snapshot
+                                                          .data!
+                                                          .docs[index]['uid'])
+                                                      ? Row(children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        150.0),
+                                                            child: SizedBox(
+                                                                width: 30,
+                                                                height: 30,
+                                                                child: Image
+                                                                    .network(
+                                                                  'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                )),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 10),
                                                           Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              StreamBuilder<
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.8,
+                                                                      child:
+                                                                          const Text(
+                                                                        '退会済みのユーザー',
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              10,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ]),
+                                                        ])
+                                                      : Row(children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        150.0),
+                                                            child: SizedBox(
+                                                              width: 30,
+                                                              height: 30,
+                                                              child: StreamBuilder<
                                                                       QuerySnapshot>(
                                                                   stream: FirebaseFirestore
                                                                       .instance
@@ -782,50 +801,100 @@ class _HomeDetailState extends State<HomeDetail> {
                                                                               'uid'])
                                                                       .snapshots(),
                                                                   builder: (context,
-                                                                      snapshot1) {
-                                                                    return snapshot1
+                                                                      snapshot0) {
+                                                                    return snapshot0
                                                                             .hasData
-                                                                        ? SizedBox(
-                                                                            width:
-                                                                                MediaQuery.of(context).size.width * 0.8,
-                                                                            child:
-                                                                                Text(
-                                                                              snapshot1.data!.docs[0]['name'],
-                                                                              overflow: TextOverflow.ellipsis,
-                                                                              style: const TextStyle(
-                                                                                fontSize: 10,
-                                                                              ),
-                                                                            ),
+                                                                        ? Image
+                                                                            .network(
+                                                                            snapshot0.data!.docs[0]['ProfilePicture'] == ''
+                                                                                ? 'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b'
+                                                                                : snapshot0.data!.docs[0]['ProfilePicture'],
+                                                                            fit:
+                                                                                BoxFit.cover,
                                                                           )
-                                                                        : const Text(
-                                                                            '');
+                                                                        : Image
+                                                                            .network(
+                                                                            'https://firebasestorage.googleapis.com/v0/b/jugyourogu-d71e0.appspot.com/o/44884218_345707102882519_2446069589734326272_n.jpeg?alt=media&token=816dc8a0-f2d6-4a73-9acc-391a74dbc75b',
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          );
                                                                   }),
-                                                              Text(
-                                                                snapshot
-                                                                    .data!
-                                                                    .docs[index]
-                                                                        [
-                                                                        'Daytime']
-                                                                    .toDate()
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 10),
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontSize: 10,
-                                                                ),
-                                                              ),
-                                                            ],
+                                                            ),
                                                           ),
-                                                        ]),
-                                                  ]),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    StreamBuilder<
+                                                                            QuerySnapshot>(
+                                                                        stream: FirebaseFirestore
+                                                                            .instance
+                                                                            .collection(
+                                                                                'users')
+                                                                            .where('uid',
+                                                                                isEqualTo: snapshot.data!.docs[index][
+                                                                                    'uid'])
+                                                                            .snapshots(),
+                                                                        builder:
+                                                                            (context,
+                                                                                snapshot1) {
+                                                                          return snapshot1.hasData
+                                                                              ? SizedBox(
+                                                                                  width: MediaQuery.of(context).size.width * 0.8,
+                                                                                  child: Text(
+                                                                                    snapshot1.data!.docs[0]['name'],
+                                                                                    overflow: TextOverflow.ellipsis,
+                                                                                    style: const TextStyle(
+                                                                                      fontSize: 10,
+                                                                                    ),
+                                                                                  ),
+                                                                                )
+                                                                              : const Text('');
+                                                                        }),
+                                                                    Text(
+                                                                      snapshot
+                                                                          .data!
+                                                                          .docs[
+                                                                              index]
+                                                                              [
+                                                                              'Daytime']
+                                                                          .toDate()
+                                                                          .toString()
+                                                                          .substring(
+                                                                              0,
+                                                                              10),
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        fontSize:
+                                                                            10,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ]),
+                                                        ])
                                                 ]),
-                                            const Expanded(
-                                              child: Icon(
-                                                Icons.arrow_forward_ios_rounded,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
+                                            usersUid.contains(snapshot
+                                                    .data!.docs[index]['uid'])
+                                                ? Container()
+                                                : const Expanded(
+                                                    child: Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_rounded,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
                                           ],
                                         ),
                                       ),

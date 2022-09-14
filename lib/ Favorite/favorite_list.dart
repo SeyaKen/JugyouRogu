@@ -30,9 +30,8 @@ class _favoriteListScreenState extends State<favoriteListScreen> {
     firebasesnapshot =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
     favo = firebasesnapshot!.get('favorite');
-    favoriteListStream = await DatabaseService()
-        .favoriteDataCollect(favo![daigakuMei], daigakuMei!);
-    for (int i = 0; i < favo![daigakuMei].length; i++) {
+    if(favo![daigakuMei] != null) {
+      for (int i = 0; i < favo![daigakuMei].length; i++) {
       DocumentSnapshot favoriteList2 = await FirebaseFirestore.instance
           .collection(daigakuMei!)
           .doc(favo![daigakuMei][i])
@@ -40,10 +39,10 @@ class _favoriteListScreenState extends State<favoriteListScreen> {
       favoriteList3.add(favoriteList2);
       if (i == favo!.length - 1) {
         favoriteList3 = favoriteList3;
-      print(favoriteList3);
-        
       }
     }
+    }
+    
     setState(() {});
   }
 
@@ -91,484 +90,474 @@ class _favoriteListScreenState extends State<favoriteListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        title: const Text('お気に入り',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            )),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: favoriteListStream,
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? RefreshIndicator(
-                    onRefresh: (() async {
-                      _loadData();
-                    }),
-                    child: ListView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        controller: _scrollController,
-                        itemCount: favoriteList3.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          return index == 0
-                              ? SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: banner != null
-                                      ? AdWidget(
-                                          ad: banner!,
-                                        )
-                                      : const SizedBox())
-                              : InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (_, __, ___) => HomeDetail(
-                                          articleId:
-                                              favoriteList3[index - 1].id,
-                                          fromTag: 1,
-                                        ),
-                                        transitionDuration:
-                                            const Duration(seconds: 0),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 13, vertical: 8),
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                      top: BorderSide(
-                                          width: 0.5, color: Colors.black),
-                                    )),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          title: const Text('お気に入り',
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              )),
+        ),
+        body: RefreshIndicator(
+          onRefresh: (() async {
+            _loadData();
+          }),
+          child: favoriteList3.isEmpty
+              ? const Center(
+                  child: Text(
+                  'お気に入りがありません。',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ))
+              : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  controller: _scrollController,
+                  itemCount: favoriteList3.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return index == 0
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            child: banner != null
+                                ? AdWidget(
+                                    ad: banner!,
+                                  )
+                                : const SizedBox())
+                        : InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (_, __, ___) => HomeDetail(
+                                    articleId: favoriteList3[index - 1].id,
+                                    fromTag: 1,
+                                  ),
+                                  transitionDuration:
+                                      const Duration(seconds: 0),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 8),
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                top:
+                                    BorderSide(width: 0.5, color: Colors.black),
+                              )),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                                favoriteList3[index - 1]
+                                                    .get('授業名'),
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                )),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 3),
+                                        Row(
+                                          children: [
+                                            favoriteList3[index - 1]
+                                                        .get('学部') !=
+                                                    ''
+                                                ? const Text('学部:',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
+                                                    ))
+                                                : Container(),
+                                            favoriteList3[index - 1]
+                                                        .get('学部') !=
+                                                    ''
+                                                ? Text(
+                                                    favoriteList3[index - 1]
+                                                        .get('学部'),
+                                                    style: const TextStyle(
+                                                      fontSize: 12,
+                                                    ))
+                                                : Container(),
+                                            favoriteList3[index - 1]
+                                                        .get('学部') !=
+                                                    ''
+                                                ? const SizedBox(
+                                                    width: 10,
+                                                  )
+                                                : Container(),
+                                            const Text('教授:',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                )),
+                                            Text(
+                                                favoriteList3[index - 1]
+                                                    .get('教授・講師名'),
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                )),
+                                          ],
+                                        ),
                                         Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Text(
-                                                      favoriteList3[index - 1]
-                                                          .get('授業名'),
-                                                      style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      )),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 3),
-                                              Row(
-                                                children: [
-                                                  favoriteList3[index - 1]
-                                                              .get('学部') !=
-                                                          ''
-                                                      ? const Text('学部:',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12,
-                                                          ))
-                                                      : Container(),
-                                                  favoriteList3[index - 1]
-                                                              .get('学部') !=
-                                                          ''
-                                                      ? Text(
-                                                          favoriteList3[
-                                                                  index - 1]
-                                                              .get('学部'),
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12,
-                                                          ))
-                                                      : Container(),
-                                                  favoriteList3[index - 1]
-                                                              .get('学部') !=
-                                                          ''
-                                                      ? const SizedBox(
-                                                          width: 10,
-                                                        )
-                                                      : Container(),
-                                                  const Text('教授:',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      )),
-                                                  Text(
-                                                      favoriteList3[index - 1]
-                                                          .get('教授・講師名'),
-                                                      style: const TextStyle(
-                                                        fontSize: 12,
-                                                      )),
-                                                ],
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      const Text('内容充実度:',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12,
-                                                          )),
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            double.parse(favoriteList3[
-                                                                            index -
-                                                                                1]
-                                                                        .get(
-                                                                            'JuujituAverage')) !=
-                                                                    0.0
-                                                                ? Icons.star
-                                                                : Icons
-                                                                    .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        1.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) <
-                                                                        2
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        2
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        2.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) <
-                                                                        3
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        3
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        3.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) <
-                                                                        4
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        4
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        4.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) <
-                                                                        5
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'JuujituAverage')) >=
-                                                                        5
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        favoriteList3[index - 1]
-                                                                    .get(
-                                                                        'JuujituAverage') !=
-                                                                '0'
-                                                            ? favoriteList3[
-                                                                    index - 1]
-                                                                .get(
-                                                                    'JuujituAverage')
-                                                                .toString()
-                                                            : 'データなし',
-                                                        style: const TextStyle(
-                                                          color: Colors.red,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const Text('楽単度:',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 12,
-                                                          )),
-                                                      Row(
-                                                        children: [
-                                                          Icon(
-                                                            double.parse(favoriteList3[
-                                                                            index -
-                                                                                1]
-                                                                        .get(
-                                                                            'RakutanAverage')) !=
-                                                                    0.0
-                                                                ? Icons.star
-                                                                : Icons
-                                                                    .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        1.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) <
-                                                                        2
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        2
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        2.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) <
-                                                                        3
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        3
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        3.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) <
-                                                                        4
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        4
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                          Icon(
-                                                            double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        4.5 &&
-                                                                    double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) <
-                                                                        5
-                                                                ? Icons
-                                                                    .star_half_outlined
-                                                                : double.parse(favoriteList3[index -
-                                                                                1]
-                                                                            .get(
-                                                                                'RakutanAverage')) >=
-                                                                        5
-                                                                    ? Icons.star
-                                                                    : Icons
-                                                                        .star_outline,
-                                                            color:
-                                                                Colors.orange,
-                                                            size: 20,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        favoriteList3[index - 1]
-                                                                    .get(
-                                                                        'RakutanAverage') !=
-                                                                '0'
-                                                            ? favoriteList3[
-                                                                    index - 1]
-                                                                .get(
-                                                                    'RakutanAverage')
-                                                                .toString()
-                                                            : 'データなし',
-                                                        style: const TextStyle(
-                                                          color: Colors.red,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 12,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ]),
-                                        InkWell(
-                                          onTap: () {
-                                            if (favo![daigakuMei].contains(
-                                                favoriteList3[index - 1].id)) {
-                                              // 元々含んでいたら消す処理
-                                              favo![daigakuMei].remove(
-                                                  favoriteList3[index - 1].id);
-                                              FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(uid)
-                                                  .update({
-                                                'favorite': favo,
-                                              });
-                                            } else {
-                                              // 含んでいなかったら加える処理
-                                              favo![daigakuMei].add(
-                                                  favoriteList3[index - 1].id);
-                                              FirebaseFirestore.instance
-                                                  .collection('users')
-                                                  .doc(uid)
-                                                  .update({
-                                                'favorite': favo,
-                                              });
-                                            }
-                                            setState(() {});
-                                          },
-                                          child: favo![daigakuMei].contains(
-                                                  favoriteList3[index - 1].id)
-                                              ? const Icon(
-                                                  Icons.bookmark_outlined,
-                                                  color: Colors.orange,
-                                                  size: 35,
-                                                )
-                                              : const Icon(
-                                                  Icons
-                                                      .bookmark_outline_rounded,
-                                                  color: Colors.black,
-                                                  size: 35,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Text('内容充実度:',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
+                                                    )),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                      index - 1]
+                                                                  .get(
+                                                                      'JuujituAverage')) !=
+                                                              0.0
+                                                          ? Icons.star
+                                                          : Icons.star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  1.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) <
+                                                                  2
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  2
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  2.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) <
+                                                                  3
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  3
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  3.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) <
+                                                                  4
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  4
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  4.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) <
+                                                                  5
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'JuujituAverage')) >=
+                                                                  5
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                  ],
                                                 ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                        }),
-                  )
-                : const Center(
-                    child: Text(
-                    'お気に入りがありません。',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ));
-          }),
-    );
+                                                Text(
+                                                  favoriteList3[index - 1].get(
+                                                              'JuujituAverage') !=
+                                                          '0'
+                                                      ? favoriteList3[index - 1]
+                                                          .get('JuujituAverage')
+                                                          .toString()
+                                                      : 'データなし',
+                                                  style: const TextStyle(
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text('楽単度:',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 12,
+                                                    )),
+                                                Row(
+                                                  children: [
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                      index - 1]
+                                                                  .get(
+                                                                      'RakutanAverage')) !=
+                                                              0.0
+                                                          ? Icons.star
+                                                          : Icons.star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  1.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) <
+                                                                  2
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  2
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  2.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) <
+                                                                  3
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  3
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  3.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) <
+                                                                  4
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  4
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                    Icon(
+                                                      double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  4.5 &&
+                                                              double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) <
+                                                                  5
+                                                          ? Icons
+                                                              .star_half_outlined
+                                                          : double.parse(favoriteList3[
+                                                                          index -
+                                                                              1]
+                                                                      .get(
+                                                                          'RakutanAverage')) >=
+                                                                  5
+                                                              ? Icons.star
+                                                              : Icons
+                                                                  .star_outline,
+                                                      color: Colors.orange,
+                                                      size: 20,
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  favoriteList3[index - 1].get(
+                                                              'RakutanAverage') !=
+                                                          '0'
+                                                      ? favoriteList3[index - 1]
+                                                          .get('RakutanAverage')
+                                                          .toString()
+                                                      : 'データなし',
+                                                  style: const TextStyle(
+                                                    color: Colors.red,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ]),
+                                  InkWell(
+                                    onTap: () {
+                                      if (favo![daigakuMei].contains(
+                                          favoriteList3[index - 1].id)) {
+                                        // 元々含んでいたら消す処理
+                                        favo![daigakuMei].remove(
+                                            favoriteList3[index - 1].id);
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(uid)
+                                            .update({
+                                          'favorite': favo,
+                                        });
+                                      } else {
+                                        // 含んでいなかったら加える処理
+                                        favo![daigakuMei]
+                                            .add(favoriteList3[index - 1].id);
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(uid)
+                                            .update({
+                                          'favorite': favo,
+                                        });
+                                      }
+                                      setState(() {});
+                                    },
+                                    child: favo![daigakuMei].contains(
+                                            favoriteList3[index - 1].id)
+                                        ? const Icon(
+                                            Icons.bookmark_outlined,
+                                            color: Colors.orange,
+                                            size: 35,
+                                          )
+                                        : const Icon(
+                                            Icons.bookmark_outline_rounded,
+                                            color: Colors.black,
+                                            size: 35,
+                                          ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                  }),
+        ));
   }
 }

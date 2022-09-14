@@ -12,23 +12,6 @@ class DatabaseService extends ChangeNotifier {
   File? imageFile;
   Image? imgs;
 
-  // Favorite一覧をうつす関数
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> favoriteDataCollect(
-      favo, String daigakuMei) async {
-    Query<Map<String, dynamic>> query =
-        FirebaseFirestore.instance.collection(daigakuMei);
-    for (var i = 0; i < favo.length; i++) {
-      try {
-        query = query.where('id', isEqualTo: favo[i]);
-      } catch (e) {
-        print(e.toString());
-      }
-      if (i == favo.length - 1) {
-        return query.snapshots();
-      }
-    }
-  }
-
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect(String daigakuMei) {
     return FirebaseFirestore.instance
         .collection(daigakuMei)
