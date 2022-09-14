@@ -13,23 +13,20 @@ class DatabaseService extends ChangeNotifier {
   Image? imgs;
 
   // Favorite一覧をうつす関数
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> searchDataCollect(
-      searchWordsList, String daigakuMei) async {
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>?> favoriteDataCollect(
+      favo, String daigakuMei) async {
     Query<Map<String, dynamic>> query =
         FirebaseFirestore.instance.collection(daigakuMei);
-    for (var i = 0; i < searchWordsList.length; i++) {
+    for (var i = 0; i < favo.length; i++) {
       try {
-        query =
-            query.where('forSearchList.${searchWordsList[i]}', isEqualTo: true);
+        query = query.where('id', isEqualTo: favo[i]);
       } catch (e) {
         print(e.toString());
       }
-      if (i == searchWordsList.length - 1) {
+      if (i == favo.length - 1) {
         return query.snapshots();
       }
     }
-
-    return null;
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> dataCollect(String daigakuMei) {

@@ -7,14 +7,16 @@ import 'package:jugyourogu/%20Reviews/add_reviews.dart';
 import 'package:jugyourogu/Home/kutikomi_detail.dart';
 import 'package:jugyourogu/Service/database.dart';
 import 'package:jugyourogu/Service/sharedpref_helper.dart';
+import 'package:jugyourogu/main_page.dart';
 
 class HomeDetail extends StatefulWidget {
-  HomeDetail({super.key, required this.articleId});
+  HomeDetail({super.key, required this.articleId, required this.fromTag});
 
   String articleId;
+  int fromTag;
 
   @override
-  State<HomeDetail> createState() => _HomeDetailState(articleId);
+  State<HomeDetail> createState() => _HomeDetailState(articleId, fromTag);
 }
 
 class _HomeDetailState extends State<HomeDetail> {
@@ -22,7 +24,7 @@ class _HomeDetailState extends State<HomeDetail> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   Stream<QuerySnapshot<Object?>>? kutikomiListsStream;
   String articleId;
-  _HomeDetailState(this.articleId);
+  _HomeDetailState(this.articleId, this.fromTag);
   final ScrollController _scrollController = ScrollController();
   double? JuujituInt;
   double? RakutanInt;
@@ -30,6 +32,7 @@ class _HomeDetailState extends State<HomeDetail> {
   var favoriteList = {};
   List favoriteListDaigakubetu = [];
   bool? hukumu;
+  int fromTag;
 
   getHomeLists() async {
     daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
@@ -99,17 +102,44 @@ class _HomeDetailState extends State<HomeDetail> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          firebasesnapshot != null
-              ? firebasesnapshot!.get('授業名').length > 11
-                  ? firebasesnapshot!.get('授業名').substring(0, 12) + '...'
-                  : ''
-              : '',
-          style: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-          overflow: TextOverflow.ellipsis,
+        automaticallyImplyLeading: false,
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => MainPage(currenttab: fromTag),
+                            transitionDuration: const Duration(seconds: 0),
+                          ));
+              },
+              child: const Icon(
+                Icons.arrow_back_ios_new_rounded,
+                size: 30,
+                color: Colors.black,
+              ),
+            ),
+            Text(
+              firebasesnapshot != null
+                  ? firebasesnapshot!.get('授業名').length > 11
+                      ? firebasesnapshot!.get('授業名').substring(0, 12) + '...'
+                      : ''
+                  : '',
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+            const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 30,
+              color: Colors.transparent,
+            ),
+          ],
         ),
       ),
       body: firebasesnapshot != null

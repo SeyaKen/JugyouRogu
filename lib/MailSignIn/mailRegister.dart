@@ -203,6 +203,7 @@ class _mailRegisterState extends State<mailRegister> {
                                             'selfIntroduction': '',
                                             'uid': user.uid,
                                             'daigaku': Daigakumei,
+                                            'favorite': {},
                                           }))
                                       .then((value) => SharedPreferenceHelper()
                                           .saveUserName('LogIned')

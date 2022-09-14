@@ -115,6 +115,7 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                                     'uid':
                                         FirebaseAuth.instance.currentUser!.uid,
                                     'daigaku': Daigakumei,
+                                    'favorite': {},
                                   });
                                 }
                               }).then((value) => SharedPreferenceHelper()
@@ -198,6 +199,7 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                                               'uid': FirebaseAuth
                                                   .instance.currentUser!.uid,
                                               'daigaku': Daigakumei,
+                                              'favorite': {},
                                             });
                                           }
                                         }).then((value) => SharedPreferenceHelper()

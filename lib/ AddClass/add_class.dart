@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +24,12 @@ class _AddClassState extends State<AddClass> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   DocumentSnapshot? firebasesnapshot;
   String? daigakuMei;
+
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
+
+String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   void kansuu() async {
     daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
@@ -112,228 +120,240 @@ class _AddClassState extends State<AddClass> {
           child: Form(
               key: _formKey,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: gakubu != null ?
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: title_list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  title_list[index],
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: gakubu != null
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: title_list.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 15,
                                   ),
-                                ),
-                                index == 0 || index == 1
-                                    ? const SizedBox(
-                                        width: 5,
-                                      )
-                                    : Container(),
-                                index == 0 || index == 1
-                                    ? const Text(
-                                        '※必須',
-                                        style: TextStyle(
+                                  Row(
+                                    children: [
+                                      Text(
+                                        title_list[index],
+                                        style: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.red,
-                                        ),
-                                      )
-                                    : Container(),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            index == 0 || index == 1
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      child: TextFormField(
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 15),
-                                        validator: (val) => val!.isEmpty
-                                            ? '正確に${title_value[index]}を入力してください。'
-                                            : null,
-                                        onChanged: (val) {
-                                          setState(() => index == 0
-                                              ? ClassName0 = val
-                                              : index == 1
-                                                  ? ClassName1 = val
-                                                  : ClassName2 = val);
-                                        },
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          fillColor: Colors.grey[300],
-                                          filled: true,
-                                          hintText: title_list[index],
-                                          hintStyle: const TextStyle(
-                                              color: Colors.grey),
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 9,
-                                          ),
-                                          isDense: true,
-                                          focusedBorder:
-                                              const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                : index != 2
-                                    ? ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.9,
-                                          child: TextFormField(
-                                            controller:
-                                                index == 3 ? txt0 : txt1,
-                                            onTap: () {
-                                              index == 3
-                                                  ? txt0.text = ''
-                                                  : txt1.text = '';
-                                              _showDialog(
-                                                CupertinoPicker(
-                                                  magnification: 1.22,
-                                                  squeeze: 1.2,
-                                                  useMagnifier: true,
-                                                  itemExtent: _kItemExtent,
-                                                  onSelectedItemChanged:
-                                                      (int selectedItem) {
-                                                    setState(() {
-                                                      index == 3
-                                                          ? ClassName3 = youbi[
-                                                              selectedItem]
-                                                          : ClassName4 = youbi[
-                                                              selectedItem];
-                                                      index == 3
-                                                          ? txt0.text = youbi[
-                                                              selectedItem]
-                                                          : txt1.text = youbi[
-                                                              selectedItem];
-                                                    });
-                                                  },
-                                                  children:
-                                                      List<Widget>.generate(
-                                                          youbi.length,
-                                                          (int indexx) {
-                                                    return Center(
-                                                      child: Text(
-                                                        youbi[indexx],
-                                                      ),
-                                                    );
-                                                  }),
-                                                ),
-                                              );
-                                            },
-                                            readOnly: true,
-                                            style: const TextStyle(
-                                                color: Colors.black),
-                                            validator: (val) => val!.isEmpty
-                                                ? '正確に${title_value[index]}を入力してください。'
-                                                : null,
-                                            decoration: InputDecoration(
-                                              fillColor: Colors.grey[300],
-                                              filled: true,
-                                              hintText: title_list[index],
-                                              hintStyle: const TextStyle(
-                                                color: Colors.grey,
+                                      index == 0 || index == 1
+                                          ? const SizedBox(
+                                              width: 5,
+                                            )
+                                          : Container(),
+                                      index == 0 || index == 1
+                                          ? const Text(
+                                              '※必須',
+                                              style: TextStyle(
                                                 fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red,
                                               ),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                                vertical: 9,
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  index == 0 || index == 1
+                                      ? ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          child: SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.9,
+                                            child: TextFormField(
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15),
+                                              validator: (val) => val!.isEmpty
+                                                  ? '正確に${title_value[index]}を入力してください。'
+                                                  : null,
+                                              onChanged: (val) {
+                                                setState(() => index == 0
+                                                    ? ClassName0 = val
+                                                    : index == 1
+                                                        ? ClassName1 = val
+                                                        : ClassName2 = val);
+                                              },
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                fillColor: Colors.grey[300],
+                                                filled: true,
+                                                hintText: title_list[index],
+                                                hintStyle: const TextStyle(
+                                                    color: Colors.grey),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                  horizontal: 10,
+                                                  vertical: 9,
+                                                ),
+                                                isDense: true,
+                                                focusedBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                  ),
+                                                ),
                                               ),
-                                              isDense: true,
-                                              border: InputBorder.none,
                                             ),
                                           ),
-                                        ))
-                                    : ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.9,
-                                          child: TextFormField(
-                                            controller: txt2,
-                                            onTap: () {
-                                              txt2.text = '';
-                                              _showDialog(
-                                                CupertinoPicker(
-                                                  magnification: 1.22,
-                                                  squeeze: 1.2,
-                                                  useMagnifier: true,
-                                                  itemExtent: _kItemExtent,
-                                                  onSelectedItemChanged:
-                                                      (int selectedItem) {
-                                                    setState(() {
-                                                      ClassName2 =
-                                                          gakubu![selectedItem];
-                                                      txt2.text =
-                                                          gakubu![selectedItem];
-                                                    });
-                                                  },
-                                                  children:
-                                                      List<Widget>.generate(
-                                                          gakubu!.length,
-                                                          (int indexxx) {
-                                                    return Center(
-                                                      child: Text(
-                                                        gakubu![indexxx],
+                                        )
+                                      : index != 2
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.9,
+                                                child: TextFormField(
+                                                  controller:
+                                                      index == 3 ? txt0 : txt1,
+                                                  onTap: () {
+                                                    index == 3
+                                                        ? txt0.text = ''
+                                                        : txt1.text = '';
+                                                    _showDialog(
+                                                      CupertinoPicker(
+                                                        magnification: 1.22,
+                                                        squeeze: 1.2,
+                                                        useMagnifier: true,
+                                                        itemExtent:
+                                                            _kItemExtent,
+                                                        onSelectedItemChanged:
+                                                            (int selectedItem) {
+                                                          setState(() {
+                                                            index == 3
+                                                                ? ClassName3 =
+                                                                    youbi[
+                                                                        selectedItem]
+                                                                : ClassName4 =
+                                                                    youbi[
+                                                                        selectedItem];
+                                                            index == 3
+                                                                ? txt0.text = youbi[
+                                                                    selectedItem]
+                                                                : txt1.text = youbi[
+                                                                    selectedItem];
+                                                          });
+                                                        },
+                                                        children: List<
+                                                                Widget>.generate(
+                                                            youbi.length,
+                                                            (int indexx) {
+                                                          return Center(
+                                                            child: Text(
+                                                              youbi[indexx],
+                                                            ),
+                                                          );
+                                                        }),
                                                       ),
                                                     );
-                                                  }),
+                                                  },
+                                                  readOnly: true,
+                                                  style: const TextStyle(
+                                                      color: Colors.black),
+                                                  validator: (val) => val!
+                                                          .isEmpty
+                                                      ? '正確に${title_value[index]}を入力してください。'
+                                                      : null,
+                                                  decoration: InputDecoration(
+                                                    fillColor: Colors.grey[300],
+                                                    filled: true,
+                                                    hintText: title_list[index],
+                                                    hintStyle: const TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 15,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 9,
+                                                    ),
+                                                    isDense: true,
+                                                    border: InputBorder.none,
+                                                  ),
                                                 ),
-                                              );
-                                            },
-                                            readOnly: true,
-                                            style: const TextStyle(
-                                                color: Colors.black),
-                                            validator: (val) => val!.isEmpty
-                                                ? '正確に${title_value[index]}を入力してください。'
-                                                : null,
-                                            decoration: InputDecoration(
-                                              fillColor: Colors.grey[300],
-                                              filled: true,
-                                              hintText: title_list[index],
-                                              hintStyle: const TextStyle(
-                                                  color: Colors.grey),
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                horizontal: 10,
-                                                vertical: 9,
-                                              ),
-                                              isDense: true,
-                                              border: InputBorder.none,
-                                            ),
-                                          ),
-                                        )),
-                          ]);
-                    }):  const CircularProgressIndicator()
-              )),
+                                              ))
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.9,
+                                                child: TextFormField(
+                                                  controller: txt2,
+                                                  onTap: () {
+                                                    txt2.text = '';
+                                                    _showDialog(
+                                                      CupertinoPicker(
+                                                        magnification: 1.22,
+                                                        squeeze: 1.2,
+                                                        useMagnifier: true,
+                                                        itemExtent:
+                                                            _kItemExtent,
+                                                        onSelectedItemChanged:
+                                                            (int selectedItem) {
+                                                          setState(() {
+                                                            ClassName2 = gakubu![
+                                                                selectedItem];
+                                                            txt2.text = gakubu![
+                                                                selectedItem];
+                                                          });
+                                                        },
+                                                        children: List<
+                                                                Widget>.generate(
+                                                            gakubu!.length,
+                                                            (int indexxx) {
+                                                          return Center(
+                                                            child: Text(
+                                                              gakubu![indexxx],
+                                                            ),
+                                                          );
+                                                        }),
+                                                      ),
+                                                    );
+                                                  },
+                                                  readOnly: true,
+                                                  style: const TextStyle(
+                                                      color: Colors.black),
+                                                  validator: (val) => val!
+                                                          .isEmpty
+                                                      ? '正確に${title_value[index]}を入力してください。'
+                                                      : null,
+                                                  decoration: InputDecoration(
+                                                    fillColor: Colors.grey[300],
+                                                    filled: true,
+                                                    hintText: title_list[index],
+                                                    hintStyle: const TextStyle(
+                                                        color: Colors.grey),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 9,
+                                                    ),
+                                                    isDense: true,
+                                                    border: InputBorder.none,
+                                                  ),
+                                                ),
+                                              )),
+                                ]);
+                          })
+                      : const CircularProgressIndicator())),
         ),
       ),
       floatingActionButton: ClipRRect(
@@ -366,10 +386,12 @@ class _AddClassState extends State<AddClass> {
                     for (int i = 0; i < allString.length - 1; i++) {
                       forSearchList[allString.substring(i, i + 2)] = true;
                       if (i == allString.length - 2) {
+                        // idをここでランダムの文字？を使って作る
+                        String randomId = getRandomString(15);
                         // 全ての処理が終わったら、データベースに格納する関数。
                         FirebaseFirestore.instance
                             .collection(daigakuMei!)
-                            .doc()
+                            .doc(randomId)
                             .set({
                           '授業名': ClassName0 ?? '',
                           '教授・講師名':
@@ -381,6 +403,7 @@ class _AddClassState extends State<AddClass> {
                           'RakutanAverage': '0',
                           'Daytime': DateTime.now(),
                           'forSearchList': forSearchList,
+                          'id': randomId,
                         });
                         ClassName0 = null;
                         ClassName1 = null;
