@@ -50,6 +50,8 @@ dependencies:
   pub_semver: ^2.0.0
   package_info: ^2.0.1
   the_apple_sign_in: ^1.1.1
+  rename:
+  app_tracking_transparency:
 
 dev_dependencies:
   flutter_test:

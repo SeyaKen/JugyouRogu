@@ -14,14 +14,10 @@ import 'Apple/apple_sign_in_available.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  final initFuture = MobileAds.instance.initialize();
-  final adState = AdState(initFuture);
+  
   final appleSignInAvailable = await AppleSignInAvailable.check();
   runApp(MultiProvider(
     providers: [
-      Provider.value(
-        value: adState,
-      ),
       Provider.value(
         value: appleSignInAvailable,
       ),
