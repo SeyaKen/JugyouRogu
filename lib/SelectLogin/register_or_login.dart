@@ -23,8 +23,9 @@ class RegisterLoginScreen extends StatefulWidget {
 class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
   @override
   void initState() {
-    initPlugin();
     WidgetsBinding.instance.addPostFrameCallback((_) => initPlugin());
+    initPlugin();
+    super.initState();
   }
 
   Future<void> initPlugin() async {
@@ -32,17 +33,6 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
     if (status == TrackingStatus.notDetermined) {
       await Future.delayed(const Duration(milliseconds: 200));
       await AppTrackingTransparency.requestTrackingAuthorization();
-      final initFuture = MobileAds.instance.initialize();
-      final adState = AdState(initFuture);
-      Provider.value(
-        value: adState,
-      );
-    } else {
-      final initFuture = MobileAds.instance.initialize();
-      final adState = AdState(initFuture);
-      Provider.value(
-        value: adState,
-      );
     }
   }
 

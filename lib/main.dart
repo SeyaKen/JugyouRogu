@@ -14,10 +14,14 @@ import 'Apple/apple_sign_in_available.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  
+  final initFuture = MobileAds.instance.initialize();
+  final adState = AdState(initFuture);
   final appleSignInAvailable = await AppleSignInAvailable.check();
   runApp(MultiProvider(
     providers: [
+      Provider.value(
+        value: adState,
+      ),
       Provider.value(
         value: appleSignInAvailable,
       ),
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<AuthService2>(
-     create: (_) => AuthService2(),
+      create: (_) => AuthService2(),
       child: ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
         child: MaterialApp(
