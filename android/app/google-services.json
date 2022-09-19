@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:427112080066:android:094f2852b7e66b1eda915b",
+        "mobilesdk_app_id": "1:427112080066:android:c9ea91bdd3950adada915b",
         "android_client_info": {
-          "package_name": "com.example.jugyourogu"
+          "package_name": "com.tanxe.jugyourogu"
         }
       },
       "oauth_client": [
