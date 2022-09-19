@@ -62,7 +62,7 @@ class _MainPageState extends State<MainPage> {
                 Icons.bookmark_outline_rounded,
                 size: 22,
               ),
-              label: '保存ずみ',
+              label: '保存済み',
               
             ),
             BottomNavigationBarItem(

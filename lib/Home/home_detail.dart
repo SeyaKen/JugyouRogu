@@ -134,8 +134,8 @@ class _HomeDetailState extends State<HomeDetail> {
             ),
             Text(
               firebasesnapshot != null
-                  ? firebasesnapshot!.get('授業名').length > 11
-                      ? firebasesnapshot!.get('授業名').substring(0, 12) + '...'
+                  ? firebasesnapshot!.get('授業名').length > 8
+                      ? firebasesnapshot!.get('授業名').substring(0, 9) + '...'
                       : ''
                   : '',
               style: const TextStyle(
