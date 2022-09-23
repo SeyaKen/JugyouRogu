@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           home: Stack(
-            children: const [
-              MySplashScreen(),
-              // Updater(appStoreUrl: '', playStoreUrl: '',),
+            children: [
+              const MySplashScreen(),
+              Updater(appStoreUrl: 'https://apps.apple.com/jp/app/%E6%8E%88%E6%A5%AD%E3%83%AD%E3%82%B0/id1643132164?l=en', playStoreUrl: 'https://play.google.com/store/apps/details?id=com.tanxe.jugyourogu',),
             ],
           ),
         ),

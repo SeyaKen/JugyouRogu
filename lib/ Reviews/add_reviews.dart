@@ -179,24 +179,24 @@ class _AddReviewsState extends State<AddReviews> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Row(
-                                children: [
-                                  Text(title_list[index],
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      )),
-                                  const SizedBox(width: 5),
-                                  const Text(
-                                    '※必須',
-                                    style: TextStyle(
+                              Row(children: [
+                                Text(title_list[index],
+                                    style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                    ),
-                                  )
-                                ],
-                              ),
+                                    )),
+                                const SizedBox(width: 5),
+                                index == 0 || index == 1
+                                    ? const Text(
+                                        '※必須',
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    : Container()
+                              ]),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.8,
                                 child: InkWell(
@@ -412,26 +412,14 @@ class _AddReviewsState extends State<AddReviews> {
           floatingActionButton: ClipRRect(
             borderRadius: BorderRadius.circular(3),
             child: Container(
-              color: _ratingValue0 != null &&
-                      _ratingValue1 != null &&
-                      _ratingValue2 != null &&
-                      _ratingValue3 != null &&
-                      _ratingValue4 != null &&
-                      _ratingValue5 != null &&
-                      _ratingValue6 != null
+              color: _ratingValue0 != null && _ratingValue1 != null
                   ? const Color(0xff92b82e)
                   : const Color(0xff92b82e).withOpacity(0.5),
               width: MediaQuery.of(context).size.width * 0.95,
               height: 50,
               child: InkWell(
                   onTap: () {
-                    if (_ratingValue0 != null &&
-                        _ratingValue1 != null &&
-                        _ratingValue2 != null &&
-                        _ratingValue3 != null &&
-                        _ratingValue4 != null &&
-                        _ratingValue5 != null &&
-                        _ratingValue6 != null) {
+                    if (_ratingValue0 != null && _ratingValue1 != null) {
                       FirebaseFirestore.instance
                           .collection(daigakuMei!)
                           .doc(articleId)
@@ -440,11 +428,31 @@ class _AddReviewsState extends State<AddReviews> {
                           .set({
                         'Juujitu': -Juujitu_list.indexOf(_ratingValue0) + 4,
                         'Rakutan': -Rakutan_list.indexOf(_ratingValue1) + 4,
-                        'Chukan': Chukan_list.indexOf(_ratingValue2),
-                        'Kimatu': Kimatu_list.indexOf(_ratingValue3),
-                        'Motikomi': Motikomi_list.indexOf(_ratingValue4),
-                        'Kyoukasho': Kyoukasho_list.indexOf(_ratingValue5),
-                        'Shusseki': Shusseki_list.indexOf(_ratingValue6),
+                        'Chukan': _ratingValue2 == null
+                            ? 0
+                            : Chukan_list.indexOf(_ratingValue2) == 'わからない'
+                                ? 0
+                                : Chukan_list.indexOf(_ratingValue2),
+                        'Kimatu': _ratingValue3 == null
+                            ? 0
+                            : Kimatu_list.indexOf(_ratingValue3) == 'わからない'
+                                ? 0
+                                : Kimatu_list.indexOf(_ratingValue3),
+                        'Motikomi': _ratingValue4 == null
+                            ? 0
+                            : Motikomi_list.indexOf(_ratingValue4) == 'わからない'
+                                ? 0
+                                : Motikomi_list.indexOf(_ratingValue4),
+                        'Kyoukasho': _ratingValue5 == null
+                            ? 0
+                            : Kyoukasho_list.indexOf(_ratingValue5) == 'わからない'
+                                ? 0
+                                : Kyoukasho_list.indexOf(_ratingValue5),
+                        'Shusseki': _ratingValue6 == null
+                            ? 0
+                            : Shusseki_list.indexOf(_ratingValue6) == 'わからない'
+                                ? 0
+                                : Shusseki_list.indexOf(_ratingValue6),
                         'Kutikomi': kutikomi ?? '',
                         'Daytime': DateTime.now(),
                         'uid': uid,
@@ -526,12 +534,14 @@ List Rakutan_list = [
 ];
 
 List Shusseki_list = [
+  'わからない',
   'ほぼ毎回とる',
   'たまにとる',
   'とらない',
 ];
 
 List Chukan_list = [
+  'わからない',
   'テストあり',
   'レポートのみ',
   'テスト・レポートなし',
@@ -539,6 +549,7 @@ List Chukan_list = [
 ];
 
 List Kimatu_list = [
+  'わからない',
   'テストあり',
   'レポートのみ',
   'テスト・レポートなし',
@@ -546,12 +557,14 @@ List Kimatu_list = [
 ];
 
 List Motikomi_list = [
+  'わからない',
   'テストなし',
   '教科書・ノート等持込 ○',
   '教科書・ノート等持込 × ',
 ];
 
 List Kyoukasho_list = [
+  'わからない',
   '教科書必要',
   '教科書なし、または不要',
 ];
