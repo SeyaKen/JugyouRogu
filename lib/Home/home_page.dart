@@ -53,6 +53,7 @@ class _HomePageState extends State<HomePage> {
     _focus.dispose();
   }
 
+  // この関数を使って、キーボードを消したり、現したりする？
   void _onFocusChange() {
     keyboardIsOpened = !keyboardIsOpened;
     print(keyboardIsOpened);
@@ -176,39 +177,8 @@ class _HomePageState extends State<HomePage> {
             )),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => const AddClass(),
-                            transitionDuration: const Duration(seconds: 0),
-                          ));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Flexible(
-                          child: Icon(
-                            Icons.add_box_outlined,
-                            size: 26,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(width: 5),
-                        Text('授業作成',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
                   child: PopUpMen(
@@ -686,6 +656,31 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      floatingActionButton: !keyboardIsOpened 
+      ? ClipRRect(
+        borderRadius: BorderRadius.circular(3),
+        child: Container(
+          color: Colors.orange,
+          width: 160,
+          height: 55,
+          child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const AddClass(),
+                      transitionDuration: const Duration(seconds: 0),
+                    ));
+              },
+              child: const Center(
+                  child: Text('授業を作成',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Colors.white,
+                      )))),
+        ),
+      ) : Container(),
     );
   }
 }
