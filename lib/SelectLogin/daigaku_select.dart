@@ -150,13 +150,13 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: searchedNames.isEmpty 
-                          ? _hasBeenPressed == items[index]
-                              ? Colors.grey.withOpacity(0.3)
-                              : Colors.white
-                          : _hasBeenPressed == searchedNames[index]
-                              ? Colors.grey.withOpacity(0.3)
-                              : Colors.white,
+                          color: searchedNames.isEmpty
+                              ? _hasBeenPressed == items[index]
+                                  ? Colors.black.withOpacity(0.9)
+                                  : Colors.white
+                              : _hasBeenPressed == searchedNames[index]
+                                  ? Colors.black.withOpacity(0.9)
+                                  : Colors.white,
                           border: const Border(
                             bottom: BorderSide(width: 0.5, color: Colors.grey),
                           ),
@@ -166,18 +166,17 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
                         child: Row(
                           children: [
                             Text(
-                              searchedNames.isEmpty 
-                              ? items[index]
-                              : searchedNames[index],
+                              searchedNames.isEmpty
+                                  ? items[index]
+                                  : searchedNames[index],
                               style: TextStyle(
-                                color:searchedNames.isEmpty
-                                ?  _hasBeenPressed == items[index]
-                                    ? Colors.orange
-                                    : Colors.black
-                                : _hasBeenPressed == searchedNames[index]
-                                    ? Colors.orange
-                                    : Colors.black
-                              ),
+                                  color: searchedNames.isEmpty
+                                      ? _hasBeenPressed == items[index]
+                                          ? Colors.white
+                                          : Colors.black
+                                      : _hasBeenPressed == searchedNames[index]
+                                          ? Colors.white
+                                          : Colors.black),
                             ),
                           ],
                         ),
@@ -207,8 +206,8 @@ class _DaigakuSelectScreenState extends State<DaigakuSelectScreen> {
               borderRadius: BorderRadius.circular(3),
               child: Container(
                   color: _hasBeenPressed != null
-                      ? const Color(0xff92b82e)
-                      : const Color(0xff92b82e).withOpacity(0.5),
+                      ? Colors.black
+                      : Colors.black.withOpacity(0.5),
                   width: MediaQuery.of(context).size.width * 0.95,
                   height: 50,
                   child: InkWell(

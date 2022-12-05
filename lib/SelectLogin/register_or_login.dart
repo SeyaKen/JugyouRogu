@@ -44,24 +44,19 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const FaIcon(
-              FontAwesomeIcons.chalkboard,
-              color: Colors.orange,
-              size: 90,
-            ),
-            const Text('授業ログ',
+            const Text('Univ.',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 70,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 )),
             const SizedBox(
-              height: 30,
+              height: 120,
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(3),
               child: Container(
-                  color: const Color(0xff92b82e),
+                  color: Colors.black,
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: 50,
                   child: InkWell(
@@ -87,7 +82,7 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
               borderRadius: BorderRadius.circular(3),
               child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xff92b82e)),
+                    border: Border.all(color: Colors.black),
                   ),
                   width: MediaQuery.of(context).size.width * 0.9,
                   height: 50,
@@ -106,7 +101,7 @@ class _RegisterLoginScreenState extends State<RegisterLoginScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
-                              color: Color(0xff92b82e),
+                              color: Colors.black,
                             ))),
                   )),
             ),

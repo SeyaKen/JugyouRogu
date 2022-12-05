@@ -25,11 +25,12 @@ class _AddClassState extends State<AddClass> {
   DocumentSnapshot? firebasesnapshot;
   String? daigakuMei;
 
-  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  static const _chars =
+      'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
 
-String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
   void kansuu() async {
     daigakuMei = await SharedPreferenceHelper().getUserDaigaku();
@@ -363,8 +364,8 @@ String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
                   ClassName1 != null &&
                   ClassName0 != '' &&
                   ClassName1 != ''
-              ? const Color(0xff92b82e)
-              : const Color(0xff92b82e).withOpacity(0.5),
+              ? Colors.black
+              : Colors.black.withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(

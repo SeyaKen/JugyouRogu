@@ -88,8 +88,8 @@ class _SignInState extends State<PasswordReset> {
                         Container(
                           decoration: BoxDecoration(
                             color: email.contains('@')
-                                ? const Color(0xff92b82e)
-                                : const Color(0xff92b82e).withOpacity(0.3),
+                                ? Colors.black
+                                : Colors.black.withOpacity(0.3),
                             borderRadius: BorderRadius.circular(3),
                           ),
                           width: MediaQuery.of(context).size.width * 0.8,

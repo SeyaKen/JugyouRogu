@@ -229,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 height: 40,
-                                color: const Color(0xff92b82e),
+                                color: Colors.black,
                                 child: TextButton(
                                     onPressed: () {
                                       Navigator.push(
@@ -237,10 +237,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                           PageRouteBuilder(
                                             pageBuilder: (_, __, ___) =>
                                                 EditProfile(
-                                                  daigakuMei: snapshot.data!.docs[0]['daigaku'],
-                                                  name: snapshot.data!.docs[0]['name'],
-                                                  ex: snapshot.data!.docs[0]['selfIntroduction'],
-                                                ),
+                                              daigakuMei: snapshot.data!.docs[0]
+                                                  ['daigaku'],
+                                              name: snapshot.data!.docs[0]
+                                                  ['name'],
+                                              ex: snapshot.data!.docs[0]
+                                                  ['selfIntroduction'],
+                                            ),
                                             transitionDuration:
                                                 const Duration(seconds: 0),
                                           ));

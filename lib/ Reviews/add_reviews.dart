@@ -412,8 +412,8 @@ class _AddReviewsState extends State<AddReviews> {
             borderRadius: BorderRadius.circular(3),
             child: Container(
               color: _ratingValue0 != null && _ratingValue1 != null
-                  ? const Color(0xff92b82e)
-                  : const Color(0xff92b82e).withOpacity(0.5),
+                  ? Colors.black
+                  : Colors.black.withOpacity(0.5),
               width: MediaQuery.of(context).size.width * 0.95,
               height: 50,
               child: InkWell(

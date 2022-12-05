@@ -178,9 +178,9 @@ class _EditClassState extends State<EditClass> {
                                         initialValue:
                                             index == 0 ? jugyoumei : kyouju,
                                         style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                          ),
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                        ),
                                         validator: (val) => val!.isEmpty
                                             ? '正確に${title_value[index]}を入力してください。'
                                             : null,
@@ -193,11 +193,11 @@ class _EditClassState extends State<EditClass> {
                                         },
                                         decoration: InputDecoration(
                                           contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 9,
-                                                      ),
-                                              isDense: true,
+                                              const EdgeInsets.symmetric(
+                                            horizontal: 10,
+                                            vertical: 9,
+                                          ),
+                                          isDense: true,
                                           border: InputBorder.none,
                                           fillColor: Colors.grey[300],
                                           filled: true,
@@ -210,7 +210,6 @@ class _EditClassState extends State<EditClass> {
                                               color: Colors.transparent,
                                             ),
                                           ),
-                                          
                                         ),
                                       ),
                                     ),
@@ -225,7 +224,6 @@ class _EditClassState extends State<EditClass> {
                                                   .width *
                                               0.9,
                                           child: TextFormField(
-                                            
                                             controller:
                                                 index == 3 ? txt0 : txt1,
                                             onTap: () {
@@ -268,16 +266,18 @@ class _EditClassState extends State<EditClass> {
                                             },
                                             readOnly: true,
                                             style: const TextStyle(
-                                                color: Colors.black, fontSize: 15,),
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                            ),
                                             validator: (val) => val!.isEmpty
                                                 ? '正確に${title_value[index]}を入力してください。'
                                                 : null,
                                             decoration: InputDecoration(
                                               contentPadding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 9,
-                                                      ),
+                                                horizontal: 10,
+                                                vertical: 9,
+                                              ),
                                               isDense: true,
                                               fillColor: Colors.grey[300],
                                               filled: true,
@@ -330,8 +330,9 @@ class _EditClassState extends State<EditClass> {
                                             },
                                             readOnly: true,
                                             style: const TextStyle(
-                                                color: Colors.black, fontSize: 15,),
-                                            
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                            ),
                                             validator: (val) => val!.isEmpty
                                                 ? '正確に${title_value[index]}を入力してください。'
                                                 : null,
@@ -341,11 +342,11 @@ class _EditClassState extends State<EditClass> {
                                               hintText: title_list[index],
                                               hintStyle: const TextStyle(
                                                   color: Colors.grey),
-                                                  contentPadding:
+                                              contentPadding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 9,
-                                                      ),
+                                                horizontal: 10,
+                                                vertical: 9,
+                                              ),
                                               isDense: true,
                                               border: InputBorder.none,
                                             ),
@@ -363,8 +364,8 @@ class _EditClassState extends State<EditClass> {
                   ClassName1 != null &&
                   ClassName0 != '' &&
                   ClassName1 != ''
-              ? const Color(0xff92b82e)
-              : const Color(0xff92b82e).withOpacity(0.5),
+              ? Colors.black
+              : Colors.black.withOpacity(0.5),
           width: MediaQuery.of(context).size.width * 0.95,
           height: 50,
           child: InkWell(

@@ -145,8 +145,9 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
               children: [
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount:
-                      searchedNames.isEmpty ? items.length : searchedNames.length,
+                  itemCount: searchedNames.isEmpty
+                      ? items.length
+                      : searchedNames.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
@@ -210,38 +211,39 @@ class _EditDaigakuScreenState extends State<EditDaigakuScreen> {
         ),
       ),
       floatingActionButton: !keyboardIsOpened
-          ?ClipRRect(
-        borderRadius: BorderRadius.circular(3),
-        child: Container(
-            color: _hasBeenPressed != null
-                ? const Color(0xff92b82e)
-                : const Color(0xff92b82e).withOpacity(0.5),
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: 50,
-            child: InkWell(
-              onTap: () async {
-                if (_hasBeenPressed != null) {
-                  Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => EditProfile(
-                          daigakuMei: _hasBeenPressed!,
-                          name: name,
-                          ex: ex,
-                        ),
-                        transitionDuration: const Duration(seconds: 0),
-                      ));
-                }
-              },
-              child: const Center(
-                  child: Text('大学を選択する',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Colors.white,
-                      ))),
-            )),
-      ):  Container(),
+          ? ClipRRect(
+              borderRadius: BorderRadius.circular(3),
+              child: Container(
+                  color: _hasBeenPressed != null
+                      ? Colors.black
+                      : Colors.black.withOpacity(0.5),
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  height: 50,
+                  child: InkWell(
+                    onTap: () async {
+                      if (_hasBeenPressed != null) {
+                        Navigator.push(
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (_, __, ___) => EditProfile(
+                                daigakuMei: _hasBeenPressed!,
+                                name: name,
+                                ex: ex,
+                              ),
+                              transitionDuration: const Duration(seconds: 0),
+                            ));
+                      }
+                    },
+                    child: const Center(
+                        child: Text('大学を選択する',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: Colors.white,
+                            ))),
+                  )),
+            )
+          : Container(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

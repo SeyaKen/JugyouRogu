@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>授業ログ</string>
+	<string>Univ.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,11 +15,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>授業ログ</string>
+	<string>Univ.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -33,8 +33,6 @@
 			</array>
 		</dict>
 	</array>
-  <key>NSUserTrackingUsageDescription</key>
-  <string>許可すると好みに合った広告が表示されやすくなります。</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>GADApplicationIdentifier</key>
@@ -49,6 +47,15 @@
 	<string>マイクへのアクセスを許可しますか？</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>ライブラリの画像を使い、プロフィール画面やトーク画面で使えるようにします。ライブラリへのアクセスを許可しますか？</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>許可すると好みに合った広告が表示されやすくなります。</string>
+	<key>SKAdNetworkItems</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -70,12 +77,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>SKAdNetworkItems</key>
-  <array>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>cstr6suwn9.skadnetwork</string>
-    </dict>
-  </array>
 </dict>
 </plist>

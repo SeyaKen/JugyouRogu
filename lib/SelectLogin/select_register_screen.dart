@@ -70,11 +70,12 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
-                  FaIcon(
-                    FontAwesomeIcons.chalkboard,
-                    color: Colors.orange,
-                    size: 90,
-                  ),
+                  Text('Univ.',
+                style: TextStyle(
+                  fontSize: 70,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
                   SizedBox(height: 10),
                   Text(
                     '新規登録する方法を選択してください。',
@@ -267,8 +268,7 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                     height: 50,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
-                      color: const Color(0xff92b82e),
-                      border: Border.all(color: Colors.grey, width: 0.5),
+                      border: Border.all(color: Colors.black),
                       borderRadius: BorderRadius.circular(3),
                     ),
                     width: MediaQuery.of(context).size.width * 0.9,
@@ -278,12 +278,12 @@ class _SelectRegisterScreenState extends State<SelectRegisterScreen> {
                       children: const [
                         Icon(
                           Icons.mail,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         Text('メールアドレスで始める',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 15,
                             )),
                         FaIcon(

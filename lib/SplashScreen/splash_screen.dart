@@ -47,17 +47,14 @@ class _MySplashScreenState extends State<MySplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
-              FaIcon(
-                FontAwesomeIcons.chalkboard,
-                color: Colors.orange,
-                size: 90,
-              ),
-              Text('授業ログ',
-                  style: TextStyle(
-                    fontSize: 30,
+              Text(
+                'Univ.',
+                style: TextStyle(
+                    fontSize: 70,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                  )),
+                )
+              ),
             ],
           )),
     );
