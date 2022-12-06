@@ -487,7 +487,7 @@ class _HomePageState extends State<HomePage> {
                                                               : 'データなし',
                                                           style:
                                                               const TextStyle(
-                                                            color: Colors.red,
+                                                            color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 12,
@@ -621,7 +621,7 @@ class _HomePageState extends State<HomePage> {
                                                               : 'データなし',
                                                           style:
                                                               const TextStyle(
-                                                            color: Colors.red,
+                                                            color: Colors.black,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 12,
@@ -660,7 +660,7 @@ class _HomePageState extends State<HomePage> {
       ? ClipRRect(
         borderRadius: BorderRadius.circular(3),
         child: Container(
-          color: Colors.blue,
+          color: Colors.black,
           width: 160,
           height: 55,
           child: InkWell(
