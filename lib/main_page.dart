@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
           },
           currentIndex: currenttab,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.orange,
+          selectedItemColor: Colors.black,
           selectedFontSize: 10,
           unselectedFontSize: 10,
           backgroundColor: const Color(0xffffffff),
